@@ -14,7 +14,7 @@ function Signin(props) {
     firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
       console.log("Successfully signed in!");
       props.handleSignIn(true);
-      history.push('/');
+      history.push('/posts');
     }).catch(function(error) {
       console.log(error.message);
     });
