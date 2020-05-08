@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import firebase from 'firebase/app';
+import Logo from './Logo';
 
 function Signin(props) {
 
@@ -21,7 +22,7 @@ function Signin(props) {
 
   return (
     <div className='signin'>
-      <h1>git share</h1>
+      <Logo />
       <form className='signinForm' onSubmit={doSignIn}>
         <h2>Sign In</h2>
         <input

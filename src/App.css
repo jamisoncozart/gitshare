@@ -1,5 +1,6 @@
 body {
   background-color: #eee;
+  font-family: 'Roboto', sans-serif;
 }
 
 /* HEADER STYLES */
@@ -83,3 +84,22 @@ input {
   margin: 5px 0;
 }
 
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20vh;
+}
+
+.logoPic {
+  border-radius: 50%;
+  height: 50px;
+  width: auto;
+  margin: 0 7px;
+}
+
+.logoTitle {
+  margin: 0 7px;
+  font-size: 30px;
+  font-family: 'Roboto Mono', monospace;
+}

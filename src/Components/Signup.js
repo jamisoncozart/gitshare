@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import firebase from 'firebase/app';
+import Logo from './Logo';
 
 function Signup() {
   const history = useHistory();
@@ -26,7 +27,7 @@ function Signup() {
 
   return (
     <div className="signin">
-      <h1>git share</h1>
+      <Logo />
       <form className="signinForm" onSubmit={doSignup}>
         <h2>Signup</h2>
         <input
