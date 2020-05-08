@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 
-function Signin() {
+function Signin(props) {
 
   function doSignIn(event) {
     event.preventDefault();
@@ -10,6 +10,7 @@ function Signin() {
     const password = event.target.signinPassword.value;
     firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
       console.log("Successfully signed in!");
+      props.handleSignIn(true);
     }).catch(function(error) {
       console.log(error.message);
     });
@@ -30,6 +31,7 @@ function Signin() {
         <button type='submit'>Sign in</button>
       </form>
       <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
+      <Link to='/'>Back to Home!</Link>
     </React.Fragment>
   );
 }

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import Signup from './Signup';
 import Signin from './Signin';
@@ -10,12 +10,18 @@ import { withFirestore, isLoaded } from 'react-redux-firebase';
 
 let App = props => {
 
-  const auth = this.props.firebase.auth();
+  const [authToggle, setAuthToggle] = useState(false);
+
+  console.log('App rendered 😀');
+
+  const auth = props.firebase.auth();
   let authContent = null;
   if(!isLoaded(auth)) {
-    authContent = <h1>Loading...</h1>
+    authContent = <h1>Loading...</h1>;
   } else if((isLoaded(auth)) && (auth.currentUser == null)) {
-    authContent = <h1>You must be signed in to access this content! <Link to='/signin'>Sign In</Link></h1>
+    authContent = <h1>You must be signed in to access this content! <Link to='/signin'>Sign In</Link></h1>;
+  } else if((isLoaded(auth)) && (auth.currentUser != null)) {
+    authContent = <Body />;
   }
 
   return(
@@ -25,14 +31,14 @@ let App = props => {
           <Signup />
         </Route>
         <Route path='/signin'>
-          <Signin />
+          <Signin handleSignIn={setAuthToggle}/>
         </Route>
         <Route path='/'>
-          <Header />
+          <Header handleSignOut={setAuthToggle}/>
           <h1>App</h1>
           <p>{props.userSignedIn ? 'true' : 'false'}</p>
           <p>{props.currentUser === null ? 'null' : props.currentUser}</p>
-          <Body />    
+          {authContent}   
           <FooterNav />
         </Route>
       </Switch>
@@ -48,10 +54,9 @@ const mapStateToProps = state => {
   return {
     userSignedIn: state.userSignedIn,
     currentUser: state.currentUser,
-    firebase: state.firebase
   }
 }
 
 App = connect(mapStateToProps)(App);
 
-export default App;
+export default withFirestore(App);

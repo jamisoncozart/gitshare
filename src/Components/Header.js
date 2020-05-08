@@ -1,11 +1,12 @@
 import React from 'react';
 import firebase from 'firebase/app';
 
-function Header() {
+function Header(props) {
 
   function doSignOut() {
     firebase.auth().signOut().then(function() {
       console.log("Successfully signed out!");
+      props.handleSignOut(false);
     }).catch(function(error) {
       console.log(error.message);
     });
