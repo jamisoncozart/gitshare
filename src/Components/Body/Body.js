@@ -11,6 +11,9 @@ function Body() {
       <Route path='/posts'>
         <Feed />
       </Route>
+      <Route path='/saved'>
+        <Feed />
+      </Route>
       <Route path='/newPost'>
         <NewPostForm />
       </Route>
