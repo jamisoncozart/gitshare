@@ -7,6 +7,7 @@ import FooterNav from './FooterNav';
 import Body from './Body';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import { withFirestore, isLoaded } from 'react-redux-firebase';
+import '../App.css';
 
 let App = props => {
 
@@ -14,15 +15,15 @@ let App = props => {
 
   console.log('App rendered 😀');
 
-  // const auth = props.firebase.auth();
+  const auth = props.firebase.auth();
   let authContent = null;
-  // if(!isLoaded(auth)) {
-  //   authContent = <h1>Loading...</h1>;
-  // } else if((isLoaded(auth)) && (auth.currentUser == null)) {
-  //   authContent = <h1>You must be signed in to access this content! <Link to='/signin'>Sign In</Link></h1>;
-  // } else if((isLoaded(auth)) && (auth.currentUser != null)) {
+  if(!isLoaded(auth)) {
+    authContent = <h1>Loading...</h1>;
+  } else if((isLoaded(auth)) && (auth.currentUser == null)) {
+    authContent = <h1>You must be signed in to access this content! <Link to='/signin'>Sign In</Link></h1>;
+  } else if((isLoaded(auth)) && (auth.currentUser != null)) {
     authContent = <Body />;
-  // }
+  }
 
   return(
     <Router>
@@ -35,8 +36,7 @@ let App = props => {
         </Route>
         <Route path='/'>
           <Header handleSignOut={setAuthToggle}/>
-          <h1>App</h1>
-          {/* <p>{auth.currentUser === null ? 'null' : ('hello ' + auth.currentUser.displayName + ' !')}</p> */}
+          <p>{auth.currentUser === null ? '' : ('hello ' + auth.currentUser.displayName + ' !')}</p>
           {authContent}   
           <FooterNav />
         </Route>

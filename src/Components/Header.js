@@ -13,10 +13,10 @@ function Header(props) {
   }
 
   return (
-    <React.Fragment>
+    <div className='header'>
       <h1>Header</h1>
       <button onClick={doSignOut}>Sign out</button>
-    </React.Fragment>
+    </div>
   );
 }
 

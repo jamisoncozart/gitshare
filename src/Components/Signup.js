@@ -25,9 +25,10 @@ function Signup() {
   }
 
   return (
-    <React.Fragment>
-      <h1>Signup</h1>
-      <form onSubmit={doSignup}>
+    <div className="signin">
+      <h1>git share</h1>
+      <form className="signinForm" onSubmit={doSignup}>
+        <h2>Signup</h2>
         <input
           type='text'
           name='username'
@@ -40,10 +41,10 @@ function Signup() {
           type='password'
           name='password'
           placeholder='Password' />
-        <button type='submit'>Sign up</button>
+        <button className="submitButton" type='submit'>Submit</button>
+        <p>Already have an account? <Link to='/signin'>Sign In</Link></p>
       </form>
-      <p>Already have an account? <Link to='/signin'>Sign In</Link></p>
-    </React.Fragment>
+    </div>
   );
 }
 

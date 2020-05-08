@@ -1,0 +1,85 @@
+body {
+  background-color: #eee;
+}
+
+/* HEADER STYLES */
+
+.header {
+  background-color: #ddd;
+  width: 100%;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* FOOTER STYLES */
+
+.footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #ddd;
+  color: #000;
+  text-align: center;
+  font-size: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+/* .footer a {
+  padding: 40px 0;
+  width: 25%;
+}
+
+a, a:active, a:visited, a:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+.navActive {
+  background-color: #bbb;
+}
+
+.footer img {
+  height: 60px;
+  width: auto;
+} */
+
+/* SIGNIN STYLES */
+
+.signin {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+}
+
+.signinForm {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  margin-top: 20px;
+  border-radius: 5px;
+  border: 1px solid black;
+  box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+  /* justify-content: center;
+  align-items: center; */
+}
+
+input {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  margin: 5px 0;
+}
+
+.submitButton {
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 17px;
+  margin: 5px 0;
+}
+

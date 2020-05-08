@@ -20,9 +20,10 @@ function Signin(props) {
   }
 
   return (
-    <React.Fragment>
-      <h1>Signin</h1>
-      <form onSubmit={doSignIn}>
+    <div className='signin'>
+      <h1>git share</h1>
+      <form className='signinForm' onSubmit={doSignIn}>
+        <h2>Sign In</h2>
         <input
           type='text'
           name='signinEmail'
@@ -31,11 +32,10 @@ function Signin(props) {
           type='password'
           name='signinPassword'
           placeholder='Password' />
-        <button type='submit'>Sign in</button>
+        <button className="submitButton" type='submit'>Submit</button>
+        <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
       </form>
-      <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
-      <Link to='/'>Back to Home!</Link>
-    </React.Fragment>
+    </div>
   );
 }
 
