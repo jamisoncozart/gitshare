@@ -1,3 +1,5 @@
-export default userSignInReducer = (state = false, action) => {
+const userSignInReducer = (state = false, action) => {
   return state;
 }
+
+export default userSignInReducer;

@@ -3,10 +3,21 @@ import { connect } from 'react-redux';
 
 let App = props => {
   return(
-    <h1>App</h1>
+    <React.Fragment>
+      <h1>App</h1>
+      <p>{props.userSignedIn ? 'true' : 'false'}</p>
+      <p>{props.currentUser === null ? 'null' : props.currentUser}</p>
+    </React.Fragment>
   );
 }
 
-App = connect()(App);
+const mapStateToProps = state => {
+  return {
+    userSignedIn: state.userSignedIn,
+    currentUser: state.currentUser
+  }
+}
+
+App = connect(mapStateToProps)(App);
 
 export default App;

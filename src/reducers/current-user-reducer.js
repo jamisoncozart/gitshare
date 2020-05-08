@@ -1,3 +1,5 @@
-export default currentUserReducer = (state = null, action) => {
+const currentUserReducer = (state = null, action) => {
   return state;
 }
+
+export default currentUserReducer;
