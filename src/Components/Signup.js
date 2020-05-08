@@ -1,15 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import firebase from 'firebase/app';
 
 function Signup() {
-
+  const history = useHistory();
   function doSignup(event) {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
+    const username = event.target.username.value;
     firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
       console.log('successfully signed in!');
+      firebase.auth().currentUser.updateProfile({
+        displayName: username
+      }).then(function() {
+        console.log('successfully updated displayName');
+        history.push('/signin');
+      }, function(error) {
+        console.log(error.message);
+      });
     }).catch(function(error) {
       console.log(error.message);
     });
@@ -19,6 +28,10 @@ function Signup() {
     <React.Fragment>
       <h1>Signup</h1>
       <form onSubmit={doSignup}>
+        <input
+          type='text'
+          name='username'
+          placeholder='username' />
         <input
           type='text'
           name='email'
