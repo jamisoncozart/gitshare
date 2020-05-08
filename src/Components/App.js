@@ -5,7 +5,7 @@ import Signin from './Signin';
 import Header from './Header';
 import FooterNav from './FooterNav';
 import Body from './Body';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link, useHistory } from 'react-router-dom';
 import { withFirestore, isLoaded } from 'react-redux-firebase';
 
 let App = props => {

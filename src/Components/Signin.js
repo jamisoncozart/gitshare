@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import firebase from 'firebase/app';
 
 function Signin(props) {
+
+  const history = useHistory();
 
   function doSignIn(event) {
     event.preventDefault();
@@ -11,6 +13,7 @@ function Signin(props) {
     firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
       console.log("Successfully signed in!");
       props.handleSignIn(true);
+      history.push('/');
     }).catch(function(error) {
       console.log(error.message);
     });
