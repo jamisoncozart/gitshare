@@ -1,8 +1,21 @@
 import React from 'react';
+import firebase from 'firebase/app';
 
 function Header() {
+
+  function doSignOut() {
+    firebase.auth().signOut().then(function() {
+      console.log("Successfully signed out!");
+    }).catch(function(error) {
+      console.log(error.message);
+    });
+  }
+
   return (
-    <h1>Header</h1>
+    <React.Fragment>
+      <h1>Header</h1>
+      <button onClick={doSignOut}>Sign out</button>
+    </React.Fragment>
   );
 }
 
