@@ -83,6 +83,7 @@ input {
   padding: 5px;
   font-size: 17px;
   margin: 5px 0;
+  width: 100%;
 }
 
 .logo {
@@ -102,4 +103,20 @@ input {
   margin: 0 7px;
   font-size: 30px;
   font-family: 'Roboto Mono', monospace;
+}
+
+/* NEW POST FORM STYLES */
+
+.newPostFormDiv {
+  width: 70%;
+  margin: 40px auto;
+  text-align: center;
+}
+
+textarea {
+  width: 100%;
+  border-radius: 5px;
+  padding: 5px;
+  box-sizing: border-box;
+  margin: 5px 0;
 }
