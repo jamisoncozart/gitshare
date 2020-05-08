@@ -22,7 +22,7 @@ function Signin(props) {
 
   return (
     <div className='signin'>
-      <Logo />
+      <Logo imageHeight='50px' fontSize='30px'/>
       <form className='signinForm' onSubmit={doSignIn}>
         <h2>Sign In</h2>
         <input

@@ -27,7 +27,7 @@ function Signup() {
 
   return (
     <div className="signin">
-      <Logo />
+      <Logo imageHeight='50px' fontSize='30px'/>
       <form className="signinForm" onSubmit={doSignup}>
         <h2>Signup</h2>
         <input

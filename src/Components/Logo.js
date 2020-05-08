@@ -1,10 +1,21 @@
 import React from 'react';
 
-const Logo = () => {
+const Logo = props => {
+  const imageStyle = {
+    height: props.imageHeight,
+    borderRadius: '50%',
+    width: 'auto',
+    margin: '0 7px'
+  }
+  const textStyle = {
+    margin: '0 7px',
+    fontSize: props.fontSize,
+    fontFamily: "'Roboto Mono', monospace"
+  }
   return (
     <div className='logo'>
-      <img className='logoPic' src='https://i.imgur.com/Lta1Npc.png' />
-      <h1 className="logoTitle">git share</h1>
+      <img style={imageStyle} src='https://i.imgur.com/Lta1Npc.png' />
+      <h1 style={textStyle}>git share</h1>
     </div>
   );
 }

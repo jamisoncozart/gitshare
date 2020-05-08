@@ -1,5 +1,6 @@
 import React from 'react';
 import firebase from 'firebase/app';
+import Logo from './Logo';
 
 function Header(props) {
 
@@ -14,8 +15,8 @@ function Header(props) {
 
   return (
     <div className='header'>
-      <h1>Header</h1>
-      <button onClick={doSignOut}>Sign out</button>
+      <Logo imageHeight='25px' fontSize='18px'/>
+      <button className='signOutButton' onClick={doSignOut}>Sign out</button>
     </div>
   );
 }

@@ -29,24 +29,24 @@ body {
   justify-content: space-around;
 }
 
-/* .footer a {
-  padding: 40px 0;
-  width: 25%;
+.footer a {
+  padding: 14px 0;
+  width: 20%;
 }
 
 a, a:active, a:visited, a:focus {
   color: #000;
   text-decoration: none;
 }
-
+/*
 .navActive {
   background-color: #bbb;
 }
-
+*/
 .footer img {
-  height: 60px;
+  height: 20px;
   width: auto;
-} */
+}
 
 /* SIGNIN STYLES */
 
@@ -54,6 +54,7 @@ a, a:active, a:visited, a:focus {
   width: 80%;
   margin: auto;
   text-align: center;
+  margin-top: 20vh;
 }
 
 .signinForm {
@@ -88,7 +89,6 @@ input {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20vh;
 }
 
 .logoPic {
