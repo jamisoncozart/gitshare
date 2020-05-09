@@ -1,12 +1,15 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import Logo from './Logo';
+import { useHistory } from 'react-router-dom';
 
 function Header(props) {
 
+  const history = useHistory();
+
   function doSignOut() {
     firebase.auth().signOut().then(function() {
-      console.log("Successfully signed out!");
+      history.push('/signin');
       props.handleSignOut(false);
     }).catch(function(error) {
       console.log(error.message);

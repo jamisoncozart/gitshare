@@ -34,7 +34,7 @@ body {
   width: 20%;
 }
 
-a, a:active, a:visited, a:focus {
+.navLink, .navLink:active, .navLink:visited, .navLink:focus {
   color: #000;
   text-decoration: none;
 }
