@@ -13,6 +13,16 @@ body {
   justify-content: space-between;
 }
 
+.headerRight {
+  display: flex;
+  align-items: center;
+}
+
+.displayName {
+  font-size: 12px;
+  margin-right: 5px;
+}
+
 /* FOOTER STYLES */
 
 .footer {
