@@ -88,6 +88,11 @@ input {
   margin: 5px 0;
 }
 
+.errorMessage {
+  color: red;
+  font-size: 12px;
+}
+
 .submitButton {
   border-radius: 5px;
   padding: 5px;

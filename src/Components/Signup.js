@@ -1,28 +1,56 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import firebase from 'firebase/app';
 import Logo from './Logo';
+import { useFirestore } from 'react-redux-firebase';
 
 function Signup() {
+
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const db = useFirestore();
   const history = useHistory();
-  function doSignup(event) {
+  async function doSignup(event) {
     event.preventDefault();
     const email = event.target.email.value;
     const password = event.target.password.value;
     const username = event.target.username.value;
-    firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
-      console.log('successfully signed in!');
-      firebase.auth().currentUser.updateProfile({
-        displayName: username
-      }).then(function() {
-        console.log('successfully updated displayName');
-        history.push('/signin');
-      }, function(error) {
-        console.log(error.message);
+    //check is username is already taken
+    const profiles = db.collection('profiles');
+    let sameProfileName = 0;
+    await db.collection('profiles').where('displayName', '==', username)
+      .get()
+      .then(function(querySnapshot) {
+        querySnapshot.forEach(profile => {
+          sameProfileName++;
+        })
+      })
+      .catch(function(error) {
+        console.log('error: ' + error.message);
       });
-    }).catch(function(error) {
-      console.log(error.message);
-    });
+    if(sameProfileName === 0) {
+      firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
+        console.log('successfully signed in!');
+        firebase.auth().currentUser.updateProfile({
+          displayName: username
+        }).then(function() {
+          profiles.add(
+            {
+              displayName: username,
+              email: email,
+              creationTime: db.FieldValue.serverTimestamp()
+            }
+          );
+          history.push('/signin');
+        }, function(error) {
+          setErrorMessage(error.message);
+        });
+      }).catch(function(error) {
+        setErrorMessage(error.message);
+      });
+    } else {
+      setErrorMessage('that username is already taken');
+    }
   }
 
   return (
@@ -42,6 +70,7 @@ function Signup() {
           type='password'
           name='password'
           placeholder='Password' />
+        <p className='errorMessage'>{errorMessage}</p>
         <button className="submitButton" type='submit'>Submit</button>
         <p>Already have an account? <Link to='/signin'>Sign In</Link></p>
       </form>
