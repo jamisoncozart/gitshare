@@ -61,17 +61,24 @@ function Signup() {
         <input
           type='text'
           name='username'
-          placeholder='username' />
+          placeholder='username'
+          required />
         <input
           type='text'
           name='email'
-          placeholder='email' />
+          placeholder='email'
+          required />
         <input
           type='password'
           name='password'
-          placeholder='Password' />
+          placeholder='Password'
+          required />
         <p className='errorMessage'>{errorMessage}</p>
-        <button className="submitButton" type='submit'>Submit</button>
+        <button 
+          className="submitButton" 
+          type='submit'>
+            Submit
+        </button>
         <p>Already have an account? <Link to='/signin'>Sign In</Link></p>
       </form>
     </div>

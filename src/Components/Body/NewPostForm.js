@@ -29,9 +29,21 @@ const NewPostForm = props => {
     <div className='newPostFormDiv'>
       <form className='siginForm' onSubmit={addPostToDb}>
         <h2>New Post</h2>
-        <input name='title' type='text' placeholder='Title' />
-        <textarea name='description' type='text' placeholder='Description' rows='4' />
-        <button className='submitButton' type='submit'>Submit</button>
+        <input 
+          name='title' 
+          type='text' 
+          placeholder='Title' 
+          required />
+        <textarea 
+          name='description' 
+          type='text' 
+          placeholder='Description' 
+          rows='4' />
+        <button 
+          className='submitButton' 
+          type='submit'>
+            Submit
+        </button>
       </form>
     </div>
   );

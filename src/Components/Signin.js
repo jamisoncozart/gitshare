@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import firebase from 'firebase/app';
 import Logo from './Logo';
 
 function Signin(props) {
 
+  const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
 
   function doSignIn(event) {
@@ -16,7 +17,7 @@ function Signin(props) {
       props.handleSignIn(true);
       history.push('/posts');
     }).catch(function(error) {
-      console.log(error.message);
+      setErrorMessage(error.message);
     });
   }
 
@@ -28,12 +29,19 @@ function Signin(props) {
         <input
           type='text'
           name='signinEmail'
-          placeholder='email' />
+          placeholder='email'
+          required />
         <input
           type='password'
           name='signinPassword'
-          placeholder='Password' />
-        <button className="submitButton" type='submit'>Submit</button>
+          placeholder='Password'
+          required />
+        <p className='errorMessage'>{errorMessage}</p>
+        <button 
+          className="submitButton" 
+          type='submit'>
+            Submit
+        </button>
         <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
       </form>
     </div>
