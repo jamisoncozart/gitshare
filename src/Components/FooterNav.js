@@ -43,7 +43,7 @@ function FooterNav() {
           'navLink': true
         })}  
         to='/follows'>
-          <img src='https://lh3.googleusercontent.com/proxy/ESh0zeV6iIHM7pcWVml18xDgcOF6fawMuoEt-mX3fQEta71f99ImzLNsq0RO98j33GGBKIA-aGAca7_j7JBxInSWg80vrOq1EZK9h8M5moVT5Sg6o9DnJRh24scLkw' />
+          <img src='https://tribemobile.co/wp-content/uploads/2016/06/connect-icon.png' />
       </Link>
       <Link 
         onClick={() => setCurrentView('/profile')} 

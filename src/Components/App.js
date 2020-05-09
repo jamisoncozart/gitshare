@@ -17,19 +17,19 @@ let App = props => {
 
   console.log('App rendered 😀');
 
-  const auth = props.firebase.auth();
+  // const auth = props.firebase.auth();
   let authContent = null;
-  if(!isLoaded(auth)) {
-    authContent = <h1>Loading...</h1>;
-  } else if((isLoaded(auth)) && (auth.currentUser == null)) {
-    // authContent = <h1>You must be signed in to access this content! <Link to='/signin'>Sign In</Link></h1>;
-    if(!onSignIn) {
-      setOnSignIn(true);
-      history.push('/signin');
-    }
-  } else if((isLoaded(auth)) && (auth.currentUser != null)) {
+  // if(!isLoaded(auth)) {
+  //   authContent = <h1>Loading...</h1>;
+  // } else if((isLoaded(auth)) && (auth.currentUser == null)) {
+  //  // If the user is not signed in, redirect to signin page
+  //   if(!onSignIn) {
+  //     setOnSignIn(true);
+  //     history.push('/signin');
+  //   }
+  // } else if((isLoaded(auth)) && (auth.currentUser != null)) {
     authContent = <Body />;
-  }
+  // }
 
   return(
     <Switch>
@@ -40,7 +40,9 @@ let App = props => {
         <Signin handleSignIn={setAuthToggle}/>
       </Route>
       <Route path='/'>
-        <Header currenUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} handleSignOut={setAuthToggle}/>
+        {/* ADD TO currentUser WHEN TESTING AUTH */}
+        {/* auth.currentUser !== null ? auth.currentUser.displayName :  */}
+        <Header currenUser={''} handleSignOut={setAuthToggle}/>
         {authContent}   
         <FooterNav />
       </Route>
