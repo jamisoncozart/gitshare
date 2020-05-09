@@ -7,7 +7,7 @@ import { useFirestore } from 'react-redux-firebase';
 function Signup() {
 
   const [errorMessage, setErrorMessage] = useState('');
-
+  const auth = firebase.auth();
   const db = useFirestore();
   const history = useHistory();
   async function doSignup(event) {
@@ -29,9 +29,9 @@ function Signup() {
         console.log('error: ' + error.message);
       });
     if(sameProfileName === 0) {
-      firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
+      auth.createUserWithEmailAndPassword(email, password).then(function() {
         console.log('successfully signed in!');
-        firebase.auth().currentUser.updateProfile({
+        auth.currentUser.updateProfile({
           displayName: username
         }).then(function() {
           profiles.add(
@@ -40,7 +40,15 @@ function Signup() {
               email: email,
               creationTime: db.FieldValue.serverTimestamp()
             }
-          );
+          )
+          .then(function(docRef) {
+            console.log(docRef.id);
+            auth.currentUser.updateProfile({
+              photoURL: docRef.id
+            });
+          }).catch(function(error) {
+            setErrorMessage(error.message);
+          });
           history.push('/signin');
         }, function(error) {
           setErrorMessage(error.message);
