@@ -59,12 +59,11 @@ code .
 ## Development Process
 
 ![Application WireFrame](https://i.imgur.com/Pm5ZplU.png)
-![Application WireFrame]()
-![Application WireFrame]()
-![Application WireFrame]()
-![Application WireFrame]()
-![Application WireFrame]()
-![Application WireFrame]()
+![Application WireFrame](https://i.imgur.com/gGmEQQH.png)
+![Application WireFrame](https://i.imgur.com/dAkbIb1.png)
+![Application WireFrame](https://i.imgur.com/b311OFn.png)
+![Application WireFrame](https://i.imgur.com/lT2iukx.png)
+![Application WireFrame](https://i.imgur.com/2xzXwBu.png)
 
 _Application features pages for Sign Up/Sign In, posts, saved posts, creating new posts, viewing accounts you've followed, and your profile._
 
