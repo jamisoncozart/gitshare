@@ -15,7 +15,8 @@ const NewPostForm = props => {
           score: 0,
           author: auth.currentUser.displayName,
           tags: [],
-          repo: null
+          upvoters: [],
+          repo: null,
         }
       );
     } else {
