@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useFirestore } from 'react-redux-firebase';
 import firebase from 'firebase/app';
+import Tag from './Tag';
 
 // LET UPVOTES PERSIST FOR USER
 
@@ -8,15 +9,16 @@ const Post = props => {
   const auth = firebase.auth();
   const db = useFirestore();
   let currentlyUpvoted;
-  if(props.upvoters.includes(auth.currentUser.displayName)) {
+  if(props.post.upvoters.includes(auth.currentUser.displayName)) {
     currentlyUpvoted = true;
   } else {
     currentlyUpvoted = false;
   }
   const [upvoted, setUpvoted] = useState(currentlyUpvoted);
-  let currentUpvotes = props.score;
-  let upvoterList = props.upvoters;
-  const handleUpvote = (postId) => {
+  let currentUpvotes = props.post.score;
+  let upvoterList = props.post.upvoters;
+
+  function handleUpvote(postId) {
     const postToUpdate = db.collection('posts').doc(postId);
     if(upvoted) {
       let newUpvotes = currentUpvotes - 1;
@@ -40,21 +42,62 @@ const Post = props => {
       });
     }
   }
-  console.log(props.score);
-  return (
-    <div 
-      className='post'
-      key={props.index}>
-      <div className='postHeader'>
-        <div onClick={() => handleUpvote(props.id)} className={upvoted ? 'clickedUpvoteDiv' : 'upvoteDiv'}>
-          <img src='https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/14645659851540882612-256.png' />
+
+  function handleDeletingPost(id) {
+    db.collection('posts').doc(id).delete().then(function() {
+      console.log('post deleted');
+      props.handleClickingBack(false);
+    }).catch(function(error) {
+      console.log(error);
+    });
+  }
+
+  if(props.showDetails) {
+    return (
+      <div className='post'>
+        <div className='postHeaderWrapper'>
+          <div className='postHeader'>
+            <div onClick={() => handleUpvote(props.post.id)} className={upvoted ? 'clickedUpvoteDiv' : 'upvoteDiv'}>
+              <img src='https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/14645659851540882612-256.png' />
+            </div>
+            <h4 onClick={() => props.handleShowingPostDetails({...props.post})}>{props.post.title}</h4>
+          </div>
+          {auth.currentUser.displayName == props.post.author ? <button className='postDeleteButton' onClick={() => handleDeletingPost(props.post.id)}>X</button> : null}
         </div>
-        <h4>{props.title}</h4>
+        <hr />
+        <div className='tagAuthorRow'>
+          <div className='tags'>
+            {props.post.tags.length > 0 ? props.post.tags.map((tag, index) => {
+              return <Tag filterFeedByTag={() => null} name={tag} key={index}/>
+            }) : null}
+          </div>
+          <p className='postAuthor'>{props.post.author}</p>
+        </div>
+        <p>{props.post.description}</p>
+        <button className='detailsBackButton' onClick={() => props.handleClickingBack(false)}>Back</button>
       </div>
-      <hr />
-      <p>{props.description}</p>
-    </div>
-  )
+    );
+  } else {
+    return (
+      <div className='post'>
+        <div className='postHeader'>
+          <div onClick={() => handleUpvote(props.post.id)} className={upvoted ? 'clickedUpvoteDiv' : 'upvoteDiv'}>
+            <img src='https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/14645659851540882612-256.png' />
+          </div>
+          <h4 onClick={() => props.handleShowingPostDetails({...props.post})}>{props.post.title}</h4>
+        </div>
+        <hr />
+        <div className='tagAuthorRow'>
+          <div className='tags'>
+            {props.post.tags.length > 0 ? props.post.tags.map((tag, index) => {
+              return <Tag filterFeedByTag={props.filterFeedByTag} name={tag} key={index}/>
+            }) : null}
+          </div>
+          <p className='postAuthor'>{props.post.author}</p>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Post;

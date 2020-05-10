@@ -14,7 +14,7 @@ const NewPostForm = props => {
           description: event.target.description.value,
           score: 0,
           author: auth.currentUser.displayName,
-          tags: [],
+          tags: event.target.tags.value.split(' '),
           upvoters: [],
           repo: null,
         }
@@ -40,6 +40,10 @@ const NewPostForm = props => {
           type='text' 
           placeholder='Description' 
           rows='4' />
+        <input
+          name='tags'
+          type='text'
+          placeholder='tag1 tag2 tag3' />
         <button 
           className='submitButton' 
           type='submit'>
