@@ -209,7 +209,6 @@ hr {
   border: 1px solid black;
   border-radius: 5px;
   margin: 0 2px 5px 2px;
-  /* max-width: 200px; */
 }
 
 .tagAuthorRow {
@@ -226,4 +225,29 @@ hr {
   padding: 5px;
   border-radius: 5px;
   margin-top: 5px;
+}
+
+.filterTag {
+  width: 100%;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+}
+
+.filterTag button {
+  height: 25px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: rgb(255, 190, 190);
+}
+
+.filterTagHeader {
+  display: flex;
+  align-items: center;
+}
+
+.filterTagHeader p {
+  margin-right: 5px;
 }
