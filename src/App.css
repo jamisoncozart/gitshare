@@ -174,7 +174,6 @@ textarea {
 
 .postHeader {
   display: flex;
-  align-items: center;
 }
 
 .postHeaderWrapper {
@@ -189,7 +188,9 @@ textarea {
   border-radius: 5px;
   font-weight: bold;
   display: flex;
-  font-size: 15px;
+  font-size: 14px;
+  height: 25px;
+  width: 25px;
 }
 
 hr {
@@ -198,6 +199,7 @@ hr {
 
 .tags {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .tag {
@@ -207,6 +209,7 @@ hr {
   border: 1px solid black;
   border-radius: 5px;
   margin: 0 2px 5px 2px;
+  /* max-width: 200px; */
 }
 
 .tagAuthorRow {

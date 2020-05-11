@@ -68,7 +68,7 @@ const Post = props => {
         <div className='tagAuthorRow'>
           <div className='tags'>
             {props.post.tags.length > 0 ? props.post.tags.map((tag, index) => {
-              return <Tag filterFeedByTag={() => null} name={tag} key={index}/>
+              return <Tag name={tag} key={index}/>
             }) : null}
           </div>
           <p className='postAuthor'>{props.post.author}</p>
@@ -90,7 +90,7 @@ const Post = props => {
         <div className='tagAuthorRow'>
           <div className='tags'>
             {props.post.tags.length > 0 ? props.post.tags.map((tag, index) => {
-              return <Tag filterFeedByTag={props.filterFeedByTag} name={tag} key={index}/>
+              return <Tag filterFeedByTag={props.handleFilterTag} name={tag} key={index}/>
             }) : null}
           </div>
           <p className='postAuthor'>{props.post.author}</p>

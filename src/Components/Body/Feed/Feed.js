@@ -11,16 +11,22 @@ const Feed = props => {
   // For viewing post details on click of a post
   const [viewingDetails, setViewingDetails] = useState(false);
   const [postDetails, setPostDetails] = useState();
+  const [tagFiltering, setTagFiltering] = useState(false);
+  const [filterTag, setFilterTag] = useState();
   function handleShowingPostDetails(post) {
     setViewingDetails(true);
     setPostDetails(post);
   }
 
-  function filterFeedByTag(tagName) {
-    console.log(tagName);
+  function handleFilterTag(tagName) {
+    setTagFiltering(true);
+    setFilterTag(tagName);
   }
 
-  const posts = useSelector(state => state.firestore.ordered.posts);
+  let posts = useSelector(state => state.firestore.ordered.posts);
+  if(tagFiltering) {
+    posts = posts.filter(post => post.tags.includes(filterTag));
+  }
 
   if(isLoaded(posts)) {
     if(!viewingDetails) {
@@ -29,10 +35,10 @@ const Feed = props => {
           {posts.map((post, index) => {
             return (
               <Post 
-                filterFeedByTag={filterFeedByTag}
                 showDetails={false}
                 handleShowingPostDetails={handleShowingPostDetails}
                 handleClickingBack={null}
+                handleFilterTag={handleFilterTag}
                 post={post}
                 key={index}/>
             );
