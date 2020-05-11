@@ -1,36 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import firebase from 'firebase/app';
 import { useFirestore, isLoaded } from 'react-redux-firebase';
 
 const Profile = props => {
   const auth = firebase.auth();
   const db = useFirestore();
-  let currentUserProfile;
-  let profileData = null;
+  const [currentProfile, setCurrentProfile] = useState(null);
   if((isLoaded(auth)) && (auth.currentUser != null)) {
-    currentUserProfile = db.collection('profiles').doc(auth.currentUser.photoURL);
+    const currentUserProfile = db.collection('profiles').doc(auth.currentUser.photoURL);
     currentUserProfile.get().then(function(profile) {
-      if(profile.exists) {
-        profileData = profile.data();
-      } else {
-        console.log('Profile does not exist!');
-      }
+      setCurrentProfile(profile.data());
     }).catch(function(error) {
       console.log(error.message);
-    })
+    });
   } else {
-    console.log('Please sign in!');
+    return <h3>Loading...</h3>
   }
-  console.log(profileData);
   return (
-    <React.Fragment>
-      {profileData ? (
-        <div className='profile'>
-          <h2>{profileData.displayName}</h2>
-          <h4>{profileData.email}</h4>
-        </div>) : null}
-    </React.Fragment>
-  );
+    <div className='profile'>
+
+    {currentProfile != null ? 
+      <div className='profileHeader'>
+        <h2>{currentProfile.displayName}</h2>
+        <h3>{currentProfile.email}</h3>
+      </div> :
+      <h3>Loading...</h3>
+    }
+    </div>
+  )
 }
 
 export default Profile;
