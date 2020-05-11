@@ -8,11 +8,9 @@ import Tag from './Tag';
 const Post = props => {
   const auth = firebase.auth();
   const db = useFirestore();
-  let currentlyUpvoted;
+  let currentlyUpvoted = false;
   if(props.post.upvoters.includes(auth.currentUser.displayName)) {
     currentlyUpvoted = true;
-  } else {
-    currentlyUpvoted = false;
   }
   const [upvoted, setUpvoted] = useState(currentlyUpvoted);
   let currentUpvotes = props.post.score;
@@ -42,6 +40,33 @@ const Post = props => {
       });
     }
   }
+  let postSaved = false;
+  if(props.post.savers.includes(auth.currentUser.displayName)) {
+    postSaved = true;
+  }
+  const [currentlySaved, setCurrentlySaved] = useState(postSaved);
+
+  function handleSavingPost(postId) {
+    const postToUpdate = db.collection('posts').doc(postId);
+    let savedList = props.post.savers;
+    if(!currentlySaved) {
+      return postToUpdate.update({
+        savers: [...savedList, auth.currentUser.displayName]
+      }).then(function() {
+        setCurrentlySaved(true);
+      }).catch(function(error) {
+        console.log(error);
+      });
+    } else {
+      return postToUpdate.update({
+        savers: savedList.filter(saver => saver != auth.currentUser.displayName)
+      }).then(function() {
+        setCurrentlySaved(false);
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
+  }
 
   function handleDeletingPost(id) {
     db.collection('posts').doc(id).delete().then(function() {
@@ -62,7 +87,12 @@ const Post = props => {
             </div>
             <h4 onClick={() => props.handleShowingPostDetails({...props.post})}>{props.post.title}</h4>
           </div>
-          {auth.currentUser.displayName == props.post.author ? <button className='postDeleteButton' onClick={() => handleDeletingPost(props.post.id)}>X</button> : null}
+          {/* Display Delete if user owns the post, display Save if user does not */}
+          {auth.currentUser.displayName == props.post.author ? 
+            <button className='postDeleteButton' onClick={() => handleDeletingPost(props.post.id)}>X</button> :
+            <button className={currentlySaved ? 'activeSaved' : 'inactiveSaved'} onClick={() => handleSavingPost(props.post.id)}>
+              <img src='https://www.shareicon.net/data/256x256/2016/09/10/828155_save_487x512.png' />
+            </button>}
         </div>
         <hr />
         <div className='tagAuthorRow'>

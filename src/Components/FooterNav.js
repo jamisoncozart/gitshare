@@ -25,7 +25,7 @@ function FooterNav() {
           'navLink': true
         })}
         to='/saved'>
-          <img src='https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/9127722121551940361-256.png' />
+          <img src='https://www.shareicon.net/data/256x256/2016/09/10/828155_save_487x512.png' />
       </Link>
       <Link 
         onClick={() => setCurrentView('/newPost')} 

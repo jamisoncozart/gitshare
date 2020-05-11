@@ -16,6 +16,7 @@ const NewPostForm = props => {
           author: auth.currentUser.displayName,
           tags: event.target.tags.value.split(' '),
           upvoters: [],
+          savers: [],
           repo: null,
         }
       );

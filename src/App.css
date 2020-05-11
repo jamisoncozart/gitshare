@@ -251,3 +251,26 @@ hr {
 .filterTagHeader p {
   margin-right: 5px;
 }
+
+.activeSaved {
+  height: 26px;
+  /* width: 25px; */
+  background-color: rgb(205, 255, 147);
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.inactiveSaved {
+  height: 26px;
+  /* width: 25px; */
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: white;
+}
+
+.activeSaved img, .inactiveSaved img {
+  height: 18px;
+  width: auto;
+  margin: 3px;
+  margin-bottom: 0;
+}
