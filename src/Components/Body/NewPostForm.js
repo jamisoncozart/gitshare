@@ -36,7 +36,7 @@ const NewPostForm = props => {
           type='text' 
           placeholder='Title' 
           required
-          maxlength='100' />
+          maxLength='100' />
         <textarea 
           name='description' 
           type='text' 
@@ -46,7 +46,7 @@ const NewPostForm = props => {
           name='tags'
           type='text'
           placeholder='tag1 tag2 tag3'
-          maxlength='25' />
+          maxLength='25' />
         <button 
           className='submitButton' 
           type='submit'>
