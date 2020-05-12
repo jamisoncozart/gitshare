@@ -30,22 +30,30 @@ const Profile = props => {
 
   console.log('updating');
   return (
-    <div className='profile'>
-
-    {currentProfile != null ? 
-      <div className='profileHeader'>
-        <h2>{currentProfile.displayName}</h2>
-        <h3>{currentProfile.email}</h3>
-        {topPosts.map((post, index) => {
-          if(index < 6) {
-            return (
-              <Post post={post} key={index} />
-            )
-          }
-        })}
-      </div> :
-      <h3>Loading...</h3>
-    }
+    <div className='profileBackground'>
+      <div className='profile'>
+        {currentProfile != null ? 
+          <div className='profileHeader'>
+            <div className='profileTop'>
+              <div className='profileImgDiv'>
+                <img src={currentProfile.profilePic} />
+              </div>
+              <h2>{currentProfile.displayName}</h2>
+            </div>
+            <h4 className='topPostTitle'>Top Posts:</h4>
+            <div className='posts'>
+              {topPosts.map((post, index) => {
+                if(index < 6) {
+                  return (
+                    <Post post={post} key={index} />
+                  )
+                }
+              })}
+            </div>
+          </div> :
+          <h3>Loading...</h3>
+        }
+      </div>
     </div>
   )
 }

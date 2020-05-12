@@ -274,3 +274,48 @@ hr {
   margin: 3px;
   margin-bottom: 0;
 }
+
+/* PROFILE STYLES */
+
+.profileBackground {
+  background-color: #aaa;
+  padding-top: 10px;
+  min-height: 100vh;
+}
+
+.profile {
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 0 10px 10px 10px;
+  background-color: #eee;
+}
+
+.profileTop {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.profileImgDiv {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid black;
+  margin: 0 20px;
+}
+
+.profileTop img {
+  height: 60px;
+  position: absolute;
+  top: -9999px;
+  bottom: -9999px;
+  left: -9999px;
+  right: -9999px;
+  margin: auto;
+}
+
+.topPostTitle {
+  margin-left: 10px;
+}
