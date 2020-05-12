@@ -5,28 +5,21 @@ import Post from '../Posts/Post';
 import { useSelector } from 'react-redux'
 
 const Profile = props => {
-  const auth = firebase.auth();
   const db = useFirestore();
   const [currentProfile, setCurrentProfile] = useState(null);
   const posts = useSelector(state => state.firestore.ordered.posts);
 
   useEffect(() => {
-    if((isLoaded(auth)) && (auth.currentUser != null)) {
-      const currentUserProfile = db.collection('profiles').doc(auth.currentUser.photoURL);
-      currentUserProfile.get().then(function(profile) {
-        setCurrentProfile(profile.data());
-      }).catch(function(error) {
-        console.log(error.message);
-      });
-    } else {
-      return <h3>Loading...</h3>
-    }
+    const currentUserProfile = db.collection('profiles').doc(props.user.id);
+    currentUserProfile.get().then(function(profile) {
+      setCurrentProfile(profile.data());
+    }).catch(function(error) {
+      console.log(error.message);
+    });
   }, []);
   let topPosts;
-  if((isLoaded(auth)) && (auth.currentUser != null)) {
-    const userPosts = posts.filter(post => post.author == auth.currentUser.displayName);
-    topPosts = userPosts.sort((a, b) => b.score - a.score);
-  }
+  const userPosts = posts.filter(post => post.author == props.user.name);
+  topPosts = userPosts.sort((a, b) => b.score - a.score);
 
   console.log('updating');
   return (
@@ -45,7 +38,7 @@ const Profile = props => {
               {topPosts.map((post, index) => {
                 if(index < 6) {
                   return (
-                    <Post post={post} key={index} />
+                    <Post currentUser={props.user} post={post} key={index} />
                   )
                 }
               })}

@@ -3,26 +3,22 @@ import { useFirestore, isLoaded } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 
 const NewPostForm = props => {
-  const auth = firebase.auth();
   const db = useFirestore();
   function addPostToDb(event) {
     event.preventDefault();
-    if(((isLoaded(auth)) && (auth.currentUser != null))) {
-      return db.collection('posts').add(
-        {
-          title: event.target.title.value,
-          description: event.target.description.value,
-          score: 0,
-          author: auth.currentUser.displayName,
-          tags: event.target.tags.value.split(' '),
-          upvoters: [],
-          savers: [],
-          repo: null,
-        }
-      );
-    } else {
-      alert('🚨 something went wrong! 🚨');
-    }
+    return db.collection('posts').add(
+      {
+        title: event.target.title.value,
+        description: event.target.description.value,
+        score: 0,
+        author: props.currentUser.name,
+        authorID: props.currentUser.id,
+        tags: event.target.tags.value.split(' '),
+        upvoters: [],
+        savers: [],
+        repo: null,
+      }
+    );
   }
 
   // FOR TAGS, USE onChange() HANDLER FOR INPUT TO CREATE Tag COMPONENTS FOR ALL WORDS SEPARATED BY SPACES

@@ -2,14 +2,15 @@ import React, { useState } from 'react';
 import { useFirestore } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import Tag from './Tag';
+import { Link } from 'react-router-dom';
 
 // LET UPVOTES PERSIST FOR USER
 
 const Post = props => {
-  const auth = firebase.auth();
+  console.log(props.currentUser);
   const db = useFirestore();
   let currentlyUpvoted = false;
-  if(props.post.upvoters.includes(auth.currentUser.displayName)) {
+  if(props.post.upvoters.includes(props.currentUser.name)) {
     currentlyUpvoted = true;
   }
   const [upvoted, setUpvoted] = useState(currentlyUpvoted);
@@ -22,7 +23,7 @@ const Post = props => {
       let newUpvotes = currentUpvotes - 1;
       return postToUpdate.update({
         score: newUpvotes,
-        upvoters: upvoterList.filter(upvoter => upvoter !== auth.currentUser.displayName)
+        upvoters: upvoterList.filter(upvoter => upvoter !== props.currentUser.name)
       }).then(function() {
         setUpvoted(false)
       }).catch(function(error) {
@@ -32,7 +33,7 @@ const Post = props => {
       let newUpvotes = currentUpvotes + 1;
       return postToUpdate.update({
         score: newUpvotes,
-        upvoters: [...upvoterList, auth.currentUser.displayName]
+        upvoters: [...upvoterList, props.currentUser.name]
       }).then(function() {
         setUpvoted(true)
       }).catch(function(error) {
@@ -41,7 +42,7 @@ const Post = props => {
     }
   }
   let postSaved = false;
-  if(props.post.savers.includes(auth.currentUser.displayName)) {
+  if(props.post.savers.includes(props.currentUser.name)) {
     postSaved = true;
   }
   const [currentlySaved, setCurrentlySaved] = useState(postSaved);
@@ -51,7 +52,7 @@ const Post = props => {
     let savedList = props.post.savers;
     if(!currentlySaved) {
       return postToUpdate.update({
-        savers: [...savedList, auth.currentUser.displayName]
+        savers: [...savedList, props.currentUser.name]
       }).then(function() {
         setCurrentlySaved(true);
       }).catch(function(error) {
@@ -59,7 +60,7 @@ const Post = props => {
       });
     } else {
       return postToUpdate.update({
-        savers: savedList.filter(saver => saver != auth.currentUser.displayName)
+        savers: savedList.filter(saver => saver != props.currentUser.name)
       }).then(function() {
         setCurrentlySaved(false);
       }).catch(function(error) {
@@ -77,6 +78,17 @@ const Post = props => {
     });
   }
 
+  const handleChangingProfileView = () => {
+    console.log(props.handleViewingProfile);
+    if(props.handleViewingProfile) {
+      if(props.currentUser.name == props.post.author) {
+        props.handleViewingProfile({ name: props.post.author, id: props.post.authorID, currentUserProfile: true});
+      } else {
+        props.handleViewingProfile({ name: props.post.author, id: props.post.authorID, currentUserProfile: false});
+      }
+    }
+  }
+
   if(props.showDetails) {
     return (
       <div className='post'>
@@ -88,7 +100,7 @@ const Post = props => {
             <h4 onClick={() => props.handleShowingPostDetails({...props.post})}>{props.post.title}</h4>
           </div>
           {/* Display Delete if user owns the post, display Save if user does not */}
-          {auth.currentUser.displayName == props.post.author ? 
+          {props.currentUser.name == props.post.author ? 
             <button className='postDeleteButton' onClick={() => handleDeletingPost(props.post.id)}>X</button> :
             <button className={currentlySaved ? 'activeSaved' : 'inactiveSaved'} onClick={() => handleSavingPost(props.post.id)}>
               <img src='https://www.shareicon.net/data/256x256/2016/09/10/828155_save_487x512.png' />
@@ -101,7 +113,7 @@ const Post = props => {
               return <Tag name={tag} key={index}/>
             }) : null}
           </div>
-          <p className='postAuthor'>{props.post.author}</p>
+          <Link to='/profile' onClick={handleChangingProfileView} className='postAuthor'>{props.post.author}</Link>
         </div>
         <p>{props.post.description}</p>
         <button className='detailsBackButton' onClick={() => props.handleClickingBack(false)}>Back</button>
@@ -123,7 +135,7 @@ const Post = props => {
               return <Tag filterFeedByTag={props.handleFilterTag} name={tag} key={index}/>
             }) : null}
           </div>
-          <p className='postAuthor'>{props.post.author}</p>
+          <Link to='/profile' onClick={handleChangingProfileView} className='postAuthor'>{props.post.author}</Link>
         </div>
       </div>
     );

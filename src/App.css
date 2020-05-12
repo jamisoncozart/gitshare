@@ -219,6 +219,7 @@ hr {
 .postAuthor {
   margin-left: 5px;
   font-size: 14px;
+  color: rgb(0, 102, 255);
 }
 
 .detailsBackButton {

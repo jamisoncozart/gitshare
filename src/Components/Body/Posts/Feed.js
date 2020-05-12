@@ -45,10 +45,12 @@ const Feed = props => {
             {posts.map((post, index) => {
               return (
                 <Post 
+                  currentUser={props.currentUser}
                   showDetails={false}
                   handleShowingPostDetails={handleShowingPostDetails}
                   handleClickingBack={null}
                   handleFilterTag={handleFilterTag}
+                  handleViewingProfile={props.handleViewingProfile}
                   post={post}
                   key={index}/>
               );
@@ -58,7 +60,11 @@ const Feed = props => {
       )
     } else {
       return (
-        <Post showDetails={true} post={postDetails} handleClickingBack={setViewingDetails} />
+        <Post 
+          currentUser={props.currentUser} 
+          showDetails={true} 
+          post={postDetails} 
+          handleClickingBack={setViewingDetails} />
       )
     }
   } else {

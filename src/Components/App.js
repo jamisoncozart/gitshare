@@ -13,7 +13,12 @@ let App = props => {
 
   const [authToggle, setAuthToggle] = useState(false);
   const [onSignIn, setOnSignIn] = useState(false);
+  const [userViewingOwnProfile, setUserViewingOwnProfile] = useState(true);
   const history = useHistory();
+
+  const handleNavToProfile = (bool) => {
+    setUserViewingOwnProfile(bool)
+  }
 
   console.log('App rendered 😀');
 
@@ -28,7 +33,10 @@ let App = props => {
       history.push('/signin');
     }
   } else if((isLoaded(auth)) && (auth.currentUser != null)) {
-    authContent = <Body />;
+    authContent = <Body 
+      userViewingOwnProfile={userViewingOwnProfile} 
+      handleNavToProfile={handleNavToProfile} 
+      currentUser={{name: auth.currentUser.displayName, id: auth.currentUser.photoURL}}/>;
   }
 
   return(
@@ -42,9 +50,9 @@ let App = props => {
       <Route path='/'>
         {/* ADD TO currentUser WHEN TESTING AUTH */}
         {/* auth.currentUser !== null ? auth.currentUser.displayName :  */}
-        <Header currenUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} handleSignOut={setAuthToggle}/>
+        <Header currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} handleSignOut={setAuthToggle}/>
         {authContent}   
-        <FooterNav />
+        <FooterNav handleNavToProfile={handleNavToProfile}/>
       </Route>
     </Switch>
   );

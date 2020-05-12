@@ -2,10 +2,15 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import classNames from 'classnames';
 
-function FooterNav() {
+function FooterNav(props) {
 
   const location = useLocation();
   const [currentView, setCurrentView] = useState(`${location.pathname}`);
+
+  const changeToCurrentUserProfile = () => {
+    props.handleNavToProfile(true);
+    setCurrentView('/profile')
+  }
 
   return (
     <div className='footer'>
@@ -46,7 +51,7 @@ function FooterNav() {
           <img src='https://tribemobile.co/wp-content/uploads/2016/06/connect-icon.png' />
       </Link>
       <Link 
-        onClick={() => setCurrentView('/profile')} 
+        onClick={changeToCurrentUserProfile} 
         className={classNames({
           'navActive': currentView === '/profile', 
           'navLink': true
