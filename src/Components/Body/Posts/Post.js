@@ -102,7 +102,9 @@ const Post = props => {
         author: props.currentUser.name,
         authorID: props.currentUser.id,
         parentPostID: props.post.id,
-        score: 0
+        score: 0,
+        upvoters: [],
+        replies: []
       }
     )
   }
@@ -142,7 +144,7 @@ const Post = props => {
           </form>
           {postComments.map((comment, index) => {
             return(
-              <Comment comment={comment} key={index} />
+              <Comment currentUser={props.currentUser} comment={comment} key={index} />
             )
           })}
         </div>

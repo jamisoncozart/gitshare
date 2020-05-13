@@ -16,7 +16,7 @@ const NewPostForm = props => {
         tags: event.target.tags.value.split(' '),
         upvoters: [],
         savers: [],
-        repo: null,
+        repo: null
       }
     );
   }
