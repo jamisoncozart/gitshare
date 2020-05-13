@@ -48,10 +48,12 @@ const Feed = props => {
             {savedPosts.map((post, index) => {
               return (
                 <Post 
+                  currentUser={props.currentUser}
                   showDetails={false}
                   handleShowingPostDetails={handleShowingPostDetails}
                   handleClickingBack={null}
                   handleFilterTag={handleFilterTag}
+                  handleViewingProfile={props.handleViewingProfile}
                   post={post}
                   key={index}/>
               );

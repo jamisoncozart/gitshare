@@ -21,7 +21,6 @@ const Profile = props => {
   const userPosts = posts.filter(post => post.author == props.user.name);
   topPosts = userPosts.sort((a, b) => b.score - a.score);
 
-  console.log('updating');
   return (
     <div className='profileBackground'>
       <div className='profile'>

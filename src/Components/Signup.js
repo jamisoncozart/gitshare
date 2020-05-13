@@ -43,7 +43,6 @@ function Signup() {
             }
           )
           .then(function(docRef) {
-            console.log(docRef.id);
             auth.currentUser.updateProfile({
               photoURL: docRef.id
             });

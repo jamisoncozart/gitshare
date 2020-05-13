@@ -7,11 +7,9 @@ import Saved from './Posts/Saved';
 import { Route } from 'react-router-dom';
 
 function Body(props) {
-  console.log(props.currentUser);
   const [profileToView, setProfileToView] = useState(props.currentUser);
 
   const handleViewingProfile = user => {
-    console.log('handleViewingProfile ' + user);
     props.handleNavToProfile(false);
     setProfileToView(user);
   }
@@ -25,7 +23,7 @@ function Body(props) {
         <Feed currentUser={props.currentUser} handleViewingProfile={handleViewingProfile}/>
       </Route>
       <Route path='/saved'>
-        <Saved />
+        <Saved currentUser={props.currentUser} handleViewingProfile={handleViewingProfile}/>
       </Route>
       <Route path='/newPost'>
         <NewPostForm currentUser={props.currentUser}/>

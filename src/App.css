@@ -320,3 +320,14 @@ hr {
 .topPostTitle {
   margin-left: 10px;
 }
+
+.commentForm {
+  display: flex;
+  align-items: center;
+}
+
+.commentForm button {
+  border-radius: 5px;
+  padding: 5px 3px;
+  margin-left: 4px;
+}
