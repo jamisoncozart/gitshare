@@ -7,6 +7,11 @@ function FooterNav(props) {
   const location = useLocation();
   const [currentView, setCurrentView] = useState(`${location.pathname}`);
 
+  const handleClickingFeed = () => {
+    setCurrentView('/posts');
+    props.handleNavToFeed()
+  }
+
   const changeToCurrentUserProfile = () => {
     props.handleNavToProfile(true);
     setCurrentView('/profile')
@@ -15,7 +20,7 @@ function FooterNav(props) {
   return (
     <div className='footer'>
       <Link 
-        onClick={() => setCurrentView('/posts')} 
+        onClick={handleClickingFeed} 
         className={classNames({
           'navActive': currentView === '/posts', 
           'navLink': true

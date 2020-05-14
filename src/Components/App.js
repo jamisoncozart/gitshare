@@ -14,10 +14,15 @@ let App = props => {
   const [authToggle, setAuthToggle] = useState(false);
   const [onSignIn, setOnSignIn] = useState(false);
   const [userViewingOwnProfile, setUserViewingOwnProfile] = useState(true);
+  const [viewingDetails, setViewingDetails] = useState(false);
   const history = useHistory();
 
   const handleNavToProfile = (bool) => {
     setUserViewingOwnProfile(bool)
+  }
+
+  const handleNavToFeed = () => {
+    setViewingDetails(false);
   }
 
   console.log('App rendered 😀');
@@ -36,7 +41,9 @@ let App = props => {
     authContent = <Body 
       userViewingOwnProfile={userViewingOwnProfile} 
       handleNavToProfile={handleNavToProfile} 
-      currentUser={{name: auth.currentUser.displayName, id: auth.currentUser.photoURL}}/>;
+      currentUser={{name: auth.currentUser.displayName, id: auth.currentUser.photoURL}}
+      setViewingDetails={setViewingDetails}
+      viewingDetails={viewingDetails}/>;
   }
 
   return(
@@ -52,7 +59,9 @@ let App = props => {
         {/* auth.currentUser !== null ? auth.currentUser.displayName :  */}
         <Header currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} handleSignOut={setAuthToggle}/>
         {authContent}   
-        <FooterNav handleNavToProfile={handleNavToProfile}/>
+        <FooterNav 
+          handleNavToProfile={handleNavToProfile} 
+          handleNavToFeed={handleNavToFeed} />
       </Route>
     </Switch>
   );

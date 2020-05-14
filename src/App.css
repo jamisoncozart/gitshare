@@ -166,6 +166,7 @@ textarea {
   border: 1px solid black;
   border-radius: 5px;
   margin-right: 10px;
+  float: left;
 }
 
 .upvoteDiv img, .clickedUpvoteDiv img {
@@ -254,6 +255,8 @@ hr {
   background-color: rgb(205, 255, 147);
   border: 1px solid black;
   border-radius: 5px;
+  float: right;
+  margin: 0 0 0 10px;
 }
 
 .inactiveSaved {
@@ -262,6 +265,8 @@ hr {
   border: 1px solid black;
   border-radius: 5px;
   background-color: white;
+  float: right;
+  margin: 0 0 0 10px;
 }
 
 .activeSaved img, .inactiveSaved img {

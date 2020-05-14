@@ -10,12 +10,11 @@ const Feed = props => {
   ]);
 
   // For viewing post details on click of a post
-  const [viewingDetails, setViewingDetails] = useState(false);
   const [postDetails, setPostDetails] = useState();
   const [tagFiltering, setTagFiltering] = useState(false);
   const [filterTag, setFilterTag] = useState();
   function handleShowingPostDetails(post) {
-    setViewingDetails(true);
+    props.setViewingDetails(true);
     setPostDetails(post);
   }
 
@@ -30,7 +29,7 @@ const Feed = props => {
   }
 
   if(isLoaded(posts)) {
-    if(!viewingDetails) {
+    if(!props.viewingDetails) {
       return (
         <React.Fragment>
           {tagFiltering ? 
@@ -64,7 +63,7 @@ const Feed = props => {
           currentUser={props.currentUser} 
           showDetails={true} 
           post={postDetails} 
-          handleClickingBack={setViewingDetails} />
+          handleClickingBack={props.setViewingDetails} />
       )
     }
   } else {

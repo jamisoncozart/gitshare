@@ -125,13 +125,13 @@ const Post = props => {
               <button className={currentlySaved ? 'activeSaved' : 'inactiveSaved'} onClick={() => handleSavingPost(props.post.id)}>
                 <img src='https://www.shareicon.net/data/256x256/2016/09/10/828155_save_487x512.png' />
               </button>}
-            <h4 onClick={() => props.handleShowingPostDetails({...props.post})}>{props.post.title}</h4>
+            <h4>{props.post.title}</h4>
           </div>
           <hr />
           <div className='tagAuthorRow'>
             <div className='tags'>
               {props.post.tags.length > 0 ? props.post.tags.map((tag, index) => {
-                return <Tag name={tag} key={index}/>
+                return <Tag onFeed={false} name={tag} key={index}/>
               }) : null}
             </div>
             <Link to='/profile' onClick={handleChangingProfileView} className='postAuthor'>{props.post.author}</Link>
@@ -162,7 +162,7 @@ const Post = props => {
           <div className='tagAuthorRow'>
             <div className='tags'>
               {props.post.tags.length > 0 ? props.post.tags.map((tag, index) => {
-                return <Tag filterFeedByTag={props.handleFilterTag} name={tag} key={index}/>
+                return <Tag onFeed={true} filterFeedByTag={props.handleFilterTag} name={tag} key={index}/>
               }) : null}
             </div>
             <Link to='/profile' onClick={handleChangingProfileView} className='postAuthor'>{props.post.author}</Link>

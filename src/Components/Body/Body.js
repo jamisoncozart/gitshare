@@ -20,7 +20,11 @@ function Body(props) {
   return (
     <React.Fragment>
       <Route path='/posts'>
-        <Feed currentUser={props.currentUser} handleViewingProfile={handleViewingProfile}/>
+        <Feed 
+          currentUser={props.currentUser} 
+          handleViewingProfile={handleViewingProfile}
+          setViewingDetails={props.setViewingDetails}
+          viewingDetails={props.viewingDetails}/>
       </Route>
       <Route path='/saved'>
         <Saved currentUser={props.currentUser} handleViewingProfile={handleViewingProfile}/>
