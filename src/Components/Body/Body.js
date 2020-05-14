@@ -36,7 +36,7 @@ function Body(props) {
         <FollowList />
       </Route>
       <Route path='/profile'>
-        <Profile user={props.userViewingOwnProfile ? props.currentUser : profileToView}/>
+        <Profile currentlyLoggedInUser={props.currentUser} user={props.userViewingOwnProfile ? props.currentUser : profileToView}/>
       </Route>
     </React.Fragment>
   );

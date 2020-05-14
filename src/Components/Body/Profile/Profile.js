@@ -8,9 +8,9 @@ const Profile = props => {
   const db = useFirestore();
   const [currentProfile, setCurrentProfile] = useState(null);
   const posts = useSelector(state => state.firestore.ordered.posts);
+  const currentUserProfile = db.collection('profiles').doc(props.user.id);
 
   useEffect(() => {
-    const currentUserProfile = db.collection('profiles').doc(props.user.id);
     currentUserProfile.get().then(function(profile) {
       setCurrentProfile(profile.data());
     }).catch(function(error) {
@@ -20,6 +20,36 @@ const Profile = props => {
   let topPosts;
   const userPosts = posts.filter(post => post.author == props.user.name);
   topPosts = userPosts.sort((a, b) => b.score - a.score);
+  
+  let currentlyFollowing = false;
+  if(currentProfile != null) {
+    if(currentProfile.following.includes(props.user.name)) {
+      currentlyFollowing = true;
+    }
+  }
+  const [following, setFollowing] = useState(currentlyFollowing);
+  const handleClickingFollow = () => {
+    if(following) {
+      currentUserProfile.update({
+        following: [...currentProfile.following.filter(user => user != props.currentlyLoggedInUser.name)]
+      }).then(function() {
+        setFollowing(false);
+      }).catch(function(error) {
+        console.log(error);
+      });
+    } else {
+      currentUserProfile.update({
+        following: [...currentProfile.following, props.currentlyLoggedInUser.name]
+      }).then(function() {
+        setFollowing(true);
+      }).catch(function(error) {
+        console.log(error);
+      });
+    }
+    //update currentLoggedInProfile
+    // then
+    //toggle following state based on og value
+  }
 
   return (
     <div className='profileBackground'>
@@ -27,6 +57,11 @@ const Profile = props => {
         {currentProfile != null ? 
           <div className='profileHeader'>
             <div className='profileTop'>
+              {props.currentlyLoggedInUser.name != props.user.name ? (
+                <button 
+                  onClick={handleClickingFollow} 
+                  className={following ? 'activeFollowButton' : 'inactiveFollowButton'}>Follow</button>
+              ) : null}
               <div className='profileImgDiv'>
                 <img src={currentProfile.profilePic} />
               </div>

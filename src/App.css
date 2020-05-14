@@ -317,6 +317,14 @@ hr {
   margin: auto;
 }
 
+.activeFollowButton {
+  background-color: rgb(188, 225, 255);
+}
+
+.inactiveFollowButton {
+  background-color: white;
+}
+
 .topPostTitle {
   margin-left: 10px;
 }
@@ -424,3 +432,4 @@ hr {
   text-align: right;
   font-size: 10px;
 }
+
