@@ -4,6 +4,8 @@ import Post from '../Posts/Post';
 import { useSelector } from 'react-redux'
 
 const Profile = props => {
+  console.log('props.user in Profile.js');
+  console.log(props.user);
   const db = useFirestore();
   const [currentProfile, setCurrentProfile] = useState(null);
   const posts = useSelector(state => state.firestore.ordered.posts);
@@ -30,7 +32,7 @@ const Profile = props => {
     if(props.currentlyLoggedInProfile != null) { 
       if(following) {
         props.currentLoggedInUserQuery.update({
-          following: props.currentlyLoggedInProfile.following.filter(user => user != props.user.name)
+          following: props.currentlyLoggedInProfile.following.filter(user => user.name != props.user.name)
         }).then(function() {
           setFollowing(false);
           props.handleRefreshingCurrentlyLoggedInUser();
@@ -39,7 +41,7 @@ const Profile = props => {
         });
       } else {
         props.currentLoggedInUserQuery.update({
-          following: [...props.currentlyLoggedInProfile.following, props.user.name]
+          following: [...props.currentlyLoggedInProfile.following, {name: props.user.name, id: props.user.id}]
         }).then(function() {
           setFollowing(true);
           props.handleRefreshingCurrentlyLoggedInUser();

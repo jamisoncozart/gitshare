@@ -84,7 +84,6 @@ const Post = props => {
   }
 
   const handleChangingProfileView = () => {
-    console.log(props.handleViewingProfile);
     if(props.handleViewingProfile) {
       if(props.currentUser.name == props.post.author) {
         props.handleViewingProfile({ name: props.post.author, id: props.post.authorID, currentUserProfile: true});
@@ -134,7 +133,12 @@ const Post = props => {
                 return <Tag onFeed={false} name={tag} key={index}/>
               }) : null}
             </div>
-            <Link to='/profile' onClick={handleChangingProfileView} className='postAuthor'>{props.post.author}</Link>
+            <Link 
+              to='/profile' 
+              onClick={handleChangingProfileView} 
+              className='postAuthor'>
+                {props.post.author}
+            </Link>
           </div>
           <p>{props.post.description}</p>
           <button className='detailsBackButton' onClick={() => props.handleClickingBack(false)}>Back</button>

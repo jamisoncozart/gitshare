@@ -15,12 +15,15 @@ const FollowList = props => {
   }, []);
   if(currentProfile != null) {
     console.log(currentProfile);
-    let follows = currentProfile.following.filter(profile => profile != props.currentUser.name);
+    let follows = currentProfile.following.filter(profile => profile.name != props.currentUser.name);
     return (
       <div className='followList'>
         {follows.map((follow, index) => {
           return (
-            <Follow followName={follow} key={index} />
+            <Follow 
+              handleViewingProfile={props.handleViewingProfile} 
+              followData={follow} 
+              key={index} />
           );
         })}
       </div>

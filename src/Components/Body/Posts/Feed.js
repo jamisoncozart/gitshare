@@ -28,14 +28,11 @@ const Feed = props => {
     posts = posts.filter(post => post.tags.includes(filterTag));
   }
 
-  console.log(posts);
-  console.log(props.sortFeedObj);
   let sortedPosts = posts;
   if(isLoaded(posts)) {
     if(!props.viewingDetails) {
       if(props.sortFeedObj.sortByFollow) {
-        sortedPosts = sortedPosts.filter(post => props.currentlyLoggedInProfile.following.includes(post.author));
-        console.log(posts);
+        sortedPosts = sortedPosts.filter(post => props.currentlyLoggedInProfile.following.map(follow => follow.name).includes(post.author));
       }
       if(props.sortFeedObj.sortByTop) {
         sortedPosts = sortedPosts.slice().sort((a, b) => parseInt(b.score) - parseInt(a.score));

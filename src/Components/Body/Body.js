@@ -11,6 +11,8 @@ function Body(props) {
   const [profileToView, setProfileToView] = useState(props.currentUser);
   const [currentlyLoggedInProfile, setCurrentlyLoggedInProfile] = useState(null);
   const handleViewingProfile = user => {
+    console.log('user in handleViewingProfile in Body.js');
+    console.log(user);
     props.handleNavToProfile(false);
     setProfileToView(user);
   }
@@ -44,13 +46,17 @@ function Body(props) {
           sortFeedObj={props.sortFeedObj}/>
       </Route>
       <Route path='/saved'>
-        <Saved currentUser={props.currentUser} handleViewingProfile={handleViewingProfile}/>
+        <Saved 
+          currentUser={props.currentUser} 
+          handleViewingProfile={handleViewingProfile}/>
       </Route>
       <Route path='/newPost'>
         <NewPostForm currentUser={props.currentUser}/>
       </Route>
       <Route path='/follows'>
-        <FollowList currentUser={props.currentUser}/>
+        <FollowList 
+          handleViewingProfile={handleViewingProfile} 
+          currentUser={props.currentUser}/>
       </Route>
       <Route path='/profile'>
         <Profile 
