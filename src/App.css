@@ -23,6 +23,72 @@ body {
   margin-right: 5px;
 }
 
+.sideNav {
+  height: 100%;
+  display: none;
+  width: 0;
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  right: 0;
+  background-color: #bbb;
+  overflow-x: hidden;
+  transition: 0.5s;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.openNav {
+  width: 100px;
+  transition: 0.5s;
+}
+
+.closebtn {
+  text-align: left;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  background-color: #ddd;
+}
+
+.closebtn img {
+  height: 20px;
+  width: auto;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.sidebarButton {
+  padding: 0 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #ddd;
+  margin-left: 5px;
+}
+
+.sidebarButton img {
+  height: 25px;
+  width: auto;
+}
+
+.darknessStyle {
+  background: rgba(0,0,0,0.7);
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+  transition: 0.5s;
+}
+
 /* FOOTER STYLES */
 
 .footer {
@@ -319,10 +385,18 @@ hr {
 
 .activeFollowButton {
   background-color: rgb(188, 225, 255);
+  border-radius: 5px;
+  padding: 2px;
+  float: right;
+  margin: 5px;
 }
 
 .inactiveFollowButton {
   background-color: white;
+  border-radius: 5px;
+  padding: 2px;
+  float: right;
+  margin: 5px;
 }
 
 .topPostTitle {

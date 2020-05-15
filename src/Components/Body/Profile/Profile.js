@@ -57,12 +57,12 @@ const Profile = props => {
       <div className='profile'>
         {currentProfile != null ? 
           <div className='profileHeader'>
+            {props.currentlyLoggedInProfile.displayName != props.user.name ? (
+              <button 
+                onClick={handleClickingFollow} 
+                className={following ? 'activeFollowButton' : 'inactiveFollowButton'}>Follow</button>
+            ) : null}
             <div className='profileTop'>
-              {props.currentlyLoggedInProfile.displayName != props.user.name ? (
-                <button 
-                  onClick={handleClickingFollow} 
-                  className={following ? 'activeFollowButton' : 'inactiveFollowButton'}>Follow</button>
-              ) : null}
               <div className='profileImgDiv'>
                 <img src={currentProfile.profilePic} />
               </div>
