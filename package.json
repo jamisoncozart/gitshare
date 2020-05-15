@@ -1,4 +1,5 @@
 {
+  "homepage": "https://jamisoncozart.github.io/gitshare",
   "name": "git-share",
   "version": "0.1.0",
   "private": true,
@@ -18,6 +19,8 @@
     "redux-firestore": "^0.12.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -39,6 +42,7 @@
     ]
   },
   "devDependencies": {
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "gh-pages": "^2.2.0"
   }
 }
