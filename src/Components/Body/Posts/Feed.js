@@ -8,7 +8,6 @@ const Feed = props => {
   useFirestoreConnect([
     { collection: 'posts' }
   ]);
-  const [updateComponentToggler, setUpdateComponentToggler] = useState(false);
 
   // For viewing post details on click of a post
   const [postDetails, setPostDetails] = useState();
@@ -28,30 +27,6 @@ const Feed = props => {
   if(tagFiltering) {
     posts = posts.filter(post => post.tags.includes(filterTag));
   }
-
-  function usePrevious(value) {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    console.log("ref.current");
-    console.log(ref.current);
-    return ref.current;
-  }
-
-  const { sortByTop, sortByNew, sortByFollow } = props.sortFeedObj
-  const prevAmount = usePrevious({sortByTop, sortByNew, sortByFollow});
-  useEffect(() => {
-      if(prevAmount.sortByTop !== props.sortFeedObj.sortByTop) {
-        setUpdateComponentToggler(!updateComponentToggler);
-      }
-      if(prevAmount.sortByNew !== props.sortFeedObj.sortByNew) {
-        setUpdateComponentToggler(!updateComponentToggler);
-      }
-      if(prevAmount.sortByFollow !== props.sortFeedObj.sortByFollow) {
-        setUpdateComponentToggler(!updateComponentToggler);
-      }
-  }, [sortByTop, sortByNew, sortByFollow])
 
   console.log(posts);
   console.log(props.sortFeedObj);

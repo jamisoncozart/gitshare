@@ -240,6 +240,10 @@ textarea {
   border-radius: 5px;
 }
 
+.postsDiv {
+  margin-bottom: 70px;
+}
+
 .upvoteDiv {
   height: 25px;
   width: 25px;
