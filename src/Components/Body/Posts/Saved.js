@@ -63,7 +63,11 @@ const Feed = props => {
       )
     } else {
       return (
-        <Post showDetails={true} post={postDetails} handleClickingBack={setViewingDetails} />
+        <Post 
+          currentUser={props.currentUser}
+          showDetails={true} 
+          post={postDetails} 
+          handleClickingBack={setViewingDetails} />
       )
     }
   } else {

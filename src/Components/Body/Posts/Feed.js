@@ -33,12 +33,15 @@ const Feed = props => {
   let sortedPosts = posts;
   if(isLoaded(posts)) {
     if(!props.viewingDetails) {
-      if(props.sortFeedObj.sortByTop) {
-        sortedPosts = posts.slice().sort((a, b) => parseInt(b.score) - parseInt(a.score));
-      }
       if(props.sortFeedObj.sortByFollow) {
         sortedPosts = sortedPosts.filter(post => props.currentlyLoggedInProfile.following.includes(post.author));
         console.log(posts);
+      }
+      if(props.sortFeedObj.sortByTop) {
+        sortedPosts = sortedPosts.slice().sort((a, b) => parseInt(b.score) - parseInt(a.score));
+      }
+      if(props.sortFeedObj.sortByNew) {
+        sortedPosts = sortedPosts.slice().sort((a, b) => parseInt(b.creationTime.seconds) - parseInt(a.creationTime.seconds));
       }
       return (
         <React.Fragment>
