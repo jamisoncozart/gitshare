@@ -66,7 +66,7 @@ function Header(props) {
           onClick={() => props.handlePressingSidebarButton('follow')}
           className='sideNavButton'>
             <img src='https://tribemobile.co/wp-content/uploads/2016/06/connect-icon.png'/>
-            Follow
+            Follows
         </button>
         <button 
           className='sideNavButton' 

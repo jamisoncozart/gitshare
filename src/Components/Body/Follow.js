@@ -1,24 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useFirestore } from 'react-redux-firebase';
 
 const Follow = props => {
-  console.log('props.followData in Follow.js');
-  console.log(props.followData);
+  const db = useFirestore();
+  const followProfileQuery = db.collection('profiles').doc(props.followData.id);
+  const [followProfile, setFollowProfile] = useState(null);
+  
+  followProfileQuery.get().then(function(profile) {
+    setFollowProfile(profile.data());
+  }).catch(function(event) {
+    console.log(event);
+  });
+
   const handleClickingProfile = () => {
     props.handleViewingProfile({ name: props.followData.name, id: props.followData.id, currentUserProfile: false});
   }
-
-  return (
-    <div className='post'>
-      <Link 
-        to='/profile' 
-        onClick={handleClickingProfile} 
-        className='followName'>
-          {props.followData.name}
-      </Link>
-      <p>{props.followData.id}</p>
-    </div>
-  );
+  if(followProfile != null) {
+    return (
+      <div className='post'>
+        <div className='followPanel'>
+          <div className='followProfilePicDiv'>
+            <img src={followProfile.profilePic} />
+          </div>
+          <Link 
+            to='/profile' 
+            onClick={handleClickingProfile} 
+            className='followName'>
+              {props.followData.name}
+          </Link>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className='post'>
+        <h2>Loading...</h2>
+      </div>
+    )
+  }
 }
 
 export default Follow;

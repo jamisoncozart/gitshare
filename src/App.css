@@ -535,3 +535,27 @@ hr {
   font-size: 10px;
 }
 
+.followPanel {
+  display: flex;
+  align-items: center;
+}
+
+.followProfilePicDiv {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid black;
+  margin: 0 15px 0 10px;
+}
+
+.followProfilePicDiv img {
+  height: 40px;
+  position: absolute;
+  top: -9999px;
+  bottom: -9999px;
+  left: -9999px;
+  right: -9999px;
+  margin: auto;
+}
