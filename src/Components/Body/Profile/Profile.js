@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import firebase from 'firebase/app';
-import { useFirestore, isLoaded } from 'react-redux-firebase';
+import { useFirestore } from 'react-redux-firebase';
 import Post from '../Posts/Post';
 import { useSelector } from 'react-redux'
 
@@ -17,38 +16,40 @@ const Profile = props => {
       console.log(error.message);
     });
   }, []);
+
   let topPosts;
   const userPosts = posts.filter(post => post.author == props.user.name);
   topPosts = userPosts.sort((a, b) => b.score - a.score);
-  
+
   let currentlyFollowing = false;
-  if(currentProfile != null) {
-    if(currentProfile.following.includes(props.user.name)) {
-      currentlyFollowing = true;
-    }
+  if(props.currentlyLoggedInProfile.following.includes(props.user.name)) {
+    currentlyFollowing = true;
   }
   const [following, setFollowing] = useState(currentlyFollowing);
   const handleClickingFollow = () => {
-    if(following) {
-      currentUserProfile.update({
-        following: [...currentProfile.following.filter(user => user != props.currentlyLoggedInUser.name)]
-      }).then(function() {
-        setFollowing(false);
-      }).catch(function(error) {
-        console.log(error);
-      });
+    if(props.currentlyLoggedInProfile != null) { 
+      if(following) {
+        props.currentLoggedInUserQuery.update({
+          following: props.currentlyLoggedInProfile.following.filter(user => user != props.user.name)
+        }).then(function() {
+          setFollowing(false);
+          props.handleRefreshingCurrentlyLoggedInUser();
+        }).catch(function(error) {
+          console.log(error);
+        });
+      } else {
+        props.currentLoggedInUserQuery.update({
+          following: [...props.currentlyLoggedInProfile.following, props.user.name]
+        }).then(function() {
+          setFollowing(true);
+          props.handleRefreshingCurrentlyLoggedInUser();
+        }).catch(function(error) {
+          console.log(error);
+        });
+      }
     } else {
-      currentUserProfile.update({
-        following: [...currentProfile.following, props.currentlyLoggedInUser.name]
-      }).then(function() {
-        setFollowing(true);
-      }).catch(function(error) {
-        console.log(error);
-      });
+      console.log('null unfortunately');
     }
-    //update currentLoggedInProfile
-    // then
-    //toggle following state based on og value
   }
 
   return (
@@ -57,7 +58,7 @@ const Profile = props => {
         {currentProfile != null ? 
           <div className='profileHeader'>
             <div className='profileTop'>
-              {props.currentlyLoggedInUser.name != props.user.name ? (
+              {props.currentlyLoggedInProfile.displayName != props.user.name ? (
                 <button 
                   onClick={handleClickingFollow} 
                   className={following ? 'activeFollowButton' : 'inactiveFollowButton'}>Follow</button>

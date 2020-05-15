@@ -1,21 +1,39 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Feed from './Posts/Feed';
 import FollowList from './FollowList';
 import Profile from './Profile/Profile';
 import NewPostForm from './NewPostForm';
 import Saved from './Posts/Saved';
 import { Route } from 'react-router-dom';
+import { useFirestore } from 'react-redux-firebase';
 
 function Body(props) {
   const [profileToView, setProfileToView] = useState(props.currentUser);
+  const [currentlyLoggedInProfile, setCurrentlyLoggedInProfile] = useState(null);
 
   const handleViewingProfile = user => {
     props.handleNavToProfile(false);
     setProfileToView(user);
   }
+  const db = useFirestore();
+  console.log('props.currentUser in Body');
+  console.log(props.currentUser);
+  const currentlyLoggedInUser = db.collection('profiles').doc(props.currentUser.id);
+  useEffect(() => {
+    currentlyLoggedInUser.get().then(function(profile) {
+      setCurrentlyLoggedInProfile(profile.data());
+    }).catch(function(error) {
+      console.log(error);
+    });
+  }, []);
 
-  // props.user === currently logged in user.
-  // profileToView can be any user profile being viewed.
+  const handleRefreshingCurrentlyLoggedInUser = () => {
+    currentlyLoggedInUser.get().then(function(profile) {
+      setCurrentlyLoggedInProfile(profile.data());
+    }).catch(function(error) {
+      console.log(error);
+    });
+  }
 
   return (
     <React.Fragment>
@@ -33,10 +51,14 @@ function Body(props) {
         <NewPostForm currentUser={props.currentUser}/>
       </Route>
       <Route path='/follows'>
-        <FollowList />
+        <FollowList currentUser={props.currentUser}/>
       </Route>
       <Route path='/profile'>
-        <Profile currentlyLoggedInUser={props.currentUser} user={props.userViewingOwnProfile ? props.currentUser : profileToView}/>
+        <Profile 
+          currentLoggedInUserQuery={currentlyLoggedInUser} 
+          currentlyLoggedInProfile={currentlyLoggedInProfile}
+          handleRefreshingCurrentlyLoggedInUser={handleRefreshingCurrentlyLoggedInUser} 
+          user={props.userViewingOwnProfile ? props.currentUser : profileToView}/>
       </Route>
     </React.Fragment>
   );
