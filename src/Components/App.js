@@ -17,6 +17,10 @@ let App = props => {
   const [viewingDetails, setViewingDetails] = useState(false);
   const history = useHistory();
 
+  const [sortByTop, setSortByTop] = useState(false);
+  const [sortByNew, setSortByNew] = useState(false);
+  const [sortByFollow, setSortByFollow] = useState(false);
+
   const handleNavToProfile = (bool) => {
     setUserViewingOwnProfile(bool)
   }
@@ -43,7 +47,18 @@ let App = props => {
       handleNavToProfile={handleNavToProfile} 
       currentUser={{name: auth.currentUser.displayName, id: auth.currentUser.photoURL}}
       setViewingDetails={setViewingDetails}
-      viewingDetails={viewingDetails}/>;
+      viewingDetails={viewingDetails}
+      sortFeedObj={{sortByTop, sortByNew, sortByFollow}}/>;
+  }
+
+  const handlePressingSidebarButton = button => {
+    if(button === 'top') {
+      setSortByTop(!sortByTop);
+    } else if(button === 'new') {
+      setSortByNew(!sortByNew);
+    } else if(button === 'follow') {
+      setSortByFollow(!sortByFollow);
+    }
   }
 
   return(
@@ -57,7 +72,10 @@ let App = props => {
       <Route path='/'>
         {/* ADD TO currentUser WHEN TESTING AUTH */}
         {/* auth.currentUser !== null ? auth.currentUser.displayName :  */}
-        <Header currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} handleSignOut={setAuthToggle}/>
+        <Header 
+          currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} 
+          handleSignOut={setAuthToggle}
+          handlePressingSidebarButton={handlePressingSidebarButton}/>
         {authContent}   
         <FooterNav 
           handleNavToProfile={handleNavToProfile} 

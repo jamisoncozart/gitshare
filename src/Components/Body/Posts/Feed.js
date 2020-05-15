@@ -27,9 +27,19 @@ const Feed = props => {
   if(tagFiltering) {
     posts = posts.filter(post => post.tags.includes(filterTag));
   }
-
+  console.log(posts);
+  console.log(props.sortFeedObj);
+  let sortablePosts = posts;
   if(isLoaded(posts)) {
     if(!props.viewingDetails) {
+      if(props.sortFeedObj.sortByTop) {
+        sortablePosts.sort((a, b) => parseInt(b.score) - parseInt(a.score));
+      }
+      if(props.sortFeedObj.sortByFollow) {
+        console.log('in follow filter');
+        sortablePosts = sortablePosts.filter(post => props.currentlyLoggedInProfile.following.includes(post.author));
+        console.log(posts);
+      }
       return (
         <React.Fragment>
           {tagFiltering ? 

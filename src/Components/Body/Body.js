@@ -10,14 +10,11 @@ import { useFirestore } from 'react-redux-firebase';
 function Body(props) {
   const [profileToView, setProfileToView] = useState(props.currentUser);
   const [currentlyLoggedInProfile, setCurrentlyLoggedInProfile] = useState(null);
-
   const handleViewingProfile = user => {
     props.handleNavToProfile(false);
     setProfileToView(user);
   }
   const db = useFirestore();
-  console.log('props.currentUser in Body');
-  console.log(props.currentUser);
   const currentlyLoggedInUser = db.collection('profiles').doc(props.currentUser.id);
   useEffect(() => {
     currentlyLoggedInUser.get().then(function(profile) {
@@ -39,10 +36,12 @@ function Body(props) {
     <React.Fragment>
       <Route path='/posts'>
         <Feed 
+          currentlyLoggedInProfile={currentlyLoggedInProfile}
           currentUser={props.currentUser} 
           handleViewingProfile={handleViewingProfile}
           setViewingDetails={props.setViewingDetails}
-          viewingDetails={props.viewingDetails}/>
+          viewingDetails={props.viewingDetails}
+          sortFeedObj={props.sortFeedObj}/>
       </Route>
       <Route path='/saved'>
         <Saved currentUser={props.currentUser} handleViewingProfile={handleViewingProfile}/>

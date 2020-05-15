@@ -50,10 +50,30 @@ function Header(props) {
           className="closebtn">
             <img src='https://cdn.iconscout.com/icon/free/png-256/chevron-25-433513.png'/>
         </button>
-        <a href="#">Top</a>
-        <a href="#">New</a>
-        <a href="#">Follows</a>
-        <button className='signOutButton' onClick={doSignOut}>Sign out</button>
+        <button 
+          onClick={() => props.handlePressingSidebarButton('top')}
+          className='sideNavButton'>
+            <img src='https://icons.iconarchive.com/icons/google/noto-emoji-travel-places/256/42697-fire-icon.png'/>
+            Top
+        </button>
+        <button 
+          onClick={() => props.handlePressingSidebarButton('new')}
+          className='sideNavButton'>
+            <img src='https://icons.iconarchive.com/icons/google/noto-emoji-activities/256/52705-sparkles-icon.png'/>
+            New
+        </button>
+        <button 
+          onClick={() => props.handlePressingSidebarButton('follow')}
+          className='sideNavButton'>
+            <img src='https://tribemobile.co/wp-content/uploads/2016/06/connect-icon.png'/>
+            Follow
+        </button>
+        <button 
+          className='sideNavButton' 
+          onClick={doSignOut}>
+            <img src='https://www.shareicon.net/data/256x256/2016/05/30/772895_multimedia_512x512.png'/>
+            Logout
+        </button>
       </div>
       <div className={navOpen ? 'darknessStyle' : 'nothing'}></div>
     </div>

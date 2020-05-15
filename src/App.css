@@ -83,6 +83,25 @@ body {
   width: auto;
 }
 
+.sideNavButton {
+  padding: 10px;
+  border: none;
+  background-color: #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sideNavButton img {
+  height: 15px;
+  width: auto;
+  margin: 0 5px;
+}
+
+.activeSideButton {
+  background-color: #eee;
+}
+
 .darknessStyle {
   background: rgba(0,0,0,0.4);
   height: 100%;
