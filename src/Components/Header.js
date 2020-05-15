@@ -55,7 +55,7 @@ function Header(props) {
         <a href="#">Follows</a>
         <button className='signOutButton' onClick={doSignOut}>Sign out</button>
       </div>
-      <div className={navOpen ? 'darknessStyle' : ''}></div>
+      <div className={navOpen ? 'darknessStyle' : 'nothing'}></div>
     </div>
   );
 }
