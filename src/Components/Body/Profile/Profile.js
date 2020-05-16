@@ -54,6 +54,26 @@ const Profile = props => {
     }
   }
 
+  //==============
+  // IMAGE STORAGE
+  // var storageRef = firebase.storage().ref();
+
+  // // Create a reference to 'mountains.jpg'
+  // var mountainsRef = storageRef.child('mountains.jpg');
+
+  // // Create a reference to 'images/mountains.jpg'
+  // var mountainImagesRef = storageRef.child('images/mountains.jpg');
+
+  // // While the file names are the same, the references point to different files
+  // mountainsRef.name === mountainImagesRef.name            // true
+  // mountainsRef.fullPath === mountainImagesRef.fullPath    // false
+  // =============
+
+  const handleProfilePicSubmission = event => {
+    console.log('selectedFile');
+    console.log(event.target.files[0]);
+  }
+
   return (
     <div className='profileBackground'>
       <div className='profile'>
@@ -65,9 +85,19 @@ const Profile = props => {
                 className={following ? 'activeFollowButton' : 'inactiveFollowButton'}>Follow</button>
             ) : null}
             <div className='profileTop'>
-              <div className='profileImgDiv'>
-                <img src={currentProfile.profilePic} />
-              </div>
+              {currentProfile.profilePic == null && props.currentlyLoggedInProfile.displayName == props.user.name ? (
+                <form>
+                  <input onChange={handleProfilePicSubmission} type="file" id="img" name="img" multiple/>
+                </form>
+              ) : currentProfile.profilePic == null ? (
+                <div className='profileImgDiv'>
+                  <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRYk3Khp02Ov-8AGyTerkOhnIuMrnJFO2KfpFSojzc0TKKyKknX&usqp=CAU' />
+                </div>
+              ) : (
+                <div className='profileImgDiv'>
+                  <img src={currentProfile.profilePic} />
+                </div>
+              )}
               <h2>{currentProfile.displayName}</h2>
             </div>
             <h4 className='topPostTitle'>Top Posts:</h4>
