@@ -85,14 +85,11 @@ let App = props => {
   );
 }
 
-
-
-
-
 const mapStateToProps = state => {
   return {
     userSignedIn: state.userSignedIn,
     currentUser: state.currentUser,
+    currentPost: state.currentPost
   }
 }
 

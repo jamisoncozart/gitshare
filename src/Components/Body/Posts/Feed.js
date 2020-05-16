@@ -3,19 +3,26 @@ import { useSelector } from 'react-redux'
 import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import Post from './Post';
 import Tag from './Tag';
+import { connect } from 'react-redux';
 
-const Feed = props => {
+let Feed = props => {
   useFirestoreConnect([
     { collection: 'posts' }
   ]);
 
   // For viewing post details on click of a post
-  const [postDetails, setPostDetails] = useState();
+  // const [postDetails, setPostDetails] = useState();
   const [tagFiltering, setTagFiltering] = useState(false);
   const [filterTag, setFilterTag] = useState();
   function handleShowingPostDetails(post) {
+    console.log('post in handleShowingPostDetails')
+    console.log(post);
     props.setViewingDetails(true);
-    setPostDetails(post);
+    const action = {
+      type: 'UPDATE_CURRENT_POST',
+      ...post
+    }
+    props.dispatch(action);
   }
 
   function handleFilterTag(tagName) {
@@ -68,11 +75,13 @@ const Feed = props => {
         </React.Fragment>
       )
     } else {
+      console.log('current post in Redux');
+      console.log(props.currentPost)
       return (
         <Post 
           currentUser={props.currentUser} 
           showDetails={true} 
-          post={postDetails} 
+          post={props.currentPost} 
           handleClickingBack={props.setViewingDetails} />
       )
     }
@@ -82,5 +91,13 @@ const Feed = props => {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    currentPost: state.currentPost
+  }
+}
+
+Feed = connect(mapStateToProps)(Feed);
 
 export default Feed;

@@ -3,10 +3,11 @@ import { useFirestore } from 'react-redux-firebase';
 import Post from '../Posts/Post';
 import { useSelector } from 'react-redux'
 import firebase from 'firebase/app';
+import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const Profile = props => {
-  console.log('props.user in Profile.js');
-  console.log(props.user);
+let Profile = props => {
+  const history = useHistory();
   const db = useFirestore();
   const [currentProfile, setCurrentProfile] = useState(null);
   const posts = useSelector(state => state.firestore.ordered.posts);
@@ -100,6 +101,16 @@ const Profile = props => {
   }
 
   //=========================================================
+
+  const handleChangingCurrentPost = (post) => {
+    const action = {
+      type: 'UPDATE_CURRENT_POST',
+      ...post
+    }
+    props.dispatch(action);
+    history.push('/posts');
+  }
+
   let inputElement;
   return (
     <div className='profileBackground'>
@@ -116,7 +127,14 @@ const Profile = props => {
                 <div onClick={() => inputElement.click()} className='profileImgDiv'>
                   <p>Upload</p>
                   <form style={{display: 'none'}}>
-                    <input ref={input => inputElement = input} className='imageUploadButton' onChange={handleProfilePicSubmission} type="file" id="img" name="img" multiple/>
+                    <input 
+                      ref={input => inputElement = input}
+                      className='imageUploadButton' 
+                      onChange={handleProfilePicSubmission} 
+                      type="file" 
+                      id="img" 
+                      name="img" 
+                      multiple/>
                   </form>
                 </div>
               ) : currentProfile.profilePic == null ? (
@@ -135,7 +153,12 @@ const Profile = props => {
               {topPosts.map((post, index) => {
                 if(index < 6) {
                   return (
-                    <Post currentUser={props.user} post={post} key={index} />
+                    <Post 
+                      currentUser={props.user} 
+                      showDetails={false}
+                      handleShowingPostDetails={handleChangingCurrentPost}
+                      post={post} 
+                      key={index} />
                   )
                 }
               })}
@@ -147,5 +170,7 @@ const Profile = props => {
     </div>
   )
 }
+
+Profile = connect()(Profile);
 
 export default Profile;
