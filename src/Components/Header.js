@@ -38,8 +38,6 @@ function Header(props) {
     props.handlePressingSidebarButton(button);
   }
 
-
-
   return (
     <div className='header'>
       <Logo imageHeight='25px' fontSize='18px'/>

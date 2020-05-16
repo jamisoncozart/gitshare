@@ -38,7 +38,7 @@ function Signup() {
             {
               displayName: username,
               email: email,
-              profilePic: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRYk3Khp02Ov-8AGyTerkOhnIuMrnJFO2KfpFSojzc0TKKyKknX&usqp=CAU',
+              profilePic: null,
               following: [],
               creationTime: db.FieldValue.serverTimestamp()
             }

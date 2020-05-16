@@ -56,8 +56,14 @@ const Comment = props => {
       </div>
       <div className='commentFooter'>
         <button 
-          onClick={() => setShowCommentReplyForm(!showCommentReplyForm)} className='commentReplyButton'>Reply</button>
-        <h5 onClick={handleClickingCommentAuthor} className='commentAuthor'>{props.comment.author}</h5>
+          onClick={() => setShowCommentReplyForm(!showCommentReplyForm)} className='commentReplyButton'>
+            Reply
+        </button>
+        <h5 
+          onClick={handleClickingCommentAuthor} 
+          className='commentAuthor'>
+            {props.comment.author}
+        </h5>
       </div>
       {showCommentReplyForm ? (
         <form onSubmit={handleCommentReplySubmission} className='commentReplyForm'>

@@ -108,50 +108,66 @@ const Post = props => {
     )
   }
 
+  const [showCommentForm, setShowCommentForm] = useState(false);
+
   const comments = useSelector(state => state.firestore.ordered.comments);
   if(isLoaded(comments)) {
-    const postComments = comments.filter(comment => comment.parentPostID == props.post.id)
+    const postComments = comments.filter(comment => comment.parentPostID == props.post.id);
+    postComments.sort((a, b) => b.score - a.score);
     if(props.showDetails) {
       return (
-        <div className='post'>
-          <div className='postHeader'>
-            <div onClick={() => handleUpvote(props.post.id)} className={upvoted ? 'clickedUpvoteDiv' : 'upvoteDiv'}>
-              <img src='https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/14645659851540882612-256.png' />
+        <React.Fragment>
+          <button 
+            className='detailsBackButton' 
+            onClick={() => props.handleClickingBack(false)}>
+              <img src='https://cdn.iconscout.com/icon/free/png-256/left-chevron-458460.png' />
+          </button>
+          <div className='post'>
+            <div className='postHeader'>
+              <div onClick={() => handleUpvote(props.post.id)} className={upvoted ? 'clickedUpvoteDiv' : 'upvoteDiv'}>
+                <img src='https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/14645659851540882612-256.png' />
+              </div>
+              {/* Display Delete if user owns the post, display Save if user does not */}
+              {props.currentUser.name == props.post.author ? 
+                <button className='postDeleteButton' onClick={() => handleDeletingPost(props.post.id)}>X</button> :
+                <button className={currentlySaved ? 'activeSaved' : 'inactiveSaved'} onClick={() => handleSavingPost(props.post.id)}>
+                  <img src='https://www.shareicon.net/data/256x256/2016/09/10/828155_save_487x512.png' />
+                </button>}
+              <h4>{props.post.title}</h4>
             </div>
-            {/* Display Delete if user owns the post, display Save if user does not */}
-            {props.currentUser.name == props.post.author ? 
-              <button className='postDeleteButton' onClick={() => handleDeletingPost(props.post.id)}>X</button> :
-              <button className={currentlySaved ? 'activeSaved' : 'inactiveSaved'} onClick={() => handleSavingPost(props.post.id)}>
-                <img src='https://www.shareicon.net/data/256x256/2016/09/10/828155_save_487x512.png' />
-              </button>}
-            <h4>{props.post.title}</h4>
-          </div>
-          <hr />
-          <div className='tagAuthorRow'>
-            <div className='tags'>
-              {props.post.tags.length > 0 ? props.post.tags.map((tag, index) => {
-                return <Tag onFeed={false} name={tag} key={index}/>
-              }) : null}
+            <hr />
+            <div className='tagAuthorRow'>
+              <div className='tags'>
+                {props.post.tags.length > 0 ? props.post.tags.map((tag, index) => {
+                  return <Tag onFeed={false} name={tag} key={index}/>
+                }) : null}
+              </div>
+              <Link 
+                to='/profile' 
+                onClick={handleChangingProfileView} 
+                className='postAuthor'>
+                  {props.post.author}
+              </Link>
             </div>
-            <Link 
-              to='/profile' 
-              onClick={handleChangingProfileView} 
-              className='postAuthor'>
-                {props.post.author}
-            </Link>
+            <p className='postDescription'>{props.post.description}</p>
+            <p 
+              className='commentLink' 
+              onClick={() => setShowCommentForm(!showCommentForm)}>
+                Comment
+            </p>
+            {showCommentForm ? (
+              <form className='commentForm' onSubmit={handleCommentSubmission}>
+                <input type='text' name='comment' placeholder='comment' />
+                <button type='submit'>Submit</button>
+              </form>
+            ) : null}
+            {postComments.map((comment, index) => {
+              return(
+                <Comment currentUser={props.currentUser} comment={comment} key={index} />
+              )
+            })}
           </div>
-          <p>{props.post.description}</p>
-          <button className='detailsBackButton' onClick={() => props.handleClickingBack(false)}>Back</button>
-          <form className='commentForm' onSubmit={handleCommentSubmission}>
-            <input type='text' name='comment' />
-            <button type='submit'>Submit</button>
-          </form>
-          {postComments.map((comment, index) => {
-            return(
-              <Comment currentUser={props.currentUser} comment={comment} key={index} />
-            )
-          })}
-        </div>
+        </React.Fragment>
       );
     } else {
       return (
