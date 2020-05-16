@@ -40,15 +40,16 @@ body {
 }
 
 .openNav {
-  width: 100px;
+  width: 200px;
   transition: 0.3s;
 }
 
 .closebtn {
-  text-align: left;
+  text-align: center;
   width: 100%;
   padding: 10px;
   border: none;
+  border-bottom: 1px solid #aaa;
   background-color: #ddd;
 }
 
@@ -86,20 +87,38 @@ body {
 .sideNavButton {
   padding: 10px;
   border: none;
+  border-bottom: 1px solid #aaa;
   background-color: #ccc;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.sideNavButton img {
+.sideNavButton img, .activeSideButton img, .darkActiveSideButton img {
   height: 15px;
   width: auto;
   margin: 0 5px;
 }
 
 .activeSideButton {
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #aaa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #eee;
+}
+
+.darkActiveSideButton {
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #222;
+  color: white;
 }
 
 .darknessStyle {
