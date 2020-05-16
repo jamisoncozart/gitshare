@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useFirestore } from 'react-redux-firebase';
 import Post from '../Posts/Post';
 import { useSelector } from 'react-redux'
+import firebase from 'firebase/app';
 
 const Profile = props => {
   console.log('props.user in Profile.js');
@@ -54,25 +55,51 @@ const Profile = props => {
     }
   }
 
-  //==============
+  //=========================================================
   // IMAGE STORAGE
-  // var storageRef = firebase.storage().ref();
 
-  // // Create a reference to 'mountains.jpg'
-  // var mountainsRef = storageRef.child('mountains.jpg');
-
-  // // Create a reference to 'images/mountains.jpg'
-  // var mountainImagesRef = storageRef.child('images/mountains.jpg');
-
-  // // While the file names are the same, the references point to different files
-  // mountainsRef.name === mountainImagesRef.name            // true
-  // mountainsRef.fullPath === mountainImagesRef.fullPath    // false
-  // =============
-
+  const storageRef = firebase.storage().ref();
   const handleProfilePicSubmission = event => {
-    console.log('selectedFile');
-    console.log(event.target.files[0]);
+    const fileType = event.target.files[0].type;
+    const file = event.target.files[0];
+    console.log(file);
+    const metadata = {
+      contentType: fileType
+    }
+    const uploadTask = storageRef.child('images/' + file.name).put(file, metadata);
+
+    uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,
+      function(snapshot) {
+        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload Progress: ' + progress);
+      }, function(error) {
+        console.log(error);
+        switch (error.code) {
+          case 'storage/unauthorized':
+            console.log("User doesn't have permission to access the object");
+            break;
+          case 'storage/canceled':
+            console.log("User canceled the upload");
+            break;      
+          case 'storage/unknown':
+            console.log("Unknown error occurred, inspect error.serverResponse");
+            break;
+        }
+      }, function() {
+        uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+          console.log(downloadURL);
+          currentUserProfile.update({
+            profilePic: downloadURL
+          }).then(function() {
+            setCurrentProfile({...currentProfile, profilePic: downloadURL});
+          }).catch(function(error) {
+            console.log(error);
+          });
+        });
+      });
   }
+
+  //=========================================================
 
   return (
     <div className='profileBackground'>
