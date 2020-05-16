@@ -100,7 +100,7 @@ const Profile = props => {
   }
 
   //=========================================================
-
+  let inputElement;
   return (
     <div className='profileBackground'>
       <div className='profile'>
@@ -113,9 +113,12 @@ const Profile = props => {
             ) : null}
             <div className='profileTop'>
               {currentProfile.profilePic == null && props.currentlyLoggedInProfile.displayName == props.user.name ? (
-                <form>
-                  <input onChange={handleProfilePicSubmission} type="file" id="img" name="img" multiple/>
-                </form>
+                <div onClick={() => inputElement.click()} className='profileImgDiv'>
+                  <p>Upload</p>
+                  <form style={{display: 'none'}}>
+                    <input ref={input => inputElement = input} className='imageUploadButton' onChange={handleProfilePicSubmission} type="file" id="img" name="img" multiple/>
+                  </form>
+                </div>
               ) : currentProfile.profilePic == null ? (
                 <div className='profileImgDiv'>
                   <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRYk3Khp02Ov-8AGyTerkOhnIuMrnJFO2KfpFSojzc0TKKyKknX&usqp=CAU' />
