@@ -36,7 +36,6 @@ let App = props => {
   if(!isLoaded(auth)) {
     authContent = <h1>Loading...</h1>;
   } else if((isLoaded(auth)) && (auth.currentUser == null)) {
-   // If the user is not signed in, redirect to signin page
     if(!onSignIn) {
       setOnSignIn(true);
       history.push('/signin');
@@ -70,8 +69,6 @@ let App = props => {
         <Signin handleSignIn={setAuthToggle}/>
       </Route>
       <Route path='/'>
-        {/* ADD TO currentUser WHEN TESTING AUTH */}
-        {/* auth.currentUser !== null ? auth.currentUser.displayName :  */}
         <Header 
           currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} 
           handleSignOut={setAuthToggle}
@@ -87,7 +84,6 @@ let App = props => {
 
 const mapStateToProps = state => {
   return {
-    userSignedIn: state.userSignedIn,
     currentUser: state.currentUser,
     currentPost: state.currentPost
   }

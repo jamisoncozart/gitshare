@@ -3,6 +3,7 @@ import firebase from 'firebase/app';
 import Logo from './Logo';
 import { useHistory } from 'react-router-dom';
 import { isLoaded } from 'react-redux-firebase';
+import { connect } from 'react-redux';
 
 function Header(props) {
   const auth = firebase.auth();
@@ -10,7 +11,19 @@ function Header(props) {
   const [topActiveTheme, setTopActiveTheme] = useState(false);
   const [newActiveTheme, setNewActiveTheme] = useState(false);
   const [followActiveTheme, setFollowActiveTheme] = useState(false);
-  const [darkTheme, setDarkTheme] = useState(false);
+
+  const handleTogglingTheme = () => {
+    const action = {
+      type: 'TOGGLE_THEME'
+    }
+    props.dispatch(action);
+  }
+
+  if(props.darkMode) {
+    document.body.style.backgroundColor = '#111';
+  } else {
+    document.body.style.backgroundColor = '#eee';
+  }
 
   function doSignOut() {
     auth.signOut().then(function() {
@@ -38,15 +51,17 @@ function Header(props) {
     props.handlePressingSidebarButton(button);
   }
 
+
+
   return (
-    <div className='header'>
-      <Logo imageHeight='25px' fontSize='18px'/>
+    <div className={props.darkMode ? 'darkHeader' : 'header'}>
+      <Logo darkMode={props.darkMode} imageHeight='25px' fontSize='18px'/>
       <div className='headerRight'>
-        <p className='displayName'>{currentUser}</p>
+        <p className={props.darkMode ? 'darkDisplayName' : 'displayName'}>{currentUser}</p>
         <button 
-          className={'sidebarButton'} 
+          className={props.darkMode ? 'darkSideBarButton' : 'sidebarButton'} 
           onClick={() => setNavOpen(true)}>
-            <img src='https://www.contentformula.com/blog/wp-content/uploads/2016/06/hamburger-menu.png'/>
+            <img src={props.darkMode ? 'https://thunderbasinortho.com/wp-content/uploads/2019/04/menu-three-horizontal-lines-symbol.png' : 'https://www.contentformula.com/blog/wp-content/uploads/2016/06/hamburger-menu.png'}/>
         </button>
       </div>
       <div className={navOpen ? 'sideNav openNav' : 'sideNav'}>
@@ -74,9 +89,9 @@ function Header(props) {
             Follows
         </button>
         <button 
-          onClick={() => setDarkTheme(!darkTheme)}
-          className={darkTheme ? 'darkActiveSideButton' : 'sideNavButton'}>
-            <img src={darkTheme ? 'https://i2.wp.com/hostasonthebluff.com/wp-content/uploads/2017/10/Sun-Icon.png?fit=256%2C256&ssl=1' : 'https://cdn.iconscout.com/icon/free/png-256/half-moon-1767806-1502386.png'}/>
+          onClick={handleTogglingTheme}
+          className={props.darkMode ? 'darkActiveSideButton' : 'sideNavButton'}>
+            <img src={props.darkMode ? 'https://i2.wp.com/hostasonthebluff.com/wp-content/uploads/2017/10/Sun-Icon.png?fit=256%2C256&ssl=1' : 'https://cdn.iconscout.com/icon/free/png-256/half-moon-1767806-1502386.png'}/>
             Theme
         </button>
         <button 
@@ -90,5 +105,13 @@ function Header(props) {
     </div>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    darkMode: state.darkMode
+  }
+}
+
+Header = connect(mapStateToProps)(Header);
 
 export default Header;

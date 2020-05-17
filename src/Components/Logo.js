@@ -12,10 +12,16 @@ const Logo = props => {
     fontSize: props.fontSize,
     fontFamily: "'Roboto Mono', monospace"
   }
+  const darkTextStyle = {
+    color: 'white',
+    margin: '0 7px',
+    fontSize: props.fontSize,
+    fontFamily: "'Roboto Mono', monospace"
+  }
   return (
     <div className='logo'>
       <img style={imageStyle} src='https://i.imgur.com/Lta1Npc.png' />
-      <h1 style={textStyle}>git share</h1>
+      <h1 style={props.darkMode ? darkTextStyle : textStyle}>git share</h1>
     </div>
   );
 }
