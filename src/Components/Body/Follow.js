@@ -6,6 +6,7 @@ const Follow = props => {
   const db = useFirestore();
   const followProfileQuery = db.collection('profiles').doc(props.followData.id);
   const [followProfile, setFollowProfile] = useState(null);
+  const iconPath = process.env.PUBLIC_URL + '/assets/';
   
   followProfileQuery.get().then(function(profile) {
     setFollowProfile(profile.data());
@@ -21,7 +22,7 @@ const Follow = props => {
       <div className='post'>
         <div className='followPanel'>
           <div className='followProfilePicDiv'>
-            <img src={followProfile.profilePic} />
+            <img src={followProfile.profilePic ? followProfile.profilePic : `${iconPath}Profile_black.png`} />
           </div>
           <Link 
             to='/profile' 

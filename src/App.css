@@ -167,13 +167,13 @@ body {
   align-items: center;
 }
 
-.sideNavButton img, .activeSideButton img, .darkActiveSideButton img, .darkSideNavButton img {
+.sideNavButton img, .activeSideButton img, .darkActiveSideButton img, .darkSideNavButton img, .activeSideNavButton img {
   height: 15px;
   width: auto;
   margin: 0 5px;
 }
 
-.activeSideButton {
+.activeSideNavButton {
   padding: 10px;
   border: none;
   border-bottom: 1px solid #aaa;
@@ -191,7 +191,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #222;
+  background-color: #555;
   color: white;
   transition: 0.3s;
 }
@@ -636,6 +636,10 @@ hr {
   left: -9999px;
   right: -9999px;
   margin: auto;
+}
+
+.followList {
+  padding-top: 35px;
 }
 
 .activeFollowButton {
