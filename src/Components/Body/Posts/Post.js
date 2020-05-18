@@ -14,6 +14,7 @@ const Post = props => {
     { collection: 'comments' }
   ]);
 
+  const iconPath = process.env.PUBLIC_URL + '/assets/';
   const db = useFirestore();
   let currentlyUpvoted = false;
   if(props.post.upvoters.includes(props.currentUser.name)) {
@@ -124,7 +125,7 @@ const Post = props => {
           <div className='post'>
             <div className='postHeader'>
               <div onClick={() => handleUpvote(props.post.id)} className={upvoted ? 'clickedUpvoteDiv' : 'upvoteDiv'}>
-                <img src='https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/14645659851540882612-256.png' />
+                <img src={props.darkMode ? `${iconPath}up-arrow_white.png` : `${iconPath}up-arrow_black.png`} />
               </div>
               {/* Display Delete if user owns the post, display Save if user does not */}
               {props.currentUser.name == props.post.author ? 
@@ -162,7 +163,7 @@ const Post = props => {
             ) : null}
             {postComments.map((comment, index) => {
               return(
-                <Comment currentUser={props.currentUser} comment={comment} key={index} />
+                <Comment darkMode={props.darkMode} currentUser={props.currentUser} comment={comment} key={index} />
               )
             })}
           </div>
@@ -172,7 +173,7 @@ const Post = props => {
       return (
         <div className={props.darkMode ? 'darkPost' : 'post'}>
           <div onClick={() => handleUpvote(props.post.id)} className={upvoted ? (props.darkMode ? 'darkClickedUpvoteDiv' : 'clickedUpvoteDiv') : (props.darkMode ? 'darkUpvoteDiv' : 'upvoteDiv')}>
-            <img src='https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/14645659851540882612-256.png' />
+            <img src={props.darkMode ? `${iconPath}up-arrow_white.png` : `${iconPath}up-arrow_black.png`} />
           </div>
           <div className='postHeader'>
             <h4 onClick={() => props.handleShowingPostDetails({...props.post})}>{props.post.title}</h4>

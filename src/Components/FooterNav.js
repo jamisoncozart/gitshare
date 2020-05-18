@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { connect } from 'react-redux';
 
 function FooterNav(props) {
-
+  const iconPath = process.env.PUBLIC_URL + '/assets/';
   const location = useLocation();
   const [currentView, setCurrentView] = useState(`${location.pathname}`);
 
@@ -29,7 +29,7 @@ function FooterNav(props) {
           'darkNavLink': props.darkMode 
         })} 
         to='/posts'>
-          <img src='https://jamisoncozart.github.io/mobile-portfolio/img/home.png' />
+          <img src={props.darkMode ? `${iconPath}Home_white.png` : `${iconPath}Home_black.png`} />
       </Link>
       <Link 
         onClick={() => setCurrentView('/saved')} 
@@ -40,7 +40,7 @@ function FooterNav(props) {
           'darkNavLink': props.darkMode 
         })}
         to='/saved'>
-          <img src='https://www.shareicon.net/data/256x256/2016/09/10/828155_save_487x512.png' />
+          <img src={props.darkMode ? `${iconPath}Save_white.png` : `${iconPath}Save_black.png`} />
       </Link>
       <Link 
         onClick={() => setCurrentView('/newPost')} 
@@ -51,7 +51,7 @@ function FooterNav(props) {
           'darkNavLink': props.darkMode 
         })}
         to='/newPost'>
-          <img src='https://img.icons8.com/pastel-glyph/2x/plus.png' />
+          <img src={props.darkMode ? `${iconPath}New_white.png` : `${iconPath}New_black.png`} />
       </Link>
       <Link 
         onClick={() => setCurrentView('/follows')} 
@@ -62,7 +62,7 @@ function FooterNav(props) {
           'darkNavLink': props.darkMode 
         })}  
         to='/follows'>
-          <img src='https://tribemobile.co/wp-content/uploads/2016/06/connect-icon.png' />
+          <img src={props.darkMode ? `${iconPath}Following_white.png` : `${iconPath}Following_black.png`} />
       </Link>
       <Link 
         onClick={changeToCurrentUserProfile} 
@@ -73,7 +73,7 @@ function FooterNav(props) {
           'darkNavLink': props.darkMode 
         })}  
         to='/profile'>
-          <img src='https://jamisoncozart.github.io/mobile-portfolio/img/user.png' />
+          <img src={props.darkMode ? `${iconPath}Profile_white.png` : `${iconPath}Profile_black.png`} />
       </Link>
     </div>
   );

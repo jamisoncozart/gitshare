@@ -7,6 +7,10 @@ body {
 /* HEADER STYLES */
 
 .header {
+  z-index: 2;
+  position: fixed;
+  left: 0;
+  top: 0;
   background-color: #ddd;
   width: 100%;
   padding: 5px;
@@ -16,7 +20,11 @@ body {
 }
 
 .darkHeader {
-  background-color: #444;
+  z-index: 2;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: #111;
   width: 100%;
   padding: 5px;
   display: flex;
@@ -46,10 +54,26 @@ body {
   display: none;
   width: 0;
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   top: 0;
   right: 0;
   background-color: #bbb;
+  overflow-x: hidden;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.darkSideNav {
+  height: 100%;
+  display: none;
+  width: 0;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  right: 0;
+  background-color: #444;
   overflow-x: hidden;
   transition: 0.3s;
   display: flex;
@@ -71,7 +95,16 @@ body {
   background-color: #ddd;
 }
 
-.closebtn img {
+.darkClosebtn {
+  text-align: center;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #555;
+  background-color: #333;
+}
+
+.closebtn img, .darkClosebtn img {
   height: 20px;
   width: auto;
 }
@@ -104,8 +137,8 @@ body {
   justify-content: center;
   border: none;
   border-radius: 5px;
-  background-color: #222;
   margin-left: 5px;
+  background-color: #222;
 }
 
 .sidebarButton img, .darkSideBarButton img {
@@ -123,7 +156,18 @@ body {
   align-items: center;
 }
 
-.sideNavButton img, .activeSideButton img, .darkActiveSideButton img {
+.darkSideNavButton {
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #555;
+  background-color: #222;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sideNavButton img, .activeSideButton img, .darkActiveSideButton img, .darkSideNavButton img {
   height: 15px;
   width: auto;
   margin: 0 5px;
@@ -184,7 +228,7 @@ body {
   left: 0;
   bottom: 0;
   width: 100%;
-  background-color: #444;
+  background-color: #111;
   color: white;
   text-align: center;
   font-size: 20px;
@@ -289,7 +333,7 @@ input {
 
 .newPostFormDiv {
   width: 70%;
-  margin: 40px auto;
+  margin: 75px auto;
   text-align: center;
 }
 
@@ -325,6 +369,7 @@ textarea {
 
 .postsDiv {
   margin-bottom: 70px;
+  margin-top: 45px;
 }
 
 .githubProfile h4 {
@@ -363,7 +408,7 @@ textarea {
 
 .upvoteDiv {
   height: 25px;
-  width: 25px;
+  width: 24px;
   border: 1px solid black;
   border-radius: 5px;
   margin-right: 10px;
@@ -372,7 +417,7 @@ textarea {
 
 .darkUpvoteDiv {
   height: 25px;
-  width: 25px;
+  width: 24px;
   border: 1px solid white;
   border-radius: 5px;
   margin-right: 10px;
@@ -382,7 +427,7 @@ textarea {
 .clickedUpvoteDiv {
   background-color: rgb(255, 216, 166);
   height: 25px;
-  width: 25px;
+  width: 24px;
   border: 1px solid black;
   border-radius: 5px;
   margin-right: 10px;
@@ -392,7 +437,7 @@ textarea {
 .darkClickedUpvoteDiv {
   background-color: rgb(255, 145, 0);
   height: 25px;
-  width: 25px;
+  width: 24px;
   border: 1px solid white;
   border-radius: 5px;
   margin-right: 10px;
@@ -400,7 +445,8 @@ textarea {
 }
 
 .upvoteDiv img, .clickedUpvoteDiv img, .darkUpvoteDiv img, .darkClickedUpvoteDiv img {
-  height: 23px;
+  height: 16px;
+  margin: 3px 0 0 3px;
   width: auto;
 }
 
@@ -479,6 +525,7 @@ hr {
 }
 
 .detailsBackButton {
+  margin-top: 35px;
   padding: 5px;
   border: none;
   width: 100%;
@@ -555,7 +602,7 @@ hr {
 .profile {
   border: 1px solid black;
   border-radius: 5px;
-  margin: 0 10px 10px 10px;
+  margin: 35px 10px 10px 10px;
   background-color: #eee;
 }
 
@@ -696,7 +743,8 @@ hr {
 }
 
 .commentUpvoteDiv img, .clickedCommentUpvoteDiv img {
-  height: 16px;
+  height: 10px;
+  margin: 0 0 2px 3px;
   width: auto;
 }
 

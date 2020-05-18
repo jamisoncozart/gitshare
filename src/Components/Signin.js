@@ -39,13 +39,13 @@ function Signin(props) {
           type='text'
           name='signinEmail'
           placeholder='email'
-          // value='admin@admin.com'
+          value='admin@admin.com'
           required />
         <input
           type='password'
           name='signinPassword'
           placeholder='Password'
-          // value='password'
+          value='password'
           required />
         <p className='errorMessage'>{errorMessage}</p>
         <button 

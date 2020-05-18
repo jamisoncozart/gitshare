@@ -11,6 +11,7 @@ function Header(props) {
   const [topActiveTheme, setTopActiveTheme] = useState(false);
   const [newActiveTheme, setNewActiveTheme] = useState(false);
   const [followActiveTheme, setFollowActiveTheme] = useState(false);
+  const iconPath = process.env.PUBLIC_URL + '/assets/';
 
   const handleTogglingTheme = () => {
     const action = {
@@ -61,31 +62,31 @@ function Header(props) {
         <button 
           className={props.darkMode ? 'darkSideBarButton' : 'sidebarButton'} 
           onClick={() => setNavOpen(true)}>
-            <img src={props.darkMode ? 'https://thunderbasinortho.com/wp-content/uploads/2019/04/menu-three-horizontal-lines-symbol.png' : 'https://www.contentformula.com/blog/wp-content/uploads/2016/06/hamburger-menu.png'}/>
+            <img src={props.darkMode ? `${iconPath}hamburger_white.png` : `${iconPath}hamburger_black.png`}/>
         </button>
       </div>
-      <div className={navOpen ? 'sideNav openNav' : 'sideNav'}>
+      <div className={props.darkMode ? navOpen ? 'darkSideNav openNav' : 'darkSideNav' : navOpen ? 'sideNav openNav' : 'sideNav'}>
         <button 
           onClick={() => setNavOpen(false)} 
-          className="closebtn">
-            <img src='https://cdn.iconscout.com/icon/free/png-256/chevron-27-433515.png'/>
+          className={props.darkMode ? 'darkClosebtn' : "closebtn"}>
+            <img src={props.darkMode ? 'https://viceversaartbooks.com/static/new_frontend/local/icons/Chevron-right-white.b1357a39300c.svg' : 'https://cdn.iconscout.com/icon/free/png-256/chevron-27-433515.png'}/>
         </button>
         <button 
           onClick={() => handleTogglingSideButton('top')}
-          className={topActiveTheme ? 'activeSideButton' : 'sideNavButton'}>
+          className={topActiveTheme ? props.darkMode ? 'darkActiveSideButton' : 'activeSideNavButton' : props.darkMode ? 'darkSideNavButton' : 'sideNavButton'}>
             <img src='https://icons.iconarchive.com/icons/google/noto-emoji-travel-places/256/42697-fire-icon.png'/>
             Top
         </button>
         <button 
           onClick={() => handleTogglingSideButton('new')}
-          className={newActiveTheme ? 'activeSideButton' : 'sideNavButton'}>
+          className={newActiveTheme ? props.darkMode ? 'darkActiveSideButton' : 'activeSideNavButton' : props.darkMode ? 'darkSideNavButton' : 'sideNavButton'}>
             <img src='https://icons.iconarchive.com/icons/google/noto-emoji-activities/256/52705-sparkles-icon.png'/>
             New
         </button>
         <button 
           onClick={() => handleTogglingSideButton('follow')}
-          className={followActiveTheme ? 'activeSideButton' : 'sideNavButton'}>
-            <img src='https://tribemobile.co/wp-content/uploads/2016/06/connect-icon.png'/>
+          className={followActiveTheme ? props.darkMode ? 'darkActiveSideButton' : 'activeSideNavButton' : props.darkMode ? 'darkSideNavButton' : 'sideNavButton'}>
+            <img src={props.darkMode ? `${iconPath}Following_white.png` : `${iconPath}Following_black.png`}/>
             Follows
         </button>
         <button 
@@ -95,9 +96,9 @@ function Header(props) {
             Theme
         </button>
         <button 
-          className='sideNavButton' 
+          className={props.darkMode ? 'darkSideNavButton' : 'sideNavButton'} 
           onClick={doSignOut}>
-            <img src='https://www.shareicon.net/data/256x256/2016/05/30/772895_multimedia_512x512.png'/>
+            <img src={props.darkMode ? 'https://www.saraghinaeyewear.it/skin/frontend/evolve/evolve/images/logout.png' : 'https://image.flaticon.com/icons/png/128/545/545702.png'}/>
             Logout
         </button>
       </div>
