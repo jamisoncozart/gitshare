@@ -248,8 +248,8 @@ let Profile = props => {
                     </div>
                   </div>
                   <div className='githubBodyInfo'>
-                  <p><strong>Bio:</strong> {props.currentlyLoggedInProfile.githubBio}</p>
-                  <p><strong>Website:</strong> <a href={props.currentlyLoggedInProfile.githubPersonalWebsiteLink}>{props.currentlyLoggedInProfile.githubPersonalWebsiteLink}</a></p>
+                    <p><strong>Bio:</strong> {props.currentlyLoggedInProfile.githubBio}</p>
+                    <p><strong>Website:</strong> <a href={props.currentlyLoggedInProfile.githubPersonalWebsiteLink}>{props.currentlyLoggedInProfile.githubPersonalWebsiteLink}</a></p>
                   </div>
                   <button>Get Languages</button>
                   <button>Get Activity</button>
