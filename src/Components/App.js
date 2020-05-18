@@ -4,6 +4,7 @@ import Signup from './Signup';
 import Signin from './Signin';
 import Header from './Header';
 import FooterNav from './FooterNav';
+import LandingPage from './LandingPage';
 import Body from './Body/Body';
 import { Switch, Route, Link, useHistory } from 'react-router-dom';
 import { withFirestore, isLoaded } from 'react-redux-firebase';
@@ -66,9 +67,16 @@ let App = props => {
         <Signup />
       </Route>
       <Route path='/signin'>
-        <Signin handleSignIn={setAuthToggle}/>
+        <Signin setOnSignIn={setOnSignIn} handleSignIn={setAuthToggle}/>
+      </Route>
+      <Route path='/home'>
+        <LandingPage />
       </Route>
       <Route path='/'>
+        {auth.currentUser == null ? () => {
+            setOnSignIn(true);
+            history.push('/signin');
+          } : null}
         <Header 
           currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} 
           handleSignOut={setAuthToggle}

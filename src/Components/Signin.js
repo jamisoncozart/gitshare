@@ -4,7 +4,7 @@ import firebase from 'firebase/app';
 import Logo from './Logo';
 
 function Signin(props) {
-
+  const auth = firebase.auth();
   const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
 
@@ -23,6 +23,10 @@ function Signin(props) {
 
   return (
     <div className='signin'>
+      {auth.currentUser != null ? () => {
+            props.setOnSignIn(false);
+            history.push('/posts');
+          } : null}
       <Logo imageHeight='50px' fontSize='30px'/>
       <form className='signinForm' onSubmit={doSignIn}>
         <h2>Sign In</h2>
