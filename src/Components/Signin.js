@@ -21,6 +21,10 @@ function Signin(props) {
     });
   }
 
+  const copyright = {
+    margin: '20px'
+  }
+
   return (
     <div className='signin'>
       {auth.currentUser != null ? () => {
@@ -50,6 +54,7 @@ function Signin(props) {
         </button>
         <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
       </form>
+      <p style={copyright} className='copyright'>&copy; 2020 - Jamison Cozart</p>
     </div>
   );
 }

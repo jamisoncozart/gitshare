@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import firebase from 'firebase/app';
+import Logo from './Logo';
 
 const LandingPage = props => {
   const history = useHistory();
@@ -15,9 +16,17 @@ const LandingPage = props => {
   }
 
   return(
-    <div>
-      <h2>Landing Page</h2>
-      <a onClick={handleBackToApp}>Back To App</a>
+    <div className='landingPage'>
+      <img className='logoImg' src='https://i.imgur.com/Lta1Npc.png' />
+      <h1 className='logoText'>git share</h1>
+      <p className='copyright'>&copy; 2020 - Jamison Cozart</p>
+      <div className='link'>
+        <a href='https://github.com/jamisoncozart/gitshare'>
+          <img src='https://cdn.iconscout.com/icon/free/png-256/github-153-675523.png' />
+          <p>GitHub Repository</p>
+        </a>
+      </div>
+      <button className='enterAppButton' onClick={handleBackToApp}>Enter</button>
     </div>
   );
 }

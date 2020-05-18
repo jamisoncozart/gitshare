@@ -62,6 +62,10 @@ function Signup() {
     }
   }
 
+  const copyright = {
+    margin: '20px'
+  }
+
   return (
     <div className="signin">
       <Logo imageHeight='50px' fontSize='30px'/>
@@ -90,6 +94,7 @@ function Signup() {
         </button>
         <p>Already have an account? <Link to='/signin'>Sign In</Link></p>
       </form>
+      <p style={copyright} className='copyright'>&copy; 2020 - Jamison Cozart</p>
     </div>
   );
 }
