@@ -62,6 +62,7 @@ function Body(props) {
         <Profile 
           currentLoggedInUserQuery={currentlyLoggedInUser} 
           currentlyLoggedInProfile={currentlyLoggedInProfile}
+          setCurrentlyLoggedInProfile={setCurrentlyLoggedInProfile}
           handleRefreshingCurrentlyLoggedInUser={handleRefreshingCurrentlyLoggedInUser} 
           user={props.userViewingOwnProfile ? props.currentUser : profileToView}/>
       </Route>

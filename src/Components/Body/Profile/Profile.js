@@ -126,9 +126,11 @@ let Profile = props => {
 
   function handleProfileConfirmation() {
     console.log('inside fetch function');
+    let apiData;
     fetch(`https://api.github.com/users/${currentProfileInput}`)
       .then(response => response.json())
       .then(data => {
+        apiData = data;
         props.currentLoggedInUserQuery.update({
           githubProfile: currentProfileInput,
           githubProfilePic: data.avatar_url,
@@ -137,10 +139,20 @@ let Profile = props => {
           githubName: data.name,
           githubRepoNumber: data.public_repos,
           githubPersonalWebsiteLink: data.blog ? data.blog : null
+        }).then(() => {
+          setShowConfirmationWindow(false);
+          props.setCurrentlyLoggedInProfile({
+            ...props.currentlyLoggedInProfile,
+            githubProfilePic: data.avatar_url,
+            githubBio: data.bio,
+            githubFollowers: data.followers,
+            githubName: data.name,
+            githubRepoNumber: data.public_repos,
+            githubPersonalWebsiteLink: data.blog ? data.blog : null
+          });
         }).catch(error => {
           console.log(error);
         });
-        setShowConfirmationWindow(false);
       }).catch(error => {
         console.log(error);
       });
