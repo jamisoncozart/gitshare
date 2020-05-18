@@ -227,7 +227,7 @@ body {
   width: 80%;
   margin: auto;
   text-align: center;
-  margin-top: 20vh;
+  padding-top: 20vh;
 }
 
 .signinForm {
@@ -325,6 +325,40 @@ textarea {
 
 .postsDiv {
   margin-bottom: 70px;
+}
+
+.githubProfile h4 {
+  margin-bottom: 10px;
+  text-decoration: underline;
+}
+
+.githubProfileHeader {
+  display: flex;
+  align-items: center;
+}
+
+.gitHubProfileImgDiv {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid black;
+  margin: 0 20px;
+}
+
+.gitHubProfileImgDiv img {
+  height: 50px;
+  position: absolute;
+  top: -9999px;
+  bottom: -9999px;
+  left: -9999px;
+  right: -9999px;
+  margin: auto;
+}
+
+.profilePosts {
+  padding-bottom: 20px;
 }
 
 .upvoteDiv {
@@ -515,6 +549,7 @@ hr {
   background-color: #aaa;
   padding-top: 10px;
   min-height: 100vh;
+  padding-bottom: 70px;
 }
 
 .profile {
@@ -528,6 +563,7 @@ hr {
   display: flex;
   align-items: center;
   padding: 10px;
+  padding-bottom: 0;
 }
 
 .profileImgDiv {
@@ -573,6 +609,17 @@ hr {
 
 .topPostTitle {
   margin-left: 10px;
+}
+
+.gitHubData {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  margin: 10px;
 }
 
 .commentForm {
@@ -716,7 +763,7 @@ hr {
   justify-content: center;
   align-items: center;
   margin: auto;
-  margin-top: 23vh;
+  padding-top: 23vh;
   width: 70%;
 }
 
@@ -784,5 +831,31 @@ hr {
 
 .copyright {
   font-size: 12px;
-  margin: 5px;
+  margin: 5px 0 20px 0;
 }
+
+.behindModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 4;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  padding-top: 20vh;
+}
+
+.modal {
+  background-color: #eee;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  width: 80%;
+  height: 200px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
