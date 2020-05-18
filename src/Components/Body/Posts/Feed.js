@@ -34,7 +34,7 @@ let Feed = props => {
   if(tagFiltering) {
     posts = posts.filter(post => post.tags.includes(filterTag));
   }
-
+  console.log(posts);
   let sortedPosts = posts;
   if(isLoaded(posts)) {
     if(!props.viewingDetails) {
@@ -69,7 +69,7 @@ let Feed = props => {
                   handleViewingProfile={props.handleViewingProfile}
                   darkMode={props.darkMode}
                   post={post}
-                  key={index}/>
+                  key={post.id}/>
               );
             })}
           </div>
