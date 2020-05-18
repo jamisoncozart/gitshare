@@ -236,6 +236,23 @@ let Profile = props => {
                     </div>
                     <h3>{props.currentlyLoggedInProfile.githubProfile}</h3>
                   </div>
+                  <hr />
+                  <div className='githubStats'>
+                    <div className='stat'>
+                      <strong>{props.currentlyLoggedInProfile.githubFollowers}</strong>
+                      <p>Followers</p>
+                    </div>
+                    <div className='stat'>
+                      <strong>{props.currentlyLoggedInProfile.githubRepoNumber}</strong>
+                      <p>Repositories</p>
+                    </div>
+                  </div>
+                  <div className='githubBodyInfo'>
+                  <p><strong>Bio:</strong> {props.currentlyLoggedInProfile.githubBio}</p>
+                  <p><strong>Website:</strong> <a href={props.currentlyLoggedInProfile.githubPersonalWebsiteLink}>{props.currentlyLoggedInProfile.githubPersonalWebsiteLink}</a></p>
+                  </div>
+                  <button>Get Languages</button>
+                  <button>Get Activity</button>
                 </div>
               ) : null}
             </div>
