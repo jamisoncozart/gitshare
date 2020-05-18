@@ -20,7 +20,7 @@ function Header(props) {
   }
 
   if(props.darkMode) {
-    document.body.style.backgroundColor = '#111';
+    document.body.style.backgroundColor = '#000';
   } else {
     document.body.style.backgroundColor = '#eee';
   }

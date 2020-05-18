@@ -109,7 +109,7 @@ const Post = props => {
   }
 
   const [showCommentForm, setShowCommentForm] = useState(false);
-
+  console.log(props.post);
   const comments = useSelector(state => state.firestore.ordered.comments);
   if(isLoaded(comments)) {
     const postComments = comments.filter(comment => comment.parentPostID == props.post.id);
@@ -171,8 +171,8 @@ const Post = props => {
       );
     } else {
       return (
-        <div className='post'>
-          <div onClick={() => handleUpvote(props.post.id)} className={upvoted ? 'clickedUpvoteDiv' : 'upvoteDiv'}>
+        <div className={props.darkMode ? 'darkPost' : 'post'}>
+          <div onClick={() => handleUpvote(props.post.id)} className={upvoted ? (props.darkMode ? 'darkClickedUpvoteDiv' : 'clickedUpvoteDiv') : (props.darkMode ? 'darkUpvoteDiv' : 'upvoteDiv')}>
             <img src='https://s3.us-east-2.amazonaws.com/upload-icon/uploads/icons/png/14645659851540882612-256.png' />
           </div>
           <div className='postHeader'>
@@ -182,10 +182,15 @@ const Post = props => {
           <div className='tagAuthorRow'>
             <div className='tags'>
               {props.post.tags.length > 0 ? props.post.tags.map((tag, index) => {
-                return <Tag onFeed={true} filterFeedByTag={props.handleFilterTag} name={tag} key={index}/>
+                return <Tag 
+                  onFeed={true} 
+                  filterFeedByTag={props.handleFilterTag} 
+                  name={tag} 
+                  darkMode={props.darkMode}
+                  key={index}/>
               }) : null}
             </div>
-            <Link to='/profile' onClick={handleChangingProfileView} className='postAuthor'>{props.post.author}</Link>
+            <Link to='/profile' onClick={handleChangingProfileView} className={props.darkMode ? 'darkPostAuthor' : 'postAuthor'}>{props.post.author}</Link>
           </div>
         </div>
       );

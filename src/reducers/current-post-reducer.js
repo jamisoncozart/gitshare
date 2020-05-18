@@ -1,7 +1,7 @@
 const currentPostReducer = (state = {}, action) => {
   switch (action.type) {
     case 'UPDATE_CURRENT_POST':
-      const { author, authorID, creationTime, description, repo, savers, score, tags, title, upvoters } = action;
+      const { author, authorID, creationTime, description, repo, savers, score, tags, title, upvoters, id } = action;
       console.log('action in reducer');
       console.log(action);
       return {
@@ -14,7 +14,8 @@ const currentPostReducer = (state = {}, action) => {
         score,
         tags,
         title,
-        upvoters
+        upvoters,
+        id
       }
     default:
       return state;

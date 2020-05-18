@@ -57,7 +57,7 @@ let Feed = props => {
               </div>
               <button onClick={() => setTagFiltering(false)}>Clear</button>
             </div> : null}
-          <div className='postsDiv'>
+          <div className={'postsDiv'}>
             {sortedPosts.map((post, index) => {
               return (
                 <Post 
@@ -67,6 +67,7 @@ let Feed = props => {
                   handleClickingBack={null}
                   handleFilterTag={handleFilterTag}
                   handleViewingProfile={props.handleViewingProfile}
+                  darkMode={props.darkMode}
                   post={post}
                   key={index}/>
               );
@@ -94,7 +95,8 @@ let Feed = props => {
 
 const mapStateToProps = state => {
   return {
-    currentPost: state.currentPost
+    currentPost: state.currentPost,
+    darkMode: state.darkMode
   }
 }
 
