@@ -13,6 +13,7 @@ let Profile = props => {
   const [currentProfile, setCurrentProfile] = useState(null);
   const posts = useSelector(state => state.firestore.ordered.posts);
   const currentUserProfile = db.collection('profiles').doc(props.user.id);
+  // const [currentlyLoggedInProfile, setCurrentlyLoggedInProfile] = useState(props.currentlyLoggedInProfile)
 
   useEffect(() => {
     currentUserProfile.get().then(function(profile) {
@@ -143,6 +144,7 @@ let Profile = props => {
           setShowConfirmationWindow(false);
           props.setCurrentlyLoggedInProfile({
             ...props.currentlyLoggedInProfile,
+            githubProfile: currentProfileInput,
             githubProfilePic: data.avatar_url,
             githubBio: data.bio,
             githubFollowers: data.followers,
@@ -161,6 +163,8 @@ let Profile = props => {
   //=======================================================
 
   let inputElement;
+  console.log('currentlyLoggedInProfile in Profile.js');
+  console.log(props.currentlyLoggedInProfile);
   return (
     <div className='profileBackground'>
       <div className='profile'>
