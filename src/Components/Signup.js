@@ -40,6 +40,7 @@ function Signup() {
               email: email,
               profilePic: null,
               following: [],
+              githubProfile: null,
               creationTime: db.FieldValue.serverTimestamp()
             }
           )

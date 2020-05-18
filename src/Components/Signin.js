@@ -30,6 +30,7 @@ function Signin(props) {
       {auth.currentUser != null ? () => {
             props.setOnSignIn(false);
             history.push('/posts');
+            return null;
           } : null}
       <Logo imageHeight='50px' fontSize='30px'/>
       <form className='signinForm' onSubmit={doSignIn}>

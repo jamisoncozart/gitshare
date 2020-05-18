@@ -109,7 +109,6 @@ const Post = props => {
   }
 
   const [showCommentForm, setShowCommentForm] = useState(false);
-  console.log(props.post);
   const comments = useSelector(state => state.firestore.ordered.comments);
   if(isLoaded(comments)) {
     const postComments = comments.filter(comment => comment.parentPostID == props.post.id);

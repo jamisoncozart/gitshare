@@ -73,18 +73,21 @@ let App = props => {
         <LandingPage />
       </Route>
       <Route path='/'>
-        {auth.currentUser == null ? () => {
-            setOnSignIn(true);
-            history.push('/signin');
-          } : null}
-        <Header 
-          currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} 
-          handleSignOut={setAuthToggle}
-          handlePressingSidebarButton={handlePressingSidebarButton}/>
-        {authContent}   
-        <FooterNav 
-          handleNavToProfile={handleNavToProfile} 
-          handleNavToFeed={handleNavToFeed} />
+        <React.Fragment>
+          {auth.currentUser == null ? () => {
+              setOnSignIn(true);
+              history.push('/signin');
+              return null;
+            } : null}
+          <Header 
+            currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} 
+            handleSignOut={setAuthToggle}
+            handlePressingSidebarButton={handlePressingSidebarButton}/>
+          {authContent}   
+          <FooterNav 
+            handleNavToProfile={handleNavToProfile} 
+            handleNavToFeed={handleNavToFeed} />
+        </React.Fragment>
       </Route>
     </Switch>
   );

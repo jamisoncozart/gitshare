@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import firebase from 'firebase/app';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Modal from '../Modal';
 
 let Profile = props => {
   const history = useHistory();
@@ -111,6 +112,42 @@ let Profile = props => {
     history.push('/posts');
   }
 
+  //========================================================
+  // GITHUB PROFILE DATA
+
+  const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
+  const [currentProfileInput, setCurrentProfileInput] = useState("");
+
+  function handleGitHubProfileSubmission(event) {
+    event.preventDefault();
+    setShowConfirmationWindow(true);
+    setCurrentProfileInput(event.target.gitHubProfile.value);
+  }
+
+  function handleProfileConfirmation() {
+    console.log('inside fetch function');
+    fetch(`https://api.github.com/users/${currentProfileInput}`)
+      .then(response => response.json())
+      .then(data => {
+        props.currentLoggedInUserQuery.update({
+          githubProfile: currentProfileInput,
+          githubProfilePic: data.avatar_url,
+          githubBio: data.bio,
+          githubFollowers: data.followers,
+          githubName: data.name,
+          githubRepoNumber: data.public_repos,
+          githubPersonalWebsiteLink: data.blog ? data.blog : null
+        }).catch(error => {
+          console.log(error);
+        });
+        setShowConfirmationWindow(false);
+      }).catch(error => {
+        console.log(error);
+      });
+  }
+
+  //=======================================================
+
   let inputElement;
   return (
     <div className='profileBackground'>
@@ -148,8 +185,31 @@ let Profile = props => {
               )}
               <h2>{currentProfile.displayName}</h2>
             </div>
+            <div className='gitHubData'>
+              {props.currentlyLoggedInProfile.displayName == props.user.name && props.currentlyLoggedInProfile.githubProfile == null ? (
+                <form onSubmit={handleGitHubProfileSubmission}>
+                  <input type='text' name='gitHubProfile' placeholder='GitHub Username' required/>
+                  <button 
+                    onClick={() => setShowConfirmationWindow(true)} 
+                    className='gitHubButton'>
+                      Link GitHub
+                  </button>
+                </form>
+              ) : null }
+              {props.currentlyLoggedInProfile.githubProfile != null ? (
+                <div className='githubProfile'>
+                  <h4>GitHub Profile:</h4>
+                  <div className='githubProfileHeader'>
+                    <div className="gitHubProfileImgDiv">
+                      <img src={props.currentlyLoggedInProfile.githubProfilePic} />
+                    </div>
+                    <h3>{props.currentlyLoggedInProfile.githubProfile}</h3>
+                  </div>
+                </div>
+              ) : null}
+            </div>
             <h4 className='topPostTitle'>Top Posts:</h4>
-            <div className='posts'>
+            <div className='profilePosts'>
               {topPosts.map((post, index) => {
                 if(index < 6) {
                   return (
@@ -167,6 +227,12 @@ let Profile = props => {
           <h3>Loading...</h3>
         }
       </div>
+      {showConfirmationWindow ? 
+        <Modal 
+          currentProfileInput={currentProfileInput} 
+          setShowConfirmationWindow={setShowConfirmationWindow}
+          handleProfileConfirmation={handleProfileConfirmation}/> 
+        : null}
     </div>
   )
 }
