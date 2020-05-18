@@ -1,11 +1,14 @@
 import React from 'react';
 import { useFirestore, isLoaded } from 'react-redux-firebase';
 import firebase from 'firebase/app';
+import { useHistory } from 'react-router-dom';
 
 const NewPostForm = props => {
+  const history = useHistory();
   const db = useFirestore();
   function addPostToDb(event) {
     event.preventDefault();
+    history.push('/posts');
     return db.collection('posts').add(
       {
         title: event.target.title.value,
@@ -26,7 +29,7 @@ const NewPostForm = props => {
 
   return (
     <div className='newPostFormDiv'>
-      <form className='siginForm' onSubmit={addPostToDb}>
+      <form id='newPostForm' className='siginForm' onSubmit={addPostToDb}>
         <h2>New Post</h2>
         <input 
           name='title' 

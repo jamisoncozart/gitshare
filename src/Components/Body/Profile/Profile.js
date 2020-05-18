@@ -12,6 +12,7 @@ let Profile = props => {
   const db = useFirestore();
   const [currentProfile, setCurrentProfile] = useState(null);
   const posts = useSelector(state => state.firestore.ordered.posts);
+  const profiles = useSelector(state => state.firestore.ordered.profiles);
   const currentUserProfile = db.collection('profiles').doc(props.user.id);
   // const [currentlyLoggedInProfile, setCurrentlyLoggedInProfile] = useState(props.currentlyLoggedInProfile)
 
@@ -127,23 +128,23 @@ let Profile = props => {
 
   function handleProfileConfirmation() {
     console.log('inside fetch function');
-    let apiData;
-    fetch(`https://api.github.com/users/${currentProfileInput}`)
-      .then(response => response.json())
-      .then(data => {
-        apiData = data;
-        props.currentLoggedInUserQuery.update({
-          githubProfile: currentProfileInput,
-          githubProfilePic: data.avatar_url,
-          githubBio: data.bio,
-          githubFollowers: data.followers,
-          githubName: data.name,
-          githubRepoNumber: data.public_repos,
-          githubPersonalWebsiteLink: data.blog ? data.blog : null
-        }).then(() => {
-          setShowConfirmationWindow(false);
-          props.setCurrentlyLoggedInProfile({
-            ...props.currentlyLoggedInProfile,
+    let uniqueProfile = () => {
+      profiles.forEach(profile => {
+        console.log(profile);
+        if(profile.githubProfile == currentProfileInput) {
+          return false;
+        }
+      })
+      return true;
+    };
+    console.log(uniqueProfile);
+    if(uniqueProfile) {
+      let apiData;
+      fetch(`https://api.github.com/users/${currentProfileInput}`)
+        .then(response => response.json())
+        .then(data => {
+          apiData = data;
+          props.currentLoggedInUserQuery.update({
             githubProfile: currentProfileInput,
             githubProfilePic: data.avatar_url,
             githubBio: data.bio,
@@ -151,13 +152,27 @@ let Profile = props => {
             githubName: data.name,
             githubRepoNumber: data.public_repos,
             githubPersonalWebsiteLink: data.blog ? data.blog : null
+          }).then(() => {
+            setShowConfirmationWindow(false);
+            props.setCurrentlyLoggedInProfile({
+              ...props.currentlyLoggedInProfile,
+              githubProfile: currentProfileInput,
+              githubProfilePic: data.avatar_url,
+              githubBio: data.bio,
+              githubFollowers: data.followers,
+              githubName: data.name,
+              githubRepoNumber: data.public_repos,
+              githubPersonalWebsiteLink: data.blog ? data.blog : null
+            });
+          }).catch(error => {
+            console.log(error);
           });
         }).catch(error => {
           console.log(error);
         });
-      }).catch(error => {
-        console.log(error);
-      });
+    } else {
+      alert('That profile is already being used');
+    }
   }
 
   //=======================================================
