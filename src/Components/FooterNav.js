@@ -1,64 +1,96 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 
 function FooterNav(props) {
   const iconPath = process.env.PUBLIC_URL + '/assets/';
-  const location = useLocation();
-  const [currentView, setCurrentView] = useState(`${location.pathname}`);
 
   const handleClickingFeed = () => {
-    setCurrentView('/posts');
+    const action = {
+      type: 'CHANGE_CURRENT_VIEW',
+      view: '/posts'
+    }
+    props.dispatch(action);
     props.handleNavToFeed()
   }
 
   const changeToCurrentUserProfile = () => {
     props.handleNavToProfile(true);
-    setCurrentView('/profile')
+    const action = {
+      type: 'CHANGE_CURRENT_VIEW',
+      view: '/profile'
+    }
+    props.dispatch(action);
   }
+
+  const handleNavToSaved = () => {
+    const action = {
+      type: 'CHANGE_CURRENT_VIEW',
+      view: '/saved'
+    }
+    props.dispatch(action);
+  }
+
+  const handleNavToNewPost = () => {
+    const action = {
+      type: 'CHANGE_CURRENT_VIEW',
+      view: '/newPost'
+    }
+    props.dispatch(action);
+  }
+
+  const handleNavToFollows = () => {
+    const action = {
+      type: 'CHANGE_CURRENT_VIEW',
+      view: '/follows'
+    }
+    props.dispatch(action);
+  }
+
+  console.log('footer refreshed');
 
   return (
     <div className={props.darkMode ? 'darkFooter' : 'footer'}>
       <Link 
         onClick={handleClickingFeed} 
         className={classNames({
-          'navActive': currentView === '/posts' && !props.darkMode, 
+          'navActive': props.currentView === '/posts' && !props.darkMode, 
           'navLink': !props.darkMode,
-          'darkNavActive': currentView === '/posts' && props.darkMode,
+          'darkNavActive': props.currentView === '/posts' && props.darkMode,
           'darkNavLink': props.darkMode 
         })} 
         to='/posts'>
           <img src={props.darkMode ? `${iconPath}Home_white.png` : `${iconPath}Home_black.png`} />
       </Link>
       <Link 
-        onClick={() => setCurrentView('/saved')} 
+        onClick={handleNavToSaved} 
         className={classNames({
-          'navActive': currentView === '/saved' && !props.darkMode, 
+          'navActive': props.currentView === '/saved' && !props.darkMode, 
           'navLink': !props.darkMode,
-          'darkNavActive': currentView === '/saved' && props.darkMode,
+          'darkNavActive': props.currentView === '/saved' && props.darkMode,
           'darkNavLink': props.darkMode 
         })}
         to='/saved'>
           <img src={props.darkMode ? `${iconPath}Save_white.png` : `${iconPath}Save_black.png`} />
       </Link>
       <Link 
-        onClick={() => setCurrentView('/newPost')} 
+        onClick={handleNavToNewPost} 
         className={classNames({
-          'navActive': currentView === '/newPost' && !props.darkMode, 
+          'navActive': props.currentView === '/newPost' && !props.darkMode, 
           'navLink': !props.darkMode,
-          'darkNavActive': currentView === '/newPost' && props.darkMode,
+          'darkNavActive': props.currentView === '/newPost' && props.darkMode,
           'darkNavLink': props.darkMode 
         })}
         to='/newPost'>
           <img src={props.darkMode ? `${iconPath}New_white.png` : `${iconPath}New_black.png`} />
       </Link>
       <Link 
-        onClick={() => setCurrentView('/follows')} 
+        onClick={handleNavToFollows} 
         className={classNames({
-          'navActive': currentView === '/follows' && !props.darkMode, 
+          'navActive': props.currentView === '/follows' && !props.darkMode, 
           'navLink': !props.darkMode,
-          'darkNavActive': currentView === '/follows' && props.darkMode,
+          'darkNavActive': props.currentView === '/follows' && props.darkMode,
           'darkNavLink': props.darkMode 
         })}  
         to='/follows'>
@@ -67,9 +99,9 @@ function FooterNav(props) {
       <Link 
         onClick={changeToCurrentUserProfile} 
         className={classNames({
-          'navActive': currentView === '/profile' && !props.darkMode, 
+          'navActive': props.currentView === '/profile' && !props.darkMode, 
           'navLink': !props.darkMode,
-          'darkNavActive': currentView === '/profile' && props.darkMode,
+          'darkNavActive': props.currentView === '/profile' && props.darkMode,
           'darkNavLink': props.darkMode 
         })}  
         to='/profile'>
@@ -81,6 +113,7 @@ function FooterNav(props) {
 
 const mapStateToProps = state => {
   return {
+    currentView: state.currentView,
     darkMode: state.darkMode
   }
 }

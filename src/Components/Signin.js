@@ -25,13 +25,22 @@ function Signin(props) {
     margin: '20px'
   }
 
+  function handleRedirectToPosts() {
+    if(auth.currentUser != null) {
+      props.setOnSignIn(false);
+      history.push('/posts');
+      const action = {
+        type: 'CHANGE_CURRENT_VIEW',
+        view: '/posts'
+      }
+      props.dispatch(action);
+    }
+    return null
+  }
+
   return (
     <div className='signin'>
-      {auth.currentUser != null ? () => {
-            props.setOnSignIn(false);
-            history.push('/posts');
-            return null;
-          } : null}
+      {handleRedirectToPosts}
       <Logo imageHeight='50px' fontSize='30px'/>
       <form className='signinForm' onSubmit={doSignIn}>
         <h2>Sign In</h2>

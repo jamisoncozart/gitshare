@@ -2,12 +2,18 @@ import React from 'react';
 import { useFirestore, isLoaded } from 'react-redux-firebase';
 import firebase from 'firebase/app';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const NewPostForm = props => {
+let NewPostForm = props => {
   const history = useHistory();
   const db = useFirestore();
   function addPostToDb(event) {
     event.preventDefault();
+    const action = {
+      type: 'CHANGE_CURRENT_VIEW',
+      view: '/posts'
+    }
+    props.dispatch(action);
     history.push('/posts');
     return db.collection('posts').add(
       {
@@ -56,5 +62,7 @@ const NewPostForm = props => {
     </div>
   );
 }
+
+NewPostForm = connect()(NewPostForm);
 
 export default NewPostForm;

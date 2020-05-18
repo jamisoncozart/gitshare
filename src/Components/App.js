@@ -40,6 +40,11 @@ let App = props => {
     if(!onSignIn) {
       setOnSignIn(true);
       history.push('/signin');
+      // const action = {
+      //   type: 'CHANGE_CURRENT_VIEW',
+      //   view: '/signin'
+      // }
+      // props.dispatch(action);
     }
   } else if((isLoaded(auth)) && (auth.currentUser != null)) {
     authContent = <Body 
@@ -61,6 +66,19 @@ let App = props => {
     }
   }
 
+  function handleRedirectToSignin() {
+    if(auth.currentUser == null) {
+      setOnSignIn(true);
+      history.push('/signin');
+      // const action = {
+      //   type: 'CHANGE_CURRENT_VIEW',
+      //   view: '/signin'
+      // }
+      // props.dispatch(action);
+    }
+    return null;
+  }
+
   return(
     <Switch>
       <Route path='/signup'>
@@ -74,11 +92,7 @@ let App = props => {
       </Route>
       <Route path='/'>
         <React.Fragment>
-          {auth.currentUser == null ? () => {
-              setOnSignIn(true);
-              history.push('/signin');
-              return null;
-            } : null}
+          {handleRedirectToSignin}
           <Header 
             currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} 
             handleSignOut={setAuthToggle}
