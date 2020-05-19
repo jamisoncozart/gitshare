@@ -1,12 +1,9 @@
 import React from 'react';
-import { useFirestore, isLoaded } from 'react-redux-firebase';
-import firebase from 'firebase/app';
+import { useFirestore } from 'react-redux-firebase';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 let NewPostForm = props => {
-  console.log('CURRENT USER IN NEWPOSTFORM')
-  console.log(props.currentUser);
   const history = useHistory();
   const db = useFirestore();
   function addPostToDb(event) {
@@ -32,8 +29,6 @@ let NewPostForm = props => {
       console.log(error);
     });
   }
-
-  // FOR TAGS, USE onChange() HANDLER FOR INPUT TO CREATE Tag COMPONENTS FOR ALL WORDS SEPARATED BY SPACES
 
   return (
     <div className='newPostFormDiv'>

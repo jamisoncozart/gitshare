@@ -61,7 +61,6 @@ let Profile = props => {
             following: [...currentProfile.following, {name: props.currentUser.name, id: props.currentUser.id}]
           });
           setFollowing(true);
-          // props.handleRefreshingCurrentlyLoggedInUser();
         }).catch(function(error) {
           console.log(error);
         });

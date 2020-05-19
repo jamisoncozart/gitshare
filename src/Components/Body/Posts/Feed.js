@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux'
-import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
+import { useFirestoreConnect, isLoaded } from 'react-redux-firebase';
 import Post from './Post';
 import Tag from './Tag';
 import { connect } from 'react-redux';

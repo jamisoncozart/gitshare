@@ -6,32 +6,23 @@ import Header from './Header';
 import FooterNav from './FooterNav';
 import LandingPage from './LandingPage';
 import Body from './Body/Body';
-import { Switch, Route, Link, useHistory } from 'react-router-dom';
+import { Switch, Route, useHistory } from 'react-router-dom';
 import { withFirestore, isLoaded } from 'react-redux-firebase';
 import '../App.css';
 
 let App = props => {
-
   const [authToggle, setAuthToggle] = useState(false);
   const [onSignIn, setOnSignIn] = useState(false);
-  // const [userViewingOwnProfile, setUserViewingOwnProfile] = useState(true);
   const history = useHistory();
-
   const [sortByTop, setSortByTop] = useState(false);
   const [sortByNew, setSortByNew] = useState(false);
   const [sortByFollow, setSortByFollow] = useState(false);
-
-  // const handleNavToProfile = (bool) => {
-  //   setUserViewingOwnProfile(bool)
-  // }
-
   const handleNavToFeed = () => {
     const action = {
       type: 'HIDE_DETAILS'
     }
     props.dispatch(action);
   }
-
   console.log('App rendered 😀');
   const [userSignedIn, setUserSignedIn] = useState(false);
   const auth = props.firebase.auth();
@@ -44,9 +35,7 @@ let App = props => {
       history.push('/signin');
     }
   } else if((isLoaded(auth)) && (auth.currentUser != null)) {
-    authContent = <Body 
-      // userViewingOwnProfile={userViewingOwnProfile} 
-      // handleNavToProfile={handleNavToProfile}
+    authContent = <Body
       sortFeedObj={{sortByTop, sortByNew, sortByFollow}}
       currentlyLoggedUser={{
         name: auth.currentUser.displayName,
@@ -112,7 +101,6 @@ let App = props => {
                 id: ''
               }
             }
-            // handleNavToProfile={handleNavToProfile} 
             handleNavToFeed={handleNavToFeed} />
         </React.Fragment>
       </Route>
