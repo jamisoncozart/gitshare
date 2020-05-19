@@ -64,7 +64,7 @@ let Feed = props => {
                 <p>Filtering by: </p>
                 <Tag name={filterTag} />
               </div>
-              <button onClick={() => setTagFiltering(false)}>Clear</button>
+              <button className='clearButton' onClick={() => setTagFiltering(false)}>Clear</button>
             </div> 
             {sortedPosts.map((post, index) => {
               return (

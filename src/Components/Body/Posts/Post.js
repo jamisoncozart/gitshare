@@ -96,6 +96,7 @@ const Post = props => {
 
   const handleCommentSubmission = event => {
     event.preventDefault();
+    setShowCommentForm(false);
     db.collection('comments').add(
       {
         text: event.target.comment.value,
@@ -163,7 +164,7 @@ const Post = props => {
             ) : null}
             {postComments.map((comment, index) => {
               return(
-                <Comment darkMode={props.darkMode} currentUser={props.currentUser} comment={comment} key={index} />
+                <Comment darkMode={props.darkMode} currentUser={props.currentUser} comment={comment} key={comment.id} />
               )
             })}
           </div>

@@ -27,11 +27,17 @@ let Profile = props => {
   const userPosts = posts.filter(post => post.author == props.user.name);
   topPosts = userPosts.sort((a, b) => b.score - a.score);
 
-  let currentlyFollowing = false;
-  if(props.currentlyLoggedInProfile.following.includes(props.user.name)) {
-    currentlyFollowing = true;
+  const [following, setFollowing] = useState(false);
+  if(currentProfile && !following) {
+    for(let i = 0; i < props.currentlyLoggedInProfile.following.length; i++) {
+      if(props.currentlyLoggedInProfile.following[i].name == currentProfile.displayName) {
+        setFollowing(true);
+        break;
+      }
+    }
   }
-  const [following, setFollowing] = useState(currentlyFollowing);
+  console.log('following');
+  console.log(following);
   const handleClickingFollow = () => {
     if(props.currentlyLoggedInProfile != null) { 
       if(following) {
@@ -65,7 +71,6 @@ let Profile = props => {
   const handleProfilePicSubmission = event => {
     const fileType = event.target.files[0].type;
     const file = event.target.files[0];
-    console.log(file);
     const metadata = {
       contentType: fileType
     }
@@ -90,7 +95,6 @@ let Profile = props => {
         }
       }, function() {
         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-          console.log(downloadURL);
           currentUserProfile.update({
             profilePic: downloadURL
           }).then(function() {
@@ -133,14 +137,12 @@ let Profile = props => {
     console.log('inside fetch function');
     let uniqueProfile = () => {
       profiles.forEach(profile => {
-        console.log(profile);
         if(profile.githubProfile == currentProfileInput) {
           return false;
         }
       })
       return true;
     };
-    console.log(uniqueProfile);
     if(uniqueProfile) {
       let apiData;
       fetch(`https://api.github.com/users/${currentProfileInput}`)
@@ -181,8 +183,6 @@ let Profile = props => {
   //=======================================================
 
   let inputElement;
-  console.log('currentlyLoggedInProfile in Profile.js');
-  console.log(props.currentlyLoggedInProfile);
   return (
     <div className='profileBackground'>
       <div className='profile'>

@@ -35,6 +35,7 @@ const Comment = props => {
     event.preventDefault();
     //add reply to comment in firebase
     const thisComment = db.collection('comments').doc(props.comment.id);
+    setShowCommentReplyForm(false);
     thisComment.update({
       replies: [...props.comment.replies, {body: event.target.body.value, author: props.currentUser.name}]
     }).catch(function(error) {
