@@ -2,8 +2,9 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import firebase from 'firebase/app';
 import Particles from 'react-particles-js';
+import { connect } from 'react-redux';
 
-const LandingPage = props => {
+let LandingPage = props => {
   const history = useHistory();
   const auth = firebase.auth();
 
@@ -11,6 +12,11 @@ const LandingPage = props => {
     if(auth.currentUser == null) {
       history.push('/signin');
     } else {
+      const action = {
+        type: 'CHANGE_CURRENT_VIEW',
+        view: '/posts'
+      }
+      props.dispatch(action);
       history.push('/posts');
     }
   }
@@ -92,5 +98,7 @@ const LandingPage = props => {
     </React.Fragment>
   );
 }
+
+LandingPage = connect()(LandingPage);
 
 export default LandingPage;

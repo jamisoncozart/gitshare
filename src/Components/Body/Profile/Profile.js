@@ -222,7 +222,6 @@ let Profile = props => {
     data = {
       labels: [...Object.keys(props.currentlyLoggedInProfile.githubActivity).reverse()],
       datasets: [{
-        label: 'GitHub Activity',
         fill: false,
         lineTension: 0.1,
         backgroundColor: 'rgba(75,192,192,0.4)',
@@ -334,7 +333,7 @@ let Profile = props => {
                     <p><strong>Bio:</strong> {props.currentlyLoggedInProfile.githubBio}</p>
                     {props.currentlyLoggedInProfile.githubPersonalWebsiteLink ? 
                       <p>
-                        <strong>Website:</strong> 
+                        <strong>Website: </strong> 
                         <a href={props.currentlyLoggedInProfile.githubPersonalWebsiteLink}>
                           {props.currentlyLoggedInProfile.githubPersonalWebsiteLink}
                         </a>
@@ -343,7 +342,8 @@ let Profile = props => {
                   <button>Get Languages</button>
                   {showActivity && props.currentlyLoggedInProfile.githubActivity ? (
                     <div className='activityDataVis'>
-                      <Line data={data} />
+                      <h4>GitHub Activity</h4>
+                      <Line data={data} legend={{display: false}} />
                     </div>
                   ) : 
                     <button onClick={handleGettingGithubActivity}>Get Activity</button>
