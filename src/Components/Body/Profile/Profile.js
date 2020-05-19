@@ -6,6 +6,7 @@ import firebase from 'firebase/app';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from '../Modal';
+import { Doughnut } from 'react-chartjs-2';
 
 let Profile = props => {
   const history = useHistory();
@@ -134,13 +135,12 @@ let Profile = props => {
   }
 
   function handleProfileConfirmation() {
-    console.log('inside fetch function');
     let uniqueProfile = () => {
       profiles.forEach(profile => {
         if(profile.githubProfile == currentProfileInput) {
           return false;
         }
-      })
+      });
       return true;
     };
     if(uniqueProfile) {
@@ -179,7 +179,64 @@ let Profile = props => {
       alert('That profile is already being used');
     }
   }
-
+  let initialShowActivity = false;
+  if(props.currentlyLoggedInProfile.githubActivity) {
+    initialShowActivity = true;
+  }
+  const [showActivity, setShowActivity] = useState(initialShowActivity);
+  function handleGettingGithubActivity() {
+    if(props.currentlyLoggedInProfile.githubRepoNumber > 0) {
+      fetch(`https://api.github.com/users/${props.currentlyLoggedInProfile.githubProfile}/events`)
+        .then(response => response.json())
+        .then(data => {
+          const reducedActivityData = data.reduce((accumulator, event) => {
+            let date = event.created_at.split('').splice(0, event.created_at.indexOf('T')).join('');
+            return {
+              ...accumulator, 
+              [date]: (accumulator[date] || 0) + 1
+            }
+          }, {});
+          props.currentLoggedInUserQuery.update({
+            githubActivity: reducedActivityData
+          }).then(() => {
+            props.setCurrentlyLoggedInProfile({
+              ...props.currentlyLoggedInProfile,
+              githubActivity: reducedActivityData
+            });
+            setShowActivity(true);
+          }).catch(error => {
+            console.log(error);
+          });
+        }).catch(error => {
+          console.log(error);
+        });
+    }
+  }
+  let data;
+  if(props.currentlyLoggedInProfile.githubActivity) {
+    data = {
+      labels: [...Object.keys(props.currentlyLoggedInProfile.githubActivity)],
+      datasets: [{
+        data: [...Object.values(props.currentlyLoggedInProfile.githubActivity)],
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#36FF36',
+          '#1225FF',
+          '#FF2536'
+        ],
+        hoverBackgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56',
+          '#36FF36',
+          '#1225FF',
+          '#FF2536'
+        ]
+      }]
+    };
+  }
   //=======================================================
 
   let inputElement;
@@ -196,7 +253,7 @@ let Profile = props => {
             <div className='profileTop'>
               {currentProfile.profilePic == null && props.currentlyLoggedInProfile.displayName == props.user.name ? (
                 <div onClick={() => inputElement.click()} className='profileImgDiv'>
-                  <p>Upload</p>
+                  <p>Upload<br/>Image</p>
                   <form style={{display: 'none'}}>
                     <input 
                       ref={input => inputElement = input}
@@ -255,7 +312,13 @@ let Profile = props => {
                     <p><strong>Website:</strong> <a href={props.currentlyLoggedInProfile.githubPersonalWebsiteLink}>{props.currentlyLoggedInProfile.githubPersonalWebsiteLink}</a></p>
                   </div>
                   <button>Get Languages</button>
-                  <button>Get Activity</button>
+                  {showActivity && props.currentlyLoggedInProfile.githubActivity ? (
+                    <div className='activityDataVis'>
+                      <Doughnut data={data} />
+                    </div>
+                  ) : 
+                    <button onClick={handleGettingGithubActivity}>Get Activity</button>
+                  }
                 </div>
               ) : null}
             </div>
