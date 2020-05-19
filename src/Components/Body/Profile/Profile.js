@@ -6,7 +6,7 @@ import firebase from 'firebase/app';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from '../Modal';
-import { Doughnut } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 
 let Profile = props => {
   const history = useHistory();
@@ -184,6 +184,7 @@ let Profile = props => {
     initialShowActivity = true;
   }
   const [showActivity, setShowActivity] = useState(initialShowActivity);
+  const monthArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   function handleGettingGithubActivity() {
     if(props.currentlyLoggedInProfile.githubRepoNumber > 0) {
       fetch(`https://api.github.com/users/${props.currentlyLoggedInProfile.githubProfile}/events`)
@@ -191,11 +192,15 @@ let Profile = props => {
         .then(data => {
           const reducedActivityData = data.reduce((accumulator, event) => {
             let date = event.created_at.split('').splice(0, event.created_at.indexOf('T')).join('');
+            let dateArr = date.split('-');
+            let month = monthArr[parseInt(dateArr[1])]
+            date = `${month} ${dateArr[2]}`;
             return {
               ...accumulator, 
               [date]: (accumulator[date] || 0) + 1
             }
           }, {});
+          console.log(reducedActivityData);
           props.currentLoggedInUserQuery.update({
             githubActivity: reducedActivityData
           }).then(() => {
@@ -215,9 +220,27 @@ let Profile = props => {
   let data;
   if(props.currentlyLoggedInProfile.githubActivity) {
     data = {
-      labels: [...Object.keys(props.currentlyLoggedInProfile.githubActivity)],
+      labels: [...Object.keys(props.currentlyLoggedInProfile.githubActivity).reverse()],
       datasets: [{
-        data: [...Object.values(props.currentlyLoggedInProfile.githubActivity)],
+        label: 'GitHub Activity',
+        fill: false,
+        lineTension: 0.1,
+        backgroundColor: 'rgba(75,192,192,0.4)',
+        borderColor: 'rgba(75,192,192,1)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointBorderColor: 'rgba(75,192,192,1)',
+        pointBackgroundColor: '#fff',
+        pointBorderWidth: 1,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+        pointHoverBorderColor: 'rgba(220,220,220,1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 1,
+        pointHitRadius: 10,
+        data: [...Object.values(props.currentlyLoggedInProfile.githubActivity).reverse()],
         backgroundColor: [
           '#FF6384',
           '#36A2EB',
@@ -309,12 +332,18 @@ let Profile = props => {
                   </div>
                   <div className='githubBodyInfo'>
                     <p><strong>Bio:</strong> {props.currentlyLoggedInProfile.githubBio}</p>
-                    <p><strong>Website:</strong> <a href={props.currentlyLoggedInProfile.githubPersonalWebsiteLink}>{props.currentlyLoggedInProfile.githubPersonalWebsiteLink}</a></p>
+                    {props.currentlyLoggedInProfile.githubPersonalWebsiteLink ? 
+                      <p>
+                        <strong>Website:</strong> 
+                        <a href={props.currentlyLoggedInProfile.githubPersonalWebsiteLink}>
+                          {props.currentlyLoggedInProfile.githubPersonalWebsiteLink}
+                        </a>
+                      </p> : null}
                   </div>
                   <button>Get Languages</button>
                   {showActivity && props.currentlyLoggedInProfile.githubActivity ? (
                     <div className='activityDataVis'>
-                      <Doughnut data={data} />
+                      <Line data={data} />
                     </div>
                   ) : 
                     <button onClick={handleGettingGithubActivity}>Get Activity</button>
