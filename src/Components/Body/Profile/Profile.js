@@ -9,19 +9,16 @@ import Modal from '../Modal';
 import { Line } from 'react-chartjs-2';
 
 let Profile = props => {
+  
   const history = useHistory();
   const db = useFirestore();
   const [currentProfile, setCurrentProfile] = useState(null);
   const posts = useSelector(state => state.firestore.ordered.posts);
   const profiles = useSelector(state => state.firestore.ordered.profiles);
   const currentUserProfile = db.collection('profiles').doc(props.currentUser.id);
-  console.log('currentProfile in Profile.js');
-  console.log(currentProfile);
 
   useEffect(() => {
     currentUserProfile.get().then(function(profile) {
-      console.log('profile from useEffect');
-      console.log(profile.data());
       setCurrentProfile(profile.data());
     }).catch(function(error) {
       console.log(error.message);
@@ -35,31 +32,36 @@ let Profile = props => {
   const [following, setFollowing] = useState(false);
   if(currentProfile && !following) {
     for(let i = 0; i < props.currentlyLoggedInProfile.following.length; i++) {
-      if(props.currentlyLoggedInProfile.following[i].name == currentProfile.displayName) {
+      if(props.currentlyLoggedInProfile.following[i].name == props.currentUser.name) {
         setFollowing(true);
         break;
       }
     }
   }
-  console.log('following');
-  console.log(following);
   const handleClickingFollow = () => {
     if(props.currentlyLoggedInProfile != null) { 
       if(following) {
         props.currentLoggedInUserQuery.update({
           following: props.currentlyLoggedInProfile.following.filter(user => user.name != props.currentUser.name)
         }).then(function() {
+          setCurrentProfile({
+            ...currentProfile,
+            following: currentProfile.following.filter(user => user.name != props.currentUser.name)
+          });
           setFollowing(false);
-          props.handleRefreshingCurrentlyLoggedInUser();
         }).catch(function(error) {
           console.log(error);
         });
       } else {
         props.currentLoggedInUserQuery.update({
-          following: [...props.currentlyLoggedInProfile.following, {name: props.user.name, id: props.currentUser.id}]
+          following: [...props.currentlyLoggedInProfile.following, {name: props.currentUser.name, id: props.currentUser.id}]
         }).then(function() {
+          setCurrentProfile({
+            ...currentProfile,
+            following: [...currentProfile.following, {name: props.currentUser.name, id: props.currentUser.id}]
+          });
           setFollowing(true);
-          props.handleRefreshingCurrentlyLoggedInUser();
+          // props.handleRefreshingCurrentlyLoggedInUser();
         }).catch(function(error) {
           console.log(error);
         });
@@ -128,7 +130,6 @@ let Profile = props => {
 
   //========================================================
   // GITHUB PROFILE DATA
-  console.log(currentProfile);
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
   const [currentProfileInput, setCurrentProfileInput] = useState("");
 
@@ -203,7 +204,6 @@ let Profile = props => {
               [date]: (accumulator[date] || 0) + 1
             }
           }, {});
-          console.log(reducedActivityData);
           props.currentLoggedInUserQuery.update({
             githubActivity: reducedActivityData
           }).then(() => {
@@ -263,7 +263,8 @@ let Profile = props => {
     };
   }
   //=======================================================
-
+  console.log('currentlyLoggedInProfile');
+  console.log(props.currentlyLoggedInProfile);
   let inputElement;
   return (
     <div className='profileBackground'>

@@ -5,6 +5,8 @@ import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 let NewPostForm = props => {
+  console.log('CURRENT USER IN NEWPOSTFORM')
+  console.log(props.currentUser);
   const history = useHistory();
   const db = useFirestore();
   function addPostToDb(event) {
@@ -15,20 +17,20 @@ let NewPostForm = props => {
     }
     props.dispatch(action);
     history.push('/posts');
-    return db.collection('posts').add(
-      {
-        title: event.target.title.value,
-        description: event.target.description.value,
-        score: 0,
-        author: props.currentUser.name,
-        authorID: props.currentUser.id,
-        tags: event.target.tags.value.split(' '),
-        upvoters: [],
-        savers: [],
-        repo: null,
-        creationTime: db.FieldValue.serverTimestamp()
-      }
-    );
+    return db.collection('posts').add({
+      title: event.target.title.value,
+      description: event.target.description.value,
+      score: 0,
+      author: props.currentUser.displayName,
+      authorID: props.currentUser.id,
+      tags: event.target.tags.value.split(' '),
+      upvoters: [],
+      savers: [],
+      repo: null,
+      creationTime: db.FieldValue.serverTimestamp()
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   // FOR TAGS, USE onChange() HANDLER FOR INPUT TO CREATE Tag COMPONENTS FOR ALL WORDS SEPARATED BY SPACES

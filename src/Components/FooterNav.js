@@ -16,7 +16,6 @@ let FooterNav = props => {
   }
 
   const changeToCurrentUserProfile = () => {
-    // props.handleNavToProfile(true);
     const action = {
       type: 'SET_CURRENT_USER',
       name: props.currentLoggedUser.name,
@@ -54,8 +53,6 @@ let FooterNav = props => {
     }
     props.dispatch(action);
   }
-
-  console.log('footer refreshed');
 
   return (
     <div className={props.darkMode ? 'darkFooter' : 'footer'}>
