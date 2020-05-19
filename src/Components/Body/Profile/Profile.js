@@ -137,7 +137,7 @@ let Profile = props => {
     setShowConfirmationWindow(true);
     setCurrentProfileInput(event.target.gitHubProfile.value);
   }
-
+  let apiData;
   function handleProfileConfirmation() {
     let uniqueProfile = () => {
       profiles.forEach(profile => {
@@ -148,7 +148,6 @@ let Profile = props => {
       return true;
     };
     if(uniqueProfile) {
-      let apiData;
       fetch(`https://api.github.com/users/${currentProfileInput}`)
         .then(response => response.json())
         .then(data => {
@@ -162,9 +161,8 @@ let Profile = props => {
             githubRepoNumber: data.public_repos,
             githubPersonalWebsiteLink: data.blog ? data.blog : null
           }).then(() => {
-            setShowConfirmationWindow(false);
-            props.setCurrentlyLoggedInProfile({
-              ...props.currentlyLoggedInProfile,
+            setCurrentProfile({
+              ...currentProfile,
               githubProfile: currentProfileInput,
               githubProfilePic: data.avatar_url,
               githubBio: data.bio,
@@ -173,6 +171,7 @@ let Profile = props => {
               githubRepoNumber: data.public_repos,
               githubPersonalWebsiteLink: data.blog ? data.blog : null
             });
+            setShowConfirmationWindow(false);
           }).catch(error => {
             console.log(error);
           });
@@ -208,8 +207,8 @@ let Profile = props => {
           props.currentLoggedInUserQuery.update({
             githubActivity: reducedActivityData
           }).then(() => {
-            props.setCurrentlyLoggedInProfile({
-              ...props.currentlyLoggedInProfile,
+            setCurrentProfile({
+              ...currentProfile,
               githubActivity: reducedActivityData
             });
             setShowActivity(true);
@@ -277,7 +276,7 @@ let Profile = props => {
                 className={following ? 'activeFollowButton' : 'inactiveFollowButton'}>Follow</button>
             ) : null}
             <div className='profileTop'>
-              {currentProfile.profilePic == null && props.currentlyLoggedInProfile.displayName == props.currentUser.name ? (
+              {currentProfile.profilePic == null && props.currentUser.currentUserProfile ? (
                 <div onClick={() => inputElement.click()} className='profileImgDiv'>
                   <p>Upload<br/>Image</p>
                   <form style={{display: 'none'}}>
@@ -303,7 +302,7 @@ let Profile = props => {
               <h2>{currentProfile.displayName}</h2>
             </div>
             <div className='gitHubData'>
-              {props.currentlyLoggedInProfile.displayName == props.currentUser.name && props.currentProfile.githubProfile == null ? 
+              {props.currentUser.currentUserProfile && currentProfile.githubProfile == null ? 
                 <form onSubmit={handleGitHubProfileSubmission}>
                   <input type='text' name='gitHubProfile' placeholder='GitHub Username' required/>
                   <button 
@@ -317,44 +316,46 @@ let Profile = props => {
                   <h4>GitHub Profile:</h4>
                   <div className='githubProfileHeader'>
                     <div className="gitHubProfileImgDiv">
-                      <img src={props.currentProfile.githubProfilePic} />
+                      <img src={currentProfile.githubProfilePic} />
                     </div>
-                    <h3>{props.currentProfile.githubProfile}</h3>
+                    <h3>{currentProfile.githubProfile}</h3>
                   </div>
                   <hr />
                   <div className='githubStats'>
                     <div className='stat'>
-                      <strong>{props.currentProfile.githubFollowers}</strong>
+                      <strong>{currentProfile.githubFollowers}</strong>
                       <p>Followers</p>
                     </div>
                     <div className='stat'>
-                      <strong>{props.currentProfile.githubRepoNumber}</strong>
+                      <strong>{currentProfile.githubRepoNumber}</strong>
                       <p>Repositories</p>
                     </div>
                   </div>
                   <div className='githubBodyInfo'>
-                    <p><strong>Bio:</strong> {props.currentProfile.githubBio}</p>
-                    {props.currentProfile.githubPersonalWebsiteLink ? 
+                    {currentProfile.githubBio ? 
+                      <p><strong>Bio:</strong> {currentProfile.githubBio}</p>
+                    : null}
+                    {currentProfile.githubPersonalWebsiteLink ? 
                       <p>
                         <strong>Website: </strong> 
-                        <a href={props.currentProfile.githubPersonalWebsiteLink}>
-                          {props.currentProfile.githubPersonalWebsiteLink}
+                        <a href={currentProfile.githubPersonalWebsiteLink}>
+                          {currentProfile.githubPersonalWebsiteLink}
                         </a>
                       </p> : null}
                   </div>
 
-                  {props.currentlyLoggedInProfile.displayName == props.currentUser.name ? 
+                  {props.currentUser.currentUserProfile ? 
                     <button>Get Languages</button>
                   : null}
 
-                  {showActivity && props.currentProfile.githubActivity ? (
+                  {showActivity && currentProfile.githubActivity ? (
                     <div className='activityDataVis'>
                       <h4>GitHub Activity</h4>
                       <Line data={data} legend={{display: false}} />
                     </div>
                   ) : 
                     <React.Fragment>
-                      {props.currentlyLoggedInProfile.displayName == props.currentUser.name ? 
+                      {props.currentUser.currentUserProfile ? 
                         <button onClick={handleGettingGithubActivity}>Get Activity</button>
                       : null}
                     </React.Fragment>
