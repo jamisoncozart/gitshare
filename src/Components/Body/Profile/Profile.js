@@ -222,7 +222,7 @@ let Profile = props => {
   let data;
   if(props.currentlyLoggedInProfile.githubActivity) {
     data = {
-      labels: [...Object.keys(props.currentlyLoggedInProfile.githubActivity).reverse()],
+      labels: [...Object.keys(props.currentlyLoggedInProfile.githubActivity)],
       datasets: [{
         fill: false,
         lineTension: 0.1,
@@ -241,7 +241,7 @@ let Profile = props => {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: [...Object.values(props.currentlyLoggedInProfile.githubActivity).reverse()],
+        data: [...Object.values(props.currentlyLoggedInProfile.githubActivity)],
         backgroundColor: [
           '#FF6384',
           '#36A2EB',

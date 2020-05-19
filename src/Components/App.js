@@ -32,7 +32,7 @@ let App = props => {
   } else if((isLoaded(auth)) && (auth.currentUser == null)) {
     if(!onSignIn) {
       setOnSignIn(true);
-      history.push('/signin');
+      history.push('/home');
     }
   } else if((isLoaded(auth)) && (auth.currentUser != null)) {
     authContent = <Body
@@ -67,8 +67,7 @@ let App = props => {
 
   function handleRedirectToSignin() {
     if(auth.currentUser == null) {
-      setOnSignIn(true);
-      history.push('/signin');
+      history.push('/home');
     }
     return null;
   }
