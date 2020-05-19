@@ -21,7 +21,6 @@ const FollowList = props => {
         {follows.map((follow, index) => {
           return (
             <Follow 
-              handleViewingProfile={props.handleViewingProfile} 
               followData={follow} 
               key={index} />
           );

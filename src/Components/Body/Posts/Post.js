@@ -5,10 +5,9 @@ import { Link } from 'react-router-dom';
 import { isLoaded, useFirestoreConnect } from 'react-redux-firebase';
 import { useSelector } from 'react-redux';
 import Comment from './Comment';
+import { connect } from 'react-redux';
 
-// LET UPVOTES PERSIST FOR USER
-
-const Post = props => {
+let Post = props => {
 
   useFirestoreConnect([
     { collection: 'comments' }
@@ -85,12 +84,23 @@ const Post = props => {
   }
 
   const handleChangingProfileView = () => {
-    if(props.handleViewingProfile) {
-      if(props.currentUser.name == props.post.author) {
-        props.handleViewingProfile({ name: props.post.author, id: props.post.authorID, currentUserProfile: true});
-      } else {
-        props.handleViewingProfile({ name: props.post.author, id: props.post.authorID, currentUserProfile: false});
+    if(props.currentUser.name == props.post.author) {
+      const action = {
+        type: 'SET_CURRENT_USER',
+        name: props.post.author,
+        id: props.post.authorID,
+        currentUserProfile: true
       }
+      props.dispatch(action);
+    } else {
+      const action = {
+        type: 'SET_CURRENT_USER',
+        name: props.post.author,
+        id: props.post.authorID,
+        currentUserProfile: false
+      }
+      props.dispatch(action);
+      // props.handleViewingProfile({ name: props.post.author, id: props.post.authorID, currentUserProfile: false});
     }
   }
 
@@ -204,5 +214,7 @@ const Post = props => {
     )
   }
 }
+
+Post = connect()(Post);
 
 export default Post;

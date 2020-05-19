@@ -14,16 +14,16 @@ let App = props => {
 
   const [authToggle, setAuthToggle] = useState(false);
   const [onSignIn, setOnSignIn] = useState(false);
-  const [userViewingOwnProfile, setUserViewingOwnProfile] = useState(true);
+  // const [userViewingOwnProfile, setUserViewingOwnProfile] = useState(true);
   const history = useHistory();
 
   const [sortByTop, setSortByTop] = useState(false);
   const [sortByNew, setSortByNew] = useState(false);
   const [sortByFollow, setSortByFollow] = useState(false);
 
-  const handleNavToProfile = (bool) => {
-    setUserViewingOwnProfile(bool)
-  }
+  // const handleNavToProfile = (bool) => {
+  //   setUserViewingOwnProfile(bool)
+  // }
 
   const handleNavToFeed = () => {
     const action = {
@@ -33,7 +33,7 @@ let App = props => {
   }
 
   console.log('App rendered 😀');
-
+  const [userSignedIn, setUserSignedIn] = useState(false);
   const auth = props.firebase.auth();
   let authContent = null;
   if(!isLoaded(auth)) {
@@ -45,10 +45,25 @@ let App = props => {
     }
   } else if((isLoaded(auth)) && (auth.currentUser != null)) {
     authContent = <Body 
-      userViewingOwnProfile={userViewingOwnProfile} 
-      handleNavToProfile={handleNavToProfile} 
-      currentUser={{name: auth.currentUser.displayName, id: auth.currentUser.photoURL}}
-      sortFeedObj={{sortByTop, sortByNew, sortByFollow}}/>;
+      // userViewingOwnProfile={userViewingOwnProfile} 
+      // handleNavToProfile={handleNavToProfile}
+      sortFeedObj={{sortByTop, sortByNew, sortByFollow}}
+      currentlyLoggedUser={{
+        name: auth.currentUser.displayName,
+        id: auth.currentUser.photoURL,
+        currentUserProfile: true
+      }}/>;
+    if(!userSignedIn) {
+
+      const action = {
+        type: 'SET_CURRENT_USER',
+        name: auth.currentUser.displayName,
+        id: auth.currentUser.photoURL,
+        currentUserProfile: true
+      }
+      props.dispatch(action);
+      setUserSignedIn(true);
+    }
   }
 
   const handlePressingSidebarButton = button => {
@@ -89,7 +104,15 @@ let App = props => {
             handlePressingSidebarButton={handlePressingSidebarButton}/>
           {authContent}   
           <FooterNav 
-            handleNavToProfile={handleNavToProfile} 
+            currentLoggedUser={auth.currentUser ? { 
+                name: auth.currentUser.displayName, 
+                id: auth.currentUser.photoURL
+              } : {
+                name: '',
+                id: ''
+              }
+            }
+            // handleNavToProfile={handleNavToProfile} 
             handleNavToFeed={handleNavToFeed} />
         </React.Fragment>
       </Route>

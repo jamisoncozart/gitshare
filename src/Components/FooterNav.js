@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
 
-function FooterNav(props) {
+let FooterNav = props => {
   const iconPath = process.env.PUBLIC_URL + '/assets/';
 
   const handleClickingFeed = () => {
@@ -16,12 +16,19 @@ function FooterNav(props) {
   }
 
   const changeToCurrentUserProfile = () => {
-    props.handleNavToProfile(true);
+    // props.handleNavToProfile(true);
     const action = {
+      type: 'SET_CURRENT_USER',
+      name: props.currentLoggedUser.name,
+      id: props.currentLoggedUser.id,
+      currentUserProfile: true
+    }
+    const action2 = {
       type: 'CHANGE_CURRENT_VIEW',
       view: '/profile'
     }
     props.dispatch(action);
+    props.dispatch(action2);
   }
 
   const handleNavToSaved = () => {

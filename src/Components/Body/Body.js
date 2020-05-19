@@ -6,16 +6,14 @@ import NewPostForm from './NewPostForm';
 import Saved from './Posts/Saved';
 import { Route } from 'react-router-dom';
 import { useFirestore } from 'react-redux-firebase';
+import { connect } from 'react-redux';
 
-function Body(props) {
-  const [profileToView, setProfileToView] = useState(props.currentUser);
+let Body = props => {
+  // const [profileToView, setProfileToView] = useState(props.currentUser);
   const [currentlyLoggedInProfile, setCurrentlyLoggedInProfile] = useState(null);
-  const handleViewingProfile = user => {
-    console.log('user in handleViewingProfile in Body.js');
-    console.log(user);
-    props.handleNavToProfile(false);
-    setProfileToView(user);
-  }
+  // const handleViewingProfile = () => {
+  //   props.handleNavToProfile(false);
+  // }
   const db = useFirestore();
   const currentlyLoggedInUser = db.collection('profiles').doc(props.currentUser.id);
   useEffect(() => {
@@ -40,20 +38,17 @@ function Body(props) {
         <Feed 
           currentlyLoggedInProfile={currentlyLoggedInProfile}
           currentUser={props.currentUser} 
-          handleViewingProfile={handleViewingProfile}
           sortFeedObj={props.sortFeedObj}/>
       </Route>
       <Route path='/saved'>
         <Saved 
-          currentUser={props.currentUser} 
-          handleViewingProfile={handleViewingProfile}/>
+          currentUser={props.currentUser}/>
       </Route>
       <Route path='/newPost'>
         <NewPostForm currentUser={props.currentUser}/>
       </Route>
       <Route path='/follows'>
         <FollowList 
-          handleViewingProfile={handleViewingProfile} 
           currentUser={props.currentUser}/>
       </Route>
       <Route path='/profile'>
@@ -62,10 +57,18 @@ function Body(props) {
           currentlyLoggedInProfile={currentlyLoggedInProfile}
           setCurrentlyLoggedInProfile={setCurrentlyLoggedInProfile}
           handleRefreshingCurrentlyLoggedInUser={handleRefreshingCurrentlyLoggedInUser} 
-          user={props.userViewingOwnProfile ? props.currentUser : profileToView}/>
+          user={props.currentUser.currentUserProfile ? props.currentlyLoggedUser : props.currentUser}/>
       </Route>
     </React.Fragment>
   );
 }
+
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+Body = connect(mapStateToProps)(Body);
 
 export default Body;

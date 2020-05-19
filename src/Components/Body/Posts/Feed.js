@@ -66,7 +66,7 @@ let Feed = props => {
               </div>
               <button className='clearButton' onClick={() => setTagFiltering(false)}>Clear</button>
             </div> 
-            {sortedPosts.map((post, index) => {
+            {sortedPosts.map((post) => {
               return (
                 <Post 
                   currentUser={props.currentUser}
@@ -74,7 +74,6 @@ let Feed = props => {
                   handleShowingPostDetails={handleShowingPostDetails}
                   handleClickingBack={null}
                   handleFilterTag={handleFilterTag}
-                  handleViewingProfile={props.handleViewingProfile}
                   darkMode={props.darkMode}
                   post={post}
                   key={post.id}/>
@@ -84,7 +83,7 @@ let Feed = props => {
           </React.Fragment> : (
             <div className='postsDiv'>
               <div className='postFeed'>
-                {sortedPosts.map((post, index) => {
+                {sortedPosts.map((post) => {
                   return (
                     <Post 
                       currentUser={props.currentUser}
@@ -92,7 +91,6 @@ let Feed = props => {
                       handleShowingPostDetails={handleShowingPostDetails}
                       handleClickingBack={null}
                       handleFilterTag={handleFilterTag}
-                      handleViewingProfile={props.handleViewingProfile}
                       darkMode={props.darkMode}
                       post={post}
                       key={post.id}/>

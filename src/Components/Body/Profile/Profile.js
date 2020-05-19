@@ -14,10 +14,14 @@ let Profile = props => {
   const [currentProfile, setCurrentProfile] = useState(null);
   const posts = useSelector(state => state.firestore.ordered.posts);
   const profiles = useSelector(state => state.firestore.ordered.profiles);
-  const currentUserProfile = db.collection('profiles').doc(props.user.id);
+  const currentUserProfile = db.collection('profiles').doc(props.currentUser.id);
+  console.log('currentProfile in Profile.js');
+  console.log(currentProfile);
 
   useEffect(() => {
     currentUserProfile.get().then(function(profile) {
+      console.log('profile from useEffect');
+      console.log(profile.data());
       setCurrentProfile(profile.data());
     }).catch(function(error) {
       console.log(error.message);
@@ -25,7 +29,7 @@ let Profile = props => {
   }, []);
 
   let topPosts;
-  const userPosts = posts.filter(post => post.author == props.user.name);
+  const userPosts = posts.filter(post => post.author == props.currentUser.name);
   topPosts = userPosts.sort((a, b) => b.score - a.score);
 
   const [following, setFollowing] = useState(false);
@@ -43,7 +47,7 @@ let Profile = props => {
     if(props.currentlyLoggedInProfile != null) { 
       if(following) {
         props.currentLoggedInUserQuery.update({
-          following: props.currentlyLoggedInProfile.following.filter(user => user.name != props.user.name)
+          following: props.currentlyLoggedInProfile.following.filter(user => user.name != props.currentUser.name)
         }).then(function() {
           setFollowing(false);
           props.handleRefreshingCurrentlyLoggedInUser();
@@ -52,7 +56,7 @@ let Profile = props => {
         });
       } else {
         props.currentLoggedInUserQuery.update({
-          following: [...props.currentlyLoggedInProfile.following, {name: props.user.name, id: props.user.id}]
+          following: [...props.currentlyLoggedInProfile.following, {name: props.user.name, id: props.currentUser.id}]
         }).then(function() {
           setFollowing(true);
           props.handleRefreshingCurrentlyLoggedInUser();
@@ -124,7 +128,7 @@ let Profile = props => {
 
   //========================================================
   // GITHUB PROFILE DATA
-
+  console.log(currentProfile);
   const [showConfirmationWindow, setShowConfirmationWindow] = useState(false);
   const [currentProfileInput, setCurrentProfileInput] = useState("");
 
@@ -267,13 +271,13 @@ let Profile = props => {
       <div className='profile'>
         {currentProfile != null ? 
           <div className='profileHeader'>
-            {props.currentlyLoggedInProfile.displayName != props.user.name ? (
+            {!props.currentUser.currentUserProfile ? (
               <button 
                 onClick={handleClickingFollow} 
                 className={following ? 'activeFollowButton' : 'inactiveFollowButton'}>Follow</button>
             ) : null}
             <div className='profileTop'>
-              {currentProfile.profilePic == null && props.currentlyLoggedInProfile.displayName == props.user.name ? (
+              {currentProfile.profilePic == null && props.currentlyLoggedInProfile.displayName == props.currentUser.name ? (
                 <div onClick={() => inputElement.click()} className='profileImgDiv'>
                   <p>Upload<br/>Image</p>
                   <form style={{display: 'none'}}>
@@ -299,7 +303,7 @@ let Profile = props => {
               <h2>{currentProfile.displayName}</h2>
             </div>
             <div className='gitHubData'>
-              {props.currentlyLoggedInProfile.displayName == props.user.name && props.currentlyLoggedInProfile.githubProfile == null ? (
+              {props.currentlyLoggedInProfile.displayName == props.currentUser.name && props.currentProfile.githubProfile == null ? 
                 <form onSubmit={handleGitHubProfileSubmission}>
                   <input type='text' name='gitHubProfile' placeholder='GitHub Username' required/>
                   <button 
@@ -308,48 +312,55 @@ let Profile = props => {
                       Link GitHub
                   </button>
                 </form>
-              ) : null }
-              {props.currentlyLoggedInProfile.githubProfile != null ? (
+                : 
                 <div className='githubProfile'>
                   <h4>GitHub Profile:</h4>
                   <div className='githubProfileHeader'>
                     <div className="gitHubProfileImgDiv">
-                      <img src={props.currentlyLoggedInProfile.githubProfilePic} />
+                      <img src={props.currentProfile.githubProfilePic} />
                     </div>
-                    <h3>{props.currentlyLoggedInProfile.githubProfile}</h3>
+                    <h3>{props.currentProfile.githubProfile}</h3>
                   </div>
                   <hr />
                   <div className='githubStats'>
                     <div className='stat'>
-                      <strong>{props.currentlyLoggedInProfile.githubFollowers}</strong>
+                      <strong>{props.currentProfile.githubFollowers}</strong>
                       <p>Followers</p>
                     </div>
                     <div className='stat'>
-                      <strong>{props.currentlyLoggedInProfile.githubRepoNumber}</strong>
+                      <strong>{props.currentProfile.githubRepoNumber}</strong>
                       <p>Repositories</p>
                     </div>
                   </div>
                   <div className='githubBodyInfo'>
-                    <p><strong>Bio:</strong> {props.currentlyLoggedInProfile.githubBio}</p>
-                    {props.currentlyLoggedInProfile.githubPersonalWebsiteLink ? 
+                    <p><strong>Bio:</strong> {props.currentProfile.githubBio}</p>
+                    {props.currentProfile.githubPersonalWebsiteLink ? 
                       <p>
                         <strong>Website: </strong> 
-                        <a href={props.currentlyLoggedInProfile.githubPersonalWebsiteLink}>
-                          {props.currentlyLoggedInProfile.githubPersonalWebsiteLink}
+                        <a href={props.currentProfile.githubPersonalWebsiteLink}>
+                          {props.currentProfile.githubPersonalWebsiteLink}
                         </a>
                       </p> : null}
                   </div>
-                  <button>Get Languages</button>
-                  {showActivity && props.currentlyLoggedInProfile.githubActivity ? (
+
+                  {props.currentlyLoggedInProfile.displayName == props.currentUser.name ? 
+                    <button>Get Languages</button>
+                  : null}
+
+                  {showActivity && props.currentProfile.githubActivity ? (
                     <div className='activityDataVis'>
                       <h4>GitHub Activity</h4>
                       <Line data={data} legend={{display: false}} />
                     </div>
                   ) : 
-                    <button onClick={handleGettingGithubActivity}>Get Activity</button>
+                    <React.Fragment>
+                      {props.currentlyLoggedInProfile.displayName == props.currentUser.name ? 
+                        <button onClick={handleGettingGithubActivity}>Get Activity</button>
+                      : null}
+                    </React.Fragment>
                   }
                 </div>
-              ) : null}
+              }
             </div>
             <h4 className='topPostTitle'>Top Posts:</h4>
             <div className='profilePosts'>
@@ -357,7 +368,7 @@ let Profile = props => {
                 if(index < 6) {
                   return (
                     <Post 
-                      currentUser={props.user} 
+                      currentUser={props.currentUser} 
                       showDetails={false}
                       handleShowingPostDetails={handleChangingCurrentPost}
                       post={post} 
@@ -380,6 +391,12 @@ let Profile = props => {
   )
 }
 
-Profile = connect()(Profile);
+const mapStateToProps = state => {
+  return {
+    currentUser: state.currentUser
+  }
+}
+
+Profile = connect(mapStateToProps)(Profile);
 
 export default Profile;

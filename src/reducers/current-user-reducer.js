@@ -1,12 +1,11 @@
 const currentUserReducer = (state = null, action) => {
-  const { displayName, id, email, profilePic } = action;
+  const { name, id, currentUserProfile } = action;
   switch (action.type) {
     case 'SET_CURRENT_USER':
       return {
-        displayName,
+        name,
         id,
-        email,
-        profilePic
+        currentUserProfile
       }
     default:
       return state;

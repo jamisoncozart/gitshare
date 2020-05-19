@@ -53,7 +53,6 @@ const Feed = props => {
                   handleShowingPostDetails={handleShowingPostDetails}
                   handleClickingBack={null}
                   handleFilterTag={handleFilterTag}
-                  handleViewingProfile={props.handleViewingProfile}
                   post={post}
                   key={index}/>
               );

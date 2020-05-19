@@ -333,7 +333,7 @@ input {
 
 .newPostFormDiv {
   width: 100%;
-  /* padding: 75px 10vw; */
+  padding: 75px 10vw;
   margin: auto;
   text-align: center;
 }
@@ -357,6 +357,7 @@ textarea {
   box-shadow: 0 2px 3px rgba(0,0,0,0.2);
   border-radius: 5px;
 }
+
 .darkPost {
   width: 85%;
   margin: 7px auto;
@@ -368,10 +369,14 @@ textarea {
   border-radius: 5px;
 }
 
+.postFeed {
+  height: 100%;
+}
+
 .postsDiv {
-  /* padding-bottom: 70px;
-  padding-top: 40px; */
-  /* height: 100%; */
+  padding-top: 40px;
+  height: 100%;
+  padding-bottom: 60px;
 }
 
 .githubProfile h4 {

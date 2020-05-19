@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useFirestore } from 'react-redux-firebase';
+import { connect } from 'react-redux';
 
-const Follow = props => {
+let Follow = props => {
   const db = useFirestore();
   const followProfileQuery = db.collection('profiles').doc(props.followData.id);
   const [followProfile, setFollowProfile] = useState(null);
@@ -15,8 +16,15 @@ const Follow = props => {
   });
 
   const handleClickingProfile = () => {
-    props.handleViewingProfile({ name: props.followData.name, id: props.followData.id, currentUserProfile: false});
+    const action = {
+      type: 'SET_CURRENT_USER',
+      name: props.followData.name,
+      id: props.followData.id,
+      currentUserProfile: false
+    }
+    props.dispatch(action);
   }
+  
   if(followProfile != null) {
     return (
       <div className='post'>
@@ -41,5 +49,7 @@ const Follow = props => {
     )
   }
 }
+
+Follow = connect()(Follow);
 
 export default Follow;

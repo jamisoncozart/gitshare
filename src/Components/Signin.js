@@ -40,7 +40,6 @@ function Signin(props) {
 
   return (
     <div className='signin'>
-      {handleRedirectToPosts}
       <Logo imageHeight='50px' fontSize='30px'/>
       <form className='signinForm' onSubmit={doSignIn}>
         <h2>Sign In</h2>
