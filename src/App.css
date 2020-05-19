@@ -836,9 +836,13 @@ hr {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: auto;
-  padding-top: 23vh;
-  width: 70%;
+  padding: 15vh 14vw 20vh 14vw;
+  width: 100vw;
+  height: 100vh;
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .landingPage a {
@@ -888,8 +892,10 @@ hr {
 }
 
 .logoText {
-  font-size: 40px;
+  font-size: 55px;
   margin-top: 5px;
+  color: black;
+  text-shadow: -4px -4px 2px #eee, 4px -4px 2px #eee, -4px 4px 2px #eee, 4px 4px 2px #eee;
 }
 
 .enterAppButton {
