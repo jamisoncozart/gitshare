@@ -41,8 +41,6 @@ function Body(props) {
           currentlyLoggedInProfile={currentlyLoggedInProfile}
           currentUser={props.currentUser} 
           handleViewingProfile={handleViewingProfile}
-          setViewingDetails={props.setViewingDetails}
-          viewingDetails={props.viewingDetails}
           sortFeedObj={props.sortFeedObj}/>
       </Route>
       <Route path='/saved'>

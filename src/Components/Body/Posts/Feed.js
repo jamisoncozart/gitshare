@@ -10,24 +10,32 @@ let Feed = props => {
     { collection: 'posts' }
   ]);
 
-  // For viewing post details on click of a post
-  // const [postDetails, setPostDetails] = useState();
   const [tagFiltering, setTagFiltering] = useState(false);
   const [filterTag, setFilterTag] = useState();
   function handleShowingPostDetails(post) {
     console.log('post in handleShowingPostDetails')
     console.log(post);
-    props.setViewingDetails(true);
     const action = {
       type: 'UPDATE_CURRENT_POST',
       ...post
     }
+    const action2 = {
+      type: 'SHOW_DETAILS'
+    }
     props.dispatch(action);
+    props.dispatch(action2);
   }
 
   function handleFilterTag(tagName) {
     setTagFiltering(true);
     setFilterTag(tagName);
+  }
+
+  function handleNavBackToFeed() {
+    const action = {
+      type: 'HIDE_DETAILS'
+    }
+    props.dispatch(action);
   }
 
   let posts = useSelector(state => state.firestore.ordered.posts);
@@ -49,14 +57,15 @@ let Feed = props => {
       return (
         <React.Fragment>
           {tagFiltering ? 
+          <React.Fragment>
+          <div className='postsDiv'>
             <div className='filterTag'>
               <div className='filterTagHeader'>
                 <p>Filtering by: </p>
                 <Tag name={filterTag} />
               </div>
               <button onClick={() => setTagFiltering(false)}>Clear</button>
-            </div> : null}
-          <div className={'postsDiv'}>
+            </div> 
             {sortedPosts.map((post, index) => {
               return (
                 <Post 
@@ -72,6 +81,26 @@ let Feed = props => {
               );
             })}
           </div>
+          </React.Fragment> : (
+            <div className='postsDiv'>
+              <div className='postFeed'>
+                {sortedPosts.map((post, index) => {
+                  return (
+                    <Post 
+                      currentUser={props.currentUser}
+                      showDetails={false}
+                      handleShowingPostDetails={handleShowingPostDetails}
+                      handleClickingBack={null}
+                      handleFilterTag={handleFilterTag}
+                      handleViewingProfile={props.handleViewingProfile}
+                      darkMode={props.darkMode}
+                      post={post}
+                      key={post.id}/>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </React.Fragment>
       )
     } else {
@@ -82,7 +111,7 @@ let Feed = props => {
           currentUser={props.currentUser} 
           showDetails={true} 
           post={props.currentPost} 
-          handleClickingBack={props.setViewingDetails} />
+          handleClickingBack={handleNavBackToFeed} />
       )
     }
   } else {
@@ -95,6 +124,7 @@ let Feed = props => {
 const mapStateToProps = state => {
   return {
     currentPost: state.currentPost,
+    viewingDetails: state.viewingDetails,
     darkMode: state.darkMode
   }
 }

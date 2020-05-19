@@ -46,7 +46,7 @@ function Header(props) {
     props.handlePressingSidebarButton(button);
   }
 
-
+  props.handleRedirectToSignin();
 
   return (
     <div className={props.darkMode ? 'darkHeader' : 'header'}>

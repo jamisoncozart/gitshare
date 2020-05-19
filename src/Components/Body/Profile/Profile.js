@@ -14,7 +14,6 @@ let Profile = props => {
   const posts = useSelector(state => state.firestore.ordered.posts);
   const profiles = useSelector(state => state.firestore.ordered.profiles);
   const currentUserProfile = db.collection('profiles').doc(props.user.id);
-  // const [currentlyLoggedInProfile, setCurrentlyLoggedInProfile] = useState(props.currentlyLoggedInProfile)
 
   useEffect(() => {
     currentUserProfile.get().then(function(profile) {
@@ -110,7 +109,11 @@ let Profile = props => {
       type: 'UPDATE_CURRENT_POST',
       ...post
     }
+    const action2 = {
+      type: 'SHOW_DETAILS'
+    }
     props.dispatch(action);
+    props.dispatch(action2);
     history.push('/posts');
   }
 

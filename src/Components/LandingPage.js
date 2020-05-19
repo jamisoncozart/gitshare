@@ -39,8 +39,8 @@ const LandingPage = props => {
           "enable": false
       },
       "move": {
-        "random": true,
-        "speed": 3,
+        "random": false,
+        "speed": 4,
         "direction": "top-right",
         "out_mode": "out"
       },

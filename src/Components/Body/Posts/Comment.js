@@ -48,7 +48,6 @@ const Comment = props => {
 
   return (
     <div className='comment'>
-      {/* <div onClick={() => handleCommentUpvote(props.comment.id)} className={upvoted ? 'clickedUpvoteDiv' : 'upvoteDiv'}> */}
       <div className='commentHeader'>
         <div onClick={handleCommentUpvote} className={upvoted ? 'clickedCommentUpvoteDiv' : 'commentUpvoteDiv'}>
           <img src={props.darkMode ? `${iconPath}up-arrow_white.png` : `${iconPath}up-arrow_black.png`} />

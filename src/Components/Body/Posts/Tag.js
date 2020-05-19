@@ -1,8 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Tag = props => {
-  
-  if(props.onFeed) {
+let Tag = props => {
+  if(props.onFeed && props.currentView !== '/profile') {
     return (
       <div onClick={() => props.filterFeedByTag(props.name)} className={props.darkMode ? 'darkTag' : 'tag'}>
         {props.name}
@@ -16,5 +16,13 @@ const Tag = props => {
     )
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    currentView: state.currentView
+  }
+}
+
+Tag = connect(mapStateToProps)(Tag);
 
 export default Tag;

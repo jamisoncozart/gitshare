@@ -15,7 +15,6 @@ let App = props => {
   const [authToggle, setAuthToggle] = useState(false);
   const [onSignIn, setOnSignIn] = useState(false);
   const [userViewingOwnProfile, setUserViewingOwnProfile] = useState(true);
-  const [viewingDetails, setViewingDetails] = useState(false);
   const history = useHistory();
 
   const [sortByTop, setSortByTop] = useState(false);
@@ -27,7 +26,10 @@ let App = props => {
   }
 
   const handleNavToFeed = () => {
-    setViewingDetails(false);
+    const action = {
+      type: 'HIDE_DETAILS'
+    }
+    props.dispatch(action);
   }
 
   console.log('App rendered 😀');
@@ -40,19 +42,12 @@ let App = props => {
     if(!onSignIn) {
       setOnSignIn(true);
       history.push('/signin');
-      // const action = {
-      //   type: 'CHANGE_CURRENT_VIEW',
-      //   view: '/signin'
-      // }
-      // props.dispatch(action);
     }
   } else if((isLoaded(auth)) && (auth.currentUser != null)) {
     authContent = <Body 
       userViewingOwnProfile={userViewingOwnProfile} 
       handleNavToProfile={handleNavToProfile} 
       currentUser={{name: auth.currentUser.displayName, id: auth.currentUser.photoURL}}
-      setViewingDetails={setViewingDetails}
-      viewingDetails={viewingDetails}
       sortFeedObj={{sortByTop, sortByNew, sortByFollow}}/>;
   }
 
@@ -70,11 +65,6 @@ let App = props => {
     if(auth.currentUser == null) {
       setOnSignIn(true);
       history.push('/signin');
-      // const action = {
-      //   type: 'CHANGE_CURRENT_VIEW',
-      //   view: '/signin'
-      // }
-      // props.dispatch(action);
     }
     return null;
   }
@@ -92,8 +82,8 @@ let App = props => {
       </Route>
       <Route path='/'>
         <React.Fragment>
-          {handleRedirectToSignin}
           <Header 
+            handleRedirectToSignin={handleRedirectToSignin}
             currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} 
             handleSignOut={setAuthToggle}
             handlePressingSidebarButton={handlePressingSidebarButton}/>

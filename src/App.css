@@ -361,8 +361,8 @@ textarea {
   margin: 7px auto;
   padding: 10px;
   border: 1px solid white;
-  background-color: #222;
-  color: white;
+  background-color: #444;
+  color: #ddd;
   box-shadow: 0 2px 3px rgba(255, 255, 255, 0.4);
   border-radius: 5px;
 }
@@ -457,7 +457,7 @@ textarea {
 }
 
 .darkClickedUpvoteDiv {
-  background-color: rgb(255, 145, 0);
+  background-color: rgb(216, 139, 38);
   height: 25px;
   width: 24px;
   border: 1px solid white;
@@ -506,7 +506,7 @@ hr {
 
 .darkTag {
   padding: 4px;
-  background-color: rgb(6, 106, 255);
+  background-color: rgb(20, 77, 163);
   font-size: 14px;
   border: 1px solid white;
   border-radius: 5px;
@@ -525,7 +525,7 @@ hr {
   color: rgb(0, 102, 255);
 }
 
-.postAuthor {
+.darkPostAuthor {
   margin-left: 5px;
   font-size: 14px;
   color: rgb(0, 140, 255);
@@ -567,6 +567,7 @@ hr {
   justify-content: space-between;
   align-items: center;
   background-color: white;
+  margin-bottom: 10px;
 }
 
 .filterTag button {
