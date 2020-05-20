@@ -69,7 +69,7 @@ let Feed = props => {
             {sortedPosts.map((post) => {
               return (
                 <Post 
-                  currentUser={props.currentUser}
+                  currentlyLoggedInProfile={props.currentlyLoggedInProfile}
                   showDetails={false}
                   handleShowingPostDetails={handleShowingPostDetails}
                   handleClickingBack={null}
@@ -86,7 +86,7 @@ let Feed = props => {
                 {sortedPosts.map((post) => {
                   return (
                     <Post 
-                      currentUser={props.currentUser}
+                      currentlyLoggedInProfile={props.currentlyLoggedInProfile}
                       showDetails={false}
                       handleShowingPostDetails={handleShowingPostDetails}
                       handleClickingBack={null}
@@ -106,7 +106,7 @@ let Feed = props => {
       console.log(props.currentPost)
       return (
         <Post 
-          currentUser={props.currentUser} 
+          currentlyLoggedInProfile={props.currentlyLoggedInProfile}
           showDetails={true} 
           post={props.currentPost} 
           handleClickingBack={handleNavBackToFeed} />

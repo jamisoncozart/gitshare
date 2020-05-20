@@ -101,7 +101,7 @@ let Profile = props => {
         }
       }, function() {
         uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
-          currentUserProfile.update({
+          props.currentLoggedInUserQuery.update({
             profilePic: downloadURL
           }).then(function() {
             setCurrentProfile({...currentProfile, profilePic: downloadURL});
@@ -344,9 +344,13 @@ let Profile = props => {
                       </p> : null}
                   </div>
 
-                  {props.currentUser.currentUserProfile ? 
+                  {props.currentUser.currentUserProfile && !currentProfile.githubLanguages ? 
                     <button>Get Languages</button>
-                  : null}
+                  : 
+                  // show language data
+                  null
+                  // show language data
+                  }
 
                   {showActivity && currentProfile.githubActivity ? (
                     <div className='activityDataVis'>
@@ -369,7 +373,7 @@ let Profile = props => {
                 if(index < 6) {
                   return (
                     <Post 
-                      currentUser={props.currentUser} 
+                      currentlyLoggedInProfile={props.currentlyLoggedInProfile} 
                       showDetails={false}
                       handleShowingPostDetails={handleChangingCurrentPost}
                       post={post} 

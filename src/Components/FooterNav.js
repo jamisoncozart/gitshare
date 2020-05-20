@@ -16,6 +16,9 @@ let FooterNav = props => {
   }
 
   const changeToCurrentUserProfile = () => {
+
+    // update what is currently the local state of currentProfile in Profile.js with redux and update the currentProfile with redux here using dispatch
+
     const action = {
       type: 'SET_CURRENT_USER',
       name: props.currentLoggedUser.name,

@@ -3,15 +3,14 @@ import { useSelector } from 'react-redux'
 import { useFirestoreConnect, isLoaded, isEmpty } from 'react-redux-firebase';
 import Post from './Post';
 import Tag from './Tag';
-import firebase from 'firebase/app';
+// import firebase from 'firebase/app';
 
-const Feed = props => {
+const Saved = props => {
   useFirestoreConnect([
     { collection: 'posts' }
   ]);
-  const auth = firebase.auth();
+  // const auth = firebase.auth();
 
-  // For viewing post details on click of a post
   const [viewingDetails, setViewingDetails] = useState(false);
   const [postDetails, setPostDetails] = useState();
   const [tagFiltering, setTagFiltering] = useState(false);
@@ -27,28 +26,29 @@ const Feed = props => {
   }
 
   let posts = useSelector(state => state.firestore.ordered.posts);
-  
+  console.log('Saved.js: currentlyLoggedInProfile');
+  console.log(props.currentlyLoggedInProfile);
   if(isLoaded(posts)) {
-    let savedPosts = posts.filter(post => post.savers.includes(auth.currentUser.displayName));
+    let savedPosts = posts.filter(post => post.savers.includes(props.currentlyLoggedInProfile.displayName));
     if(tagFiltering) {
       savedPosts = savedPosts.filter(post => post.tags.includes(filterTag));
     }
     if(!viewingDetails) {
       return (
         <React.Fragment>
-          {tagFiltering ? 
-            <div className='filterTag'>
-              <div className='filterTagHeader'>
-                <p>Filtering by: </p>
-                <Tag name={filterTag} />
-              </div>
-              <button onClick={() => setTagFiltering(false)}>Clear</button>
-            </div> : null}
           <div className='postsDiv'>
+            {tagFiltering ? 
+              <div className='filterTag'>
+                <div className='filterTagHeader'>
+                  <p>Filtering by: </p>
+                  <Tag name={filterTag} />
+                </div>
+                <button onClick={() => setTagFiltering(false)}>Clear</button>
+              </div> : null}
             {savedPosts.map((post, index) => {
               return (
                 <Post 
-                  currentUser={props.currentUser}
+                  currentlyLoggedInProfile={props.currentlyLoggedInProfile}
                   showDetails={false}
                   handleShowingPostDetails={handleShowingPostDetails}
                   handleClickingBack={null}
@@ -63,7 +63,7 @@ const Feed = props => {
     } else {
       return (
         <Post 
-          currentUser={props.currentUser}
+          currentlyLoggedInProfile={props.currentlyLoggedInProfile}
           showDetails={true} 
           post={postDetails} 
           handleClickingBack={setViewingDetails} />
@@ -76,4 +76,4 @@ const Feed = props => {
   }
 }
 
-export default Feed;
+export default Saved;

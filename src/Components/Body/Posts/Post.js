@@ -16,7 +16,7 @@ let Post = props => {
   const iconPath = process.env.PUBLIC_URL + '/assets/';
   const db = useFirestore();
   let currentlyUpvoted = false;
-  if(props.post.upvoters.includes(props.currentUser.name)) {
+  if(props.post.upvoters.includes(props.currentlyLoggedInProfile.displayName)) {
     currentlyUpvoted = true;
   }
   const [upvoted, setUpvoted] = useState(currentlyUpvoted);
@@ -29,7 +29,7 @@ let Post = props => {
       let newUpvotes = currentUpvotes - 1;
       return postToUpdate.update({
         score: newUpvotes,
-        upvoters: upvoterList.filter(upvoter => upvoter !== props.currentUser.name)
+        upvoters: upvoterList.filter(upvoter => upvoter !== props.currentlyLoggedInProfile.displayName)
       }).then(function() {
         setUpvoted(false)
       }).catch(function(error) {
@@ -39,7 +39,7 @@ let Post = props => {
       let newUpvotes = currentUpvotes + 1;
       return postToUpdate.update({
         score: newUpvotes,
-        upvoters: [...upvoterList, props.currentUser.name]
+        upvoters: [...upvoterList, props.currentlyLoggedInProfile.displayName]
       }).then(function() {
         setUpvoted(true)
       }).catch(function(error) {
@@ -48,7 +48,7 @@ let Post = props => {
     }
   }
   let postSaved = false;
-  if(props.post.savers.includes(props.currentUser.name)) {
+  if(props.post.savers.includes(props.currentlyLoggedInProfile.displayName)) {
     postSaved = true;
   }
   const [currentlySaved, setCurrentlySaved] = useState(postSaved);
@@ -58,7 +58,7 @@ let Post = props => {
     let savedList = props.post.savers;
     if(!currentlySaved) {
       return postToUpdate.update({
-        savers: [...savedList, props.currentUser.name]
+        savers: [...savedList, props.currentlyLoggedInProfile.displayName]
       }).then(function() {
         setCurrentlySaved(true);
       }).catch(function(error) {
@@ -66,7 +66,7 @@ let Post = props => {
       });
     } else {
       return postToUpdate.update({
-        savers: savedList.filter(saver => saver != props.currentUser.name)
+        savers: savedList.filter(saver => saver != props.currentlyLoggedInProfile.displayName)
       }).then(function() {
         setCurrentlySaved(false);
       }).catch(function(error) {
@@ -84,7 +84,7 @@ let Post = props => {
   }
 
   const handleChangingProfileView = () => {
-    if(props.currentUser.name == props.post.author) {
+    if(props.currentlyLoggedInProfile.displayName == props.post.author) {
       const action = {
         type: 'SET_CURRENT_USER',
         name: props.post.author,
@@ -100,9 +100,10 @@ let Post = props => {
         currentUserProfile: false
       }
       props.dispatch(action);
-      // props.handleViewingProfile({ name: props.post.author, id: props.post.authorID, currentUserProfile: false});
     }
   }
+  console.log('Post.js: currentlyLoggedInProfile')
+  console.log(props.currentlyLoggedInProfile)
 
   const handleCommentSubmission = event => {
     event.preventDefault();
@@ -110,8 +111,8 @@ let Post = props => {
     db.collection('comments').add(
       {
         text: event.target.comment.value,
-        author: props.currentUser.name,
-        authorID: props.currentUser.id,
+        author: props.currentlyLoggedInProfile.displayName,
+        authorID: props.currentlyLoggedInProfile.id,
         parentPostID: props.post.id,
         score: 0,
         upvoters: [],
@@ -139,7 +140,7 @@ let Post = props => {
                 <img src={props.darkMode ? `${iconPath}up-arrow_white.png` : `${iconPath}up-arrow_black.png`} />
               </div>
               {/* Display Delete if user owns the post, display Save if user does not */}
-              {props.currentUser.name == props.post.author ? 
+              {props.currentlyLoggedInProfile.displayName == props.post.author ? 
                 <button className='postDeleteButton' onClick={() => handleDeletingPost(props.post.id)}>X</button> :
                 <button className={currentlySaved ? 'activeSaved' : 'inactiveSaved'} onClick={() => handleSavingPost(props.post.id)}>
                   <img src='https://www.shareicon.net/data/256x256/2016/09/10/828155_save_487x512.png' />
@@ -172,9 +173,13 @@ let Post = props => {
                 <button type='submit'>Submit</button>
               </form>
             ) : null}
-            {postComments.map((comment, index) => {
+            {postComments.map((comment) => {
               return(
-                <Comment darkMode={props.darkMode} currentUser={props.currentUser} comment={comment} key={comment.id} />
+                <Comment 
+                  darkMode={props.darkMode} 
+                  currentlyLoggedInProfile={props.currentlyLoggedInProfile} 
+                  comment={comment} 
+                  key={comment.id} />
               )
             })}
           </div>

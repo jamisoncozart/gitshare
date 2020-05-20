@@ -4,14 +4,14 @@ import { useFirestore, isLoaded } from 'react-redux-firebase';
 const Comment = props => {
   const db = useFirestore();
   const iconPath = process.env.PUBLIC_URL + '/assets/';
-  const upvotedAlready = props.comment.upvoters.includes(props.currentUser.name);
+  const upvotedAlready = props.comment.upvoters.includes(props.currentlyLoggedInProfile.displayName);
   const [upvoted, setUpvoted] = useState(upvotedAlready);
   const handleCommentUpvote = () => {
     const commentToUpdate = db.collection('comments').doc(props.comment.id);
     if(upvoted) {
       return commentToUpdate.update({
         score: props.comment.score - 1,
-        upvoters: props.comment.upvoters.filter(user => user !== props.currentUser.name)
+        upvoters: props.comment.upvoters.filter(user => user !== props.currentlyLoggedInProfile.displayName)
       }).then(function() {
         setUpvoted(false);
       }).catch(function(error) {
@@ -20,7 +20,7 @@ const Comment = props => {
     } else {
       return commentToUpdate.update({
         score: props.comment.score + 1,
-        upvoters: [...props.comment.upvoters, props.currentUser.name]
+        upvoters: [...props.comment.upvoters, props.currentlyLoggedInProfile.displayName]
       }).then(function() {
         setUpvoted(true);
       }).catch(function(error) {
@@ -37,7 +37,7 @@ const Comment = props => {
     const thisComment = db.collection('comments').doc(props.comment.id);
     setShowCommentReplyForm(false);
     thisComment.update({
-      replies: [...props.comment.replies, {body: event.target.body.value, author: props.currentUser.name}]
+      replies: [...props.comment.replies, {body: event.target.body.value, author: props.currentlyLoggedInProfile.displayName}]
     }).catch(function(error) {
       console.log(error);
     });

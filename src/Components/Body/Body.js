@@ -29,12 +29,12 @@ let Body = props => {
               ...updatedCurrentlyLoggedInUser, 
               id: props.currentlyLoggedUser.id
             }}
-            currentUser={props.currentUser} 
             sortFeedObj={props.sortFeedObj}/>
         </Route>
         <Route path='/saved'>
-          <Saved 
-            currentUser={props.currentUser}/>
+          <Saved currentlyLoggedInProfile={{
+            ...updatedCurrentlyLoggedInUser, 
+            id: props.currentlyLoggedUser.id}}/>
         </Route>
         <Route path='/newPost'>
           <NewPostForm currentUser={{
