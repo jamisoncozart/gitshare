@@ -6,7 +6,7 @@ import firebase from 'firebase/app';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Modal from '../Modal';
-import { Line } from 'react-chartjs-2';
+import { Line, Doughnut } from 'react-chartjs-2';
 
 let Profile = props => {
   
@@ -336,7 +336,22 @@ let Profile = props => {
 
   let languageDataConfig;
   if(props.currentlyLoggedInProfile.githubLanguages) {
-    languageDataConfig = 
+    languageDataConfig = {
+      labels: Object.keys(props.currentlyLoggedInProfile.githubLanguages),
+      datasets: [{
+        data: Object.values(props.currentlyLoggedInProfile.githubLanguages),
+        backgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56'
+        ],
+        hoverBackgroundColor: [
+          '#FF6384',
+          '#36A2EB',
+          '#FFCE56'
+        ]
+      }]
+    };
   }
 
   //=======================================================
@@ -425,14 +440,15 @@ let Profile = props => {
                   {props.currentUser.currentUserProfile && !currentProfile.githubLanguages ? 
                     <button onClick={handleGettingGithubLanguages}>Get Languages</button>
                   : 
-                  // show language data
-                  null
-                  // show language data
+                    <div className='languageDataVis'>
+                      <h4>Recent GitHub Languages</h4>
+                      <Doughnut data={languageDataConfig} legend={{position: 'bottom'}} />
+                    </div>
                   }
 
                   {showActivity && currentProfile.githubActivity ? (
                     <div className='activityDataVis'>
-                      <h4>GitHub Activity</h4>
+                      <h4>Recent GitHub Activity</h4>
                       <Line data={data} legend={{display: false}} />
                     </div>
                   ) : 

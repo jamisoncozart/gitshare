@@ -713,6 +713,7 @@ hr {
   border: 1px solid black;
   border-radius: 5px;
   margin: 10px;
+  background-color: #ddd;
 }
 
 .commentForm {
@@ -959,9 +960,19 @@ hr {
   align-items: center;
 }
 
-.activityDataVis {
+.activityDataVis, .languageDataVis {
   width: 100%;
   height: 100%;
   padding: 0;
   margin: 10px 0;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px 5px 5px 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  background-color: #eee;
+}
+
+.activityDataVis h4, .languageDataVis h4 {
+  text-align: center;
+  text-decoration: none;
 }
