@@ -186,8 +186,10 @@ let Profile = props => {
   if(props.currentlyLoggedInProfile.githubActivity) {
     initialShowActivity = true;
   }
+
   const [showActivity, setShowActivity] = useState(initialShowActivity);
   const monthArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+
   function handleGettingGithubActivity() {
     if(props.currentlyLoggedInProfile.githubRepoNumber > 0) {
       fetch(`https://api.github.com/users/${props.currentlyLoggedInProfile.githubProfile}/events`)
@@ -261,6 +263,82 @@ let Profile = props => {
       }]
     };
   }
+
+  function getData(url) {
+    return new Promise((resolve, reject) => {
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          resolve(data);
+        })
+    });
+  }
+
+  function handleGettingGithubLanguages() {
+    if(props.currentlyLoggedInProfile.githubRepoNumber > 0) {
+      fetch(`https://api.github.com/users/${props.currentlyLoggedInProfile.githubProfile}/repos?per_page=200`)
+      .then(response => response.json())
+      .then(data => {
+          let dataCopy = data;
+          const sortedData = dataCopy.sort((a, b) => {
+            let postAYearToSplice = a;
+            let postBYearToSplice = b;
+            const aYear = postAYearToSplice.updated_at.split('').splice(0,4);
+            const bYear = postBYearToSplice.updated_at.split('').splice(0,4);
+            const aYearNumber = parseInt(aYear.join(''));
+            const bYearNumber = parseInt(bYear.join(''))
+            let postAMonthToSplice = a;
+            let postBMonthToSplice = b;
+            const aMonth = postAMonthToSplice.updated_at.split('').splice(5,2);
+            const bMonth = postBMonthToSplice.updated_at.split('').splice(5,2);
+            const aMonthNumber = parseInt(aMonth.join(''));
+            const bMonthNumber = parseInt(bMonth.join(''));
+            const totalMonthsA = (aYearNumber*12) + aMonthNumber;
+            const totalMonthsB = (bYearNumber*12) + bMonthNumber;
+            return totalMonthsB - totalMonthsA;
+          });
+
+          let githubLanguages = [];
+          let promiseArray = [];
+
+          for(let i = 0; i < 5; i++) {
+            promiseArray.push(getData(sortedData[i].languages_url));
+          }
+          Promise.all(promiseArray).then(allLanguageData => {
+            const reducedLanguageData = allLanguageData.reduce(function(accumulator, nextLanguageObject) {
+              const repoLanguagesArr = [...Object.keys(nextLanguageObject)];
+              let newAccumulator = {...accumulator};
+              repoLanguagesArr.forEach(language => {
+                newAccumulator = {
+                  ...newAccumulator,
+                  [language]: (newAccumulator[language] || 0) + nextLanguageObject[language]
+                }
+              });
+              return newAccumulator;
+            }, {});
+            props.currentLoggedInUserQuery.update({
+              githubLanguages: reducedLanguageData
+            }).then(() => {
+              setCurrentProfile({
+                ...currentProfile,
+                gihubLanguages: reducedLanguageData
+              });
+            }).catch(error => {
+              console.log(error);
+            });
+            return githubLanguages;
+          });
+      }).catch(error => {
+        console.log(error);
+      });
+    }
+  }
+
+  let languageDataConfig;
+  if(props.currentlyLoggedInProfile.githubLanguages) {
+    languageDataConfig = 
+  }
+
   //=======================================================
   console.log('currentlyLoggedInProfile');
   console.log(props.currentlyLoggedInProfile);
@@ -345,7 +423,7 @@ let Profile = props => {
                   </div>
 
                   {props.currentUser.currentUserProfile && !currentProfile.githubLanguages ? 
-                    <button>Get Languages</button>
+                    <button onClick={handleGettingGithubLanguages}>Get Languages</button>
                   : 
                   // show language data
                   null
