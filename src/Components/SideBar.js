@@ -4,6 +4,11 @@ const SideBar = props => {
   const iconPath = process.env.PUBLIC_URL + '/assets/';
 
   const handleTogglingTheme = () => {
+    if(props.darkMode) {
+      document.body.style.backgroundColor = '#eee'
+    } else {
+      document.body.style.backgroundColor = '#000'
+    }
     const action = {
       type: 'TOGGLE_THEME'
     }

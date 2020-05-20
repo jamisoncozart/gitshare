@@ -379,6 +379,13 @@ textarea {
   padding-bottom: 60px;
 }
 
+.darkPostsDiv {
+  padding-top: 40px;
+  height: 100%;
+  padding-bottom: 60px;
+  background-color: #000;
+}
+
 .githubProfile h4 {
   margin-bottom: 10px;
   text-decoration: underline;
@@ -535,7 +542,7 @@ hr {
 .darkPostAuthor {
   margin-left: 5px;
   font-size: 14px;
-  color: rgb(0, 140, 255);
+  color: rgb(0, 225, 255);
 }
 
 .postDescription {

@@ -81,7 +81,7 @@ let Feed = props => {
             })}
           </div>
           </React.Fragment> : (
-            <div className='postsDiv'>
+            <div className={props.darkMode ? 'darkPostsDiv' : 'postsDiv'}>
               <div className='postFeed'>
                 {sortedPosts.map((post) => {
                   return (

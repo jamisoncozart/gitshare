@@ -157,7 +157,7 @@ let Post = props => {
               <Link 
                 to='/profile' 
                 onClick={handleChangingProfileView} 
-                className='postAuthor'>
+                className={props.darkMode ? 'darkPostAuthor' : 'postAuthor'}>
                   {props.post.author}
               </Link>
             </div>
