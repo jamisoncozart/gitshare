@@ -183,11 +183,18 @@ let Profile = props => {
     }
   }
   let initialShowActivity = false;
-  if(props.currentlyLoggedInProfile.githubActivity) {
-    initialShowActivity = true;
+  let initialShowLanguages = false;
+  if(currentProfile) {
+    if(props.currentlyLoggedInProfile.githubActivity || currentProfile.githubActivity) {
+      initialShowActivity = true;
+    }
+    if(props.currentlyLoggedInProfile.githubLanguages || currentProfile.githubLanguages) {
+      initialShowLanguages = true;
+    }
   }
 
   const [showActivity, setShowActivity] = useState(initialShowActivity);
+  const [showLanguages, setShowLanguages] = useState(initialShowLanguages);
   const monthArr = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
 
   function handleGettingGithubActivity() {
@@ -198,7 +205,7 @@ let Profile = props => {
           const reducedActivityData = data.reduce((accumulator, event) => {
             let date = event.created_at.split('').splice(0, event.created_at.indexOf('T')).join('');
             let dateArr = date.split('-');
-            let month = monthArr[parseInt(dateArr[1])]
+            let month = monthArr[parseInt(dateArr[1]) - 1];
             date = `${month} ${dateArr[2]}`;
             return {
               ...accumulator, 
@@ -221,47 +228,53 @@ let Profile = props => {
         });
     }
   }
-  let data;
-  if(props.currentlyLoggedInProfile.githubActivity) {
-    data = {
-      labels: [...Object.keys(props.currentlyLoggedInProfile.githubActivity)],
-      datasets: [{
-        fill: false,
-        lineTension: 0.1,
-        backgroundColor: 'rgba(75,192,192,0.4)',
-        borderColor: 'rgba(75,192,192,1)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointBorderColor: 'rgba(75,192,192,1)',
-        pointBackgroundColor: '#fff',
-        pointBorderWidth: 1,
-        pointHoverRadius: 5,
-        pointHoverBackgroundColor: 'rgba(75,192,192,1)',
-        pointHoverBorderColor: 'rgba(220,220,220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 1,
-        pointHitRadius: 10,
-        data: [...Object.values(props.currentlyLoggedInProfile.githubActivity)],
-        backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56',
-          '#36FF36',
-          '#1225FF',
-          '#FF2536'
-        ],
-        hoverBackgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56',
-          '#36FF36',
-          '#1225FF',
-          '#FF2536'
-        ]
-      }]
-    };
+
+  console.log('currentProfile');
+  console.log(currentProfile);
+
+  let data = null;
+  if(currentProfile) {
+    if(currentProfile.githubActivity) {
+      data = {
+        labels: Object.keys(currentProfile.githubActivity),
+        datasets: [{
+          fill: false,
+          lineTension: 0.1,
+          backgroundColor: 'rgba(75,192,192,0.4)',
+          borderColor: 'rgba(75,192,192,1)',
+          borderCapStyle: 'butt',
+          borderDash: [],
+          borderDashOffset: 0.0,
+          borderJoinStyle: 'miter',
+          pointBorderColor: 'rgba(75,192,192,1)',
+          pointBackgroundColor: '#fff',
+          pointBorderWidth: 1,
+          pointHoverRadius: 5,
+          pointHoverBackgroundColor: 'rgba(75,192,192,1)',
+          pointHoverBorderColor: 'rgba(220,220,220,1)',
+          pointHoverBorderWidth: 2,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: Object.values(currentProfile.githubActivity),
+          backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#36FF36',
+            '#1225FF',
+            '#FF2536'
+          ],
+          hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#36FF36',
+            '#1225FF',
+            '#FF2536'
+          ]
+        }]
+      };
+    }
   }
 
   function getData(url) {
@@ -323,6 +336,7 @@ let Profile = props => {
                 ...currentProfile,
                 gihubLanguages: reducedLanguageData
               });
+              setShowLanguages(true);
             }).catch(error => {
               console.log(error);
             });
@@ -334,29 +348,36 @@ let Profile = props => {
     }
   }
 
-  let languageDataConfig;
-  if(props.currentlyLoggedInProfile.githubLanguages) {
-    languageDataConfig = {
-      labels: Object.keys(props.currentlyLoggedInProfile.githubLanguages),
-      datasets: [{
-        data: Object.values(props.currentlyLoggedInProfile.githubLanguages),
-        backgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
-        ],
-        hoverBackgroundColor: [
-          '#FF6384',
-          '#36A2EB',
-          '#FFCE56'
-        ]
-      }]
-    };
+  let languageDataConfig = null;
+  if(currentProfile) {
+    if(currentProfile.githubLanguages) {
+      languageDataConfig = {
+        labels: Object.keys(currentProfile.githubLanguages).reverse(),
+        datasets: [{
+          data: Object.values(currentProfile.githubLanguages),
+          backgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#8DF78D',
+            '#D48DF7',
+            '#8DF7EC'
+          ],
+          hoverBackgroundColor: [
+            '#FF6384',
+            '#36A2EB',
+            '#FFCE56',
+            '#8DF78D',
+            '#D48DF7',
+            '#8DF7EC'
+          ]
+        }]
+      };
+    }
   }
 
   //=======================================================
-  console.log('currentlyLoggedInProfile');
-  console.log(props.currentlyLoggedInProfile);
+
   let inputElement;
   return (
     <div className='profileBackground'>
@@ -394,17 +415,18 @@ let Profile = props => {
               )}
               <h2>{currentProfile.displayName}</h2>
             </div>
-            <div className='gitHubData'>
-              {props.currentUser.currentUserProfile && currentProfile.githubProfile == null ? 
-                <form onSubmit={handleGitHubProfileSubmission}>
-                  <input type='text' name='gitHubProfile' placeholder='GitHub Username' required/>
-                  <button 
-                    onClick={() => setShowConfirmationWindow(true)} 
-                    className='gitHubButton'>
-                      Link GitHub
-                  </button>
-                </form>
-                : 
+            {props.currentUser.currentUserProfile && currentProfile.githubProfile == null ? 
+              <form className='linkGithubForm' onSubmit={handleGitHubProfileSubmission}>
+                <input type='text' name='gitHubProfile' placeholder='GitHub Username' required/>
+                <button 
+                  onClick={() => setShowConfirmationWindow(true)} 
+                  className='gitHubButton'>
+                    Link GitHub
+                </button>
+              </form>
+              : null} 
+            { currentProfile.githubProfile ? 
+              <div className='gitHubData'>
                 <div className='githubProfile'>
                   <h4>GitHub Profile:</h4>
                   <div className='githubProfileHeader'>
@@ -431,36 +453,38 @@ let Profile = props => {
                     {currentProfile.githubPersonalWebsiteLink ? 
                       <p>
                         <strong>Website: </strong> 
-                        <a href={currentProfile.githubPersonalWebsiteLink}>
+                        <a href={`${currentProfile.githubPersonalWebsiteLink}`}>
                           {currentProfile.githubPersonalWebsiteLink}
                         </a>
                       </p> : null}
                   </div>
-
-                  {props.currentUser.currentUserProfile && !currentProfile.githubLanguages ? 
-                    <button onClick={handleGettingGithubLanguages}>Get Languages</button>
-                  : 
+                  {languageDataConfig ? (
                     <div className='languageDataVis'>
                       <h4>Recent GitHub Languages</h4>
                       <Doughnut data={languageDataConfig} legend={{position: 'bottom'}} />
                     </div>
+                    ) :
+                    <React.Fragment>
+                      {props.currentUser.currentUserProfile && !props.currentlyLoggedInProfile.githubLanguages ? 
+                        <button className='githubGetButton' onClick={handleGettingGithubLanguages}>Get Languages</button>
+                      : null }
+                    </React.Fragment>
                   }
-
-                  {showActivity && currentProfile.githubActivity ? (
+                  {data ? (
                     <div className='activityDataVis'>
                       <h4>Recent GitHub Activity</h4>
                       <Line data={data} legend={{display: false}} />
                     </div>
-                  ) : 
+                    ) : 
                     <React.Fragment>
-                      {props.currentUser.currentUserProfile ? 
-                        <button onClick={handleGettingGithubActivity}>Get Activity</button>
+                      {props.currentUser.currentUserProfile && !props.currentlyLoggedInProfile.githubActivity ? 
+                        <button className='githubGetButton' onClick={handleGettingGithubActivity}>Get Activity</button>
                       : null}
                     </React.Fragment>
                   }
                 </div>
-              }
-            </div>
+              </div>
+            : null }
             <h4 className='topPostTitle'>Top Posts:</h4>
             <div className='profilePosts'>
               {topPosts.map((post, index) => {
