@@ -7,7 +7,7 @@ body {
 /* HEADER STYLES */
 
 .header {
-  z-index: 2;
+  /* z-index: 2; */
   position: fixed;
   left: 0;
   top: 0;
@@ -20,7 +20,7 @@ body {
 }
 
 .darkHeader {
-  z-index: 2;
+  /* z-index: 2; */
   position: fixed;
   left: 0;
   top: 0;
@@ -198,12 +198,12 @@ body {
 
 .darknessStyle {
   background: rgba(0,0,0,0.4);
-  height: 100%;
+  height: 100vh;
   left: 0;
   position: absolute;
   top: 0;
   width: 100%;
-  z-index: 1;
+  z-index: 2;
   transition: 0.3s;
 }
 
@@ -651,6 +651,7 @@ hr {
   align-items: center;
   padding: 10px;
   padding-bottom: 0;
+  margin-bottom: 10px;
 }
 
 .profileImgDiv {
@@ -860,7 +861,7 @@ hr {
   padding: 15vh 14vw 20vh 14vw;
   width: 100vw;
   height: 100vh;
-  z-index: 2;
+  /* z-index: 2; */
   position: fixed;
   top: 0;
   left: 0;
@@ -939,7 +940,7 @@ hr {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 4;
+  /* z-index: 2; */
   width: 100vw;
   height: 100vh;
   background-color: rgba(0,0,0,0.5);
@@ -975,4 +976,34 @@ hr {
 .activityDataVis h4, .languageDataVis h4 {
   text-align: center;
   text-decoration: none;
+}
+
+.linkGithubForm {
+  width: 90%;
+  margin: auto;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.linkGithubForm button {
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.githubGetButton {
+  width: 46%;
+  padding: 5px;
+  margin: 5px 2%;
+  border-radius: 5px;
+  border: 1px solid black;
+  background-color: rgb(119, 184, 76);
+}
+
+.githubGetButton:hover {
+  opacity: 0.8;
+  cursor: pointer;
 }

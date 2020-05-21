@@ -102,8 +102,6 @@ let Post = props => {
       props.dispatch(action);
     }
   }
-  console.log('Post.js: currentlyLoggedInProfile')
-  console.log(props.currentlyLoggedInProfile)
 
   const handleCommentSubmission = event => {
     event.preventDefault();
@@ -143,7 +141,7 @@ let Post = props => {
               {props.currentlyLoggedInProfile.displayName == props.post.author ? 
                 <button className='postDeleteButton' onClick={() => handleDeletingPost(props.post.id)}>X</button> :
                 <button className={currentlySaved ? 'activeSaved' : 'inactiveSaved'} onClick={() => handleSavingPost(props.post.id)}>
-                  <img src='https://www.shareicon.net/data/256x256/2016/09/10/828155_save_487x512.png' />
+                  <img src={props.darkMode ? `${iconPath}Save_white.png` : `${iconPath}Save_black.png`} />
                 </button>}
               <h4>{props.post.title}</h4>
             </div>

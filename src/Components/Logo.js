@@ -2,6 +2,8 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 
 const Logo = props => {
+  const iconPath = process.env.PUBLIC_URL + '/assets/';
+
   const history = useHistory();
   const imageStyle = {
     height: props.imageHeight,
@@ -22,10 +24,16 @@ const Logo = props => {
   }
   return (
     <div onClick={() => history.push('/home')} className='logo'>
-      <img style={imageStyle} src='https://i.imgur.com/Lta1Npc.png' />
+      <img style={imageStyle} src={props.darkMode ? `${iconPath}logoOpposite.png` : `${process.env.PUBLIC_URL}/GitShare-logo.png` } />
       <h1 style={props.darkMode ? darkTextStyle : textStyle}>git share</h1>
     </div>
   );
+}
+
+const mapStateToProps = state => {
+  return {
+    darkMode: state.darkMode
+  }
 }
 
 export default Logo;
