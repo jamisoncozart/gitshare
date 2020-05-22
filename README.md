@@ -1,4 +1,4 @@
-# _git share_
+# _Git Share_
 
 #### _8 May 2020 | Jamison Cozart_
 
