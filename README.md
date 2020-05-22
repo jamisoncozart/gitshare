@@ -8,7 +8,44 @@ _A social platform for software developers to connect and collaborate. Built usi
 
 <!-- _View the live site at:_ https://jamisoncozart.github.io/FastReactionCoffeeRedux/ -->
 
-<!-- ![UI Preview](https://i.imgur.com/cza07rG.png) -->
+<img src='https://i.imgur.com/axCigm9.png' alt='landing page screenshot' width='45%' />
+<img src='https://i.imgur.com/n2z3T6a.png' alt='post feed' width='45%' />
+<p>Landing page features link to github and particle system background. Feed page shows posts by all users</p>
+
+<img src='https://i.imgur.com/fq79PaR.png' alt='sign in' width='45%' />
+<img src='https://i.imgur.com/kvMRvMw.png' alt='profile page' width='45%' />
+<p>Users need to sign up and sign in to use the site. Users can connect their github profiles to their gitshare profiles to display data about the languages they've recently used as well as their github activity.</p>
+
+<img src='https://i.imgur.com/auNT7gG.png' alt='details page width='45%' />
+<img src='https://i.imgur.com/DwosnMY.png' alt='sidebar menu width='45%' />
+<p>Users can click on posts to see post description, comment thread, delete buttons if the user is the author of the post, or a save button if the user is not the author, and an upvote button. Users can open the sidebar which allows users to filter their post feed by most upvoted, newest, or posts by users they are following. Also allows for toggling dark mode.</p>
+
+<img src='https://i.imgur.com/KLQqhnd.png' alt='Follow list width='45%' />
+<img src='https://i.imgur.com/RNyW5h4.png' alt='dark mode width='45%' />
+<p>Users need to sign up and sign in to use the site. Users can connect their github profiles to their gitshare profiles to display data about the languages they've recently used as well as their github activity.</p>
+<!-- ![Landing Page Screenshot](https://i.imgur.com/axCigm9.png) -->
+<!-- ![Feed Page Screenshot](https://i.imgur.com/n2z3T6a.png) -->
+<!-- ![Signup Page Screenshot](https://i.imgur.com/fq79PaR.png) -->
+<!-- __
+__
+_Users need to sign up and sign in to use the site_ -->
+
+
+
+<!-- ![Profile Page Screenshot](https://i.imgur.com/kvMRvMw.png) -->
+<!-- _Users can connect their github profiles to their gitshare profiles to display data about the languages they've recently used as well as their github activity._ -->
+<!-- 
+![Details Page Screenshot](https://i.imgur.com/auNT7gG.png)
+_Users can click on posts to see post description, comment thread, delete buttons if the user is the author of the post, or a save button if the user is not the author, and an upvote button._
+
+![Sidebar Menu Screenshot](https://i.imgur.com/DwosnMY.png)
+_Users can open the sidebar which allows users to filter their post feed by most upvoted, newest, or posts by users they are following. Also allows for toggling dark mode._ -->
+
+<!-- ![FollowList Page Screenshot](https://i.imgur.com/KLQqhnd.png)
+_Users can follow other users, and the follows list displays all users you have followed. Users can click on any of the follows to view that users profile page._
+
+![DarkMode Screenshot](https://i.imgur.com/RNyW5h4.png)
+_Users can enable dark mode for battery saving and decreased eye strain._ -->
 
 ## Setup/Installation Requirements
 

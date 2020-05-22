@@ -114,7 +114,7 @@ let Feed = props => {
     }
   } else {
     return (
-      <h2>Loading...</h2>
+      <h4>Loading...</h4>
     )
   }
 }
