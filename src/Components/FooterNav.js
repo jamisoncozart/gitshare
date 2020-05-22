@@ -90,7 +90,7 @@ let FooterNav = props => {
           'darkNavLink': props.darkMode 
         })}
         to='/newPost'>
-          <img src={props.darkMode ? `${iconPath}New_white.png` : `${iconPath}New_black.png`} />
+          <img src={props.darkMode ? `${iconPath}New_white.png` : `${iconPath}New_Black.png`} />
       </Link>
       <Link 
         onClick={handleNavToFollows} 
@@ -112,7 +112,7 @@ let FooterNav = props => {
           'darkNavLink': props.darkMode 
         })}  
         to='/profile'>
-          <img src={props.darkMode ? `${iconPath}Profile_white.png` : `${iconPath}Profile_black.png`} />
+          <img src={props.darkMode ? `${iconPath}Profile_white.png` : `${iconPath}Profile_Black.png`} />
       </Link>
     </div>
   );
