@@ -13,8 +13,6 @@ let Feed = props => {
   const [tagFiltering, setTagFiltering] = useState(false);
   const [filterTag, setFilterTag] = useState();
   function handleShowingPostDetails(post) {
-    console.log('post in handleShowingPostDetails')
-    console.log(post);
     const action = {
       type: 'UPDATE_CURRENT_POST',
       ...post
@@ -102,8 +100,6 @@ let Feed = props => {
         </React.Fragment>
       )
     } else {
-      console.log('current post in Redux');
-      console.log(props.currentPost)
       return (
         <Post 
           currentlyLoggedInProfile={props.currentlyLoggedInProfile}

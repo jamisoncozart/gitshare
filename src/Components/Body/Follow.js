@@ -11,8 +11,8 @@ let Follow = props => {
   
   followProfileQuery.get().then(function(profile) {
     setFollowProfile(profile.data());
-  }).catch(function(event) {
-    console.log(event);
+  }).catch(function(error) {
+    console.log(error);
   });
 
   const handleClickingProfile = () => {

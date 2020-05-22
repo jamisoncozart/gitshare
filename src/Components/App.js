@@ -23,7 +23,6 @@ let App = props => {
     }
     props.dispatch(action);
   }
-  console.log('App rendered 😀');
   const [userSignedIn, setUserSignedIn] = useState(false);
   const auth = props.firebase.auth();
   let authContent = null;

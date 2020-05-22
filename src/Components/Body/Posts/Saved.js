@@ -26,8 +26,6 @@ const Saved = props => {
   }
 
   let posts = useSelector(state => state.firestore.ordered.posts);
-  console.log('Saved.js: currentlyLoggedInProfile');
-  console.log(props.currentlyLoggedInProfile);
   if(isLoaded(posts)) {
     let savedPosts = posts.filter(post => post.savers.includes(props.currentlyLoggedInProfile.displayName));
     if(tagFiltering) {

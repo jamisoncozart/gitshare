@@ -229,9 +229,6 @@ let Profile = props => {
     }
   }
 
-  console.log('currentProfile');
-  console.log(currentProfile);
-
   let data = null;
   if(currentProfile) {
     if(currentProfile.githubActivity) {

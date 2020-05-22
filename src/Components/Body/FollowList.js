@@ -14,7 +14,6 @@ const FollowList = props => {
     });
   }, []);
   if(currentProfile != null) {
-    console.log(currentProfile);
     let follows = currentProfile.following.filter(profile => profile.name != props.currentUser.name);
     return (
       <div className='followList'>
