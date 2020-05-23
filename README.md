@@ -6,7 +6,7 @@
 
 _A social platform for software developers to connect and collaborate. Built using React with Redux for the Frontend and Firebase as the Backend._
 
-<!-- _View the live site at:_ https://jamisoncozart.github.io/FastReactionCoffeeRedux/ -->
+_View the live site at:_ https://jamisoncozart.github.io/gitshare
 <div >
 <img src='https://i.imgur.com/axCigm9.png' alt='landing page screenshot' width='45%' />
 <img src='https://i.imgur.com/n2z3T6a.png' alt='post feed' width='45%' />
@@ -90,14 +90,16 @@ code .
 
 ## Development Process
 
-![Application WireFrame](https://i.imgur.com/dAkbIb1.png)
-![Application WireFrame](https://i.imgur.com/Pm5ZplU.png)
-![Application WireFrame](https://i.imgur.com/gGmEQQH.png)
-![Application WireFrame](https://i.imgur.com/b311OFn.png)
-![Application WireFrame](https://i.imgur.com/lT2iukx.png)
-![Application WireFrame](https://i.imgur.com/2xzXwBu.png)
+<img src='https://i.imgur.com/dAkbIb1.png' width='45%'>
+<img src='https://i.imgur.com/Pm5ZplU.png' width='45%'>
 
-_Application features pages for Sign Up/Sign In, posts, saved posts, creating new posts, viewing accounts you've followed, and your profile._
+<img src='https://i.imgur.com/gGmEQQH.png' width='45%'>
+<img src='https://i.imgur.com/b311OFn.png' width='45%'>
+
+<img src='https://i.imgur.com/lT2iukx.png' width='45%'>
+<img src='https://i.imgur.com/2xzXwBu.png' width='45%'>
+
+_Application wireframing features pages for Sign Up/Sign In, posts, saved posts, creating new posts, viewing accounts you've followed, and your profile._
 
 ![Application Component Tree](https://i.imgur.com/9DSqJWy.png)
 
