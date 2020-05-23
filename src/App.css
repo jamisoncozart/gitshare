@@ -1011,3 +1011,23 @@ hr {
 button {
   border: 1px solid black;
 }
+
+.modal p {
+  margin-top: 10px;
+  margin-bottom: 5px;
+}
+
+.modalButton {
+  width: 80%;
+  margin: 2px auto; 
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.confirmModalButton {
+  background-color: rgb(180, 255, 158);
+}
+
+.backModalButton {
+  background-color: rgb(255, 169, 169);
+}

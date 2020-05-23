@@ -6,8 +6,8 @@ const Modal = props => {
       <div className='modal'>
         <h3>{props.currentProfileInput}</h3>
         <p>Does this look correct?</p>
-        <button onClick={props.handleProfileConfirmation}>Confirm</button>
-        <button onClick={() => props.setShowConfirmationWindow(false)}>Close</button>
+        <button className='modalButton confirmModalButton' onClick={props.handleProfileConfirmation}>Confirm</button>
+        <button className='modalButton backModalButton' onClick={() => props.setShowConfirmationWindow(false)}>Close</button>
       </div>
     </div>
   )
