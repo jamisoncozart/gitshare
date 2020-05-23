@@ -295,10 +295,10 @@ input {
   padding: 5px;
   box-sizing: border-box;
   margin: 5px 0;
-  border-top: 2px solid #aaa;
-  border-left: 2px solid #aaa;
-  border-right: 2px solid #ccc;
-  border-bottom: 2px solid #ccc;
+  border-top: 2px solid #999;
+  border-left: 2px solid #999;
+  border-right: 2px solid #ddd;
+  border-bottom: 2px solid #ddd;
 }
 
 .errorMessage {
@@ -312,6 +312,12 @@ input {
   font-size: 17px;
   margin: 5px 0;
   width: 100%;
+  background-color: #ddd;
+  border-top: 2px solid #ddd;
+  border-left: 2px solid #ddd;
+  border-right: 2px solid #999;
+  border-bottom: 2px solid #999;
+
 }
 
 .logo {
