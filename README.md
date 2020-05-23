@@ -90,14 +90,14 @@ code .
 
 ## Development Process
 
-<img src='https://i.imgur.com/dAkbIb1.png' width='45%' height='550px'>
-<img src='https://i.imgur.com/Pm5ZplU.png' width='45%' height='550px'>
+<img src='https://i.imgur.com/dAkbIb1.png' width='45%'>
+<img src='https://i.imgur.com/Pm5ZplU.png' width='45%'>
 
-<img src='https://i.imgur.com/gGmEQQH.png' width='45%' height='550px'>
-<img src='https://i.imgur.com/b311OFn.png' width='45%' height='550px'>
+<img src='https://i.imgur.com/gGmEQQH.png' width='45%'>
+<img src='https://i.imgur.com/b311OFn.png' width='45%'>
 
-<img src='https://i.imgur.com/lT2iukx.png' width='45%' height='550px'>
-<img src='https://i.imgur.com/2xzXwBu.png' width='45%' height='550px'>
+<img src='https://i.imgur.com/lT2iukx.png' width='45%'>
+<img src='https://i.imgur.com/2xzXwBu.png' width='45%'>
 
 _Application wireframing features pages for Sign Up/Sign In, posts, saved posts, creating new posts, viewing accounts you've followed, and your profile._
 
