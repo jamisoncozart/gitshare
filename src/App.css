@@ -1037,3 +1037,42 @@ button {
 .backModalButton {
   background-color: rgb(255, 169, 169);
 }
+
+/* MEDIA QUERIES */
+
+@Media only screen and (min-width: 600px) {
+  .signinForm {
+    width: 350px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+  }
+  .signinForm h2 {
+    font-size: 35px;
+  }
+  .signinForm input {
+    font-size: 17px;
+  }
+  .signinForm button {
+    font-size: 20px;
+  }
+  .signinForm p {
+    font-size: 18px;
+  }
+  .copyright {
+    font-size: 20px;
+  }
+  .landingPage button {
+    width: 300px;
+    font-size: 25px;  
+  }
+  .landingPage .link {
+    width: 300px;
+    font-size: 18px;
+    padding: 5px 10px;
+  }
+  .landingPage .link img {
+    height: 30px;
+    margin-right: 15px;
+  }
+}
