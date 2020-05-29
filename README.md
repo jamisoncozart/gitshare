@@ -6,7 +6,7 @@
 
 _A social platform for software developers to connect and collaborate. Built using React with Redux for the Frontend and Firebase as the Backend._
 
-_View the live site at:_ https://jamisoncozart.github.io/gitshare
+_View the live site at:_ https://gitshare.app (optimized for mobile experience)
 <div >
 <img src='https://i.imgur.com/axCigm9.png' alt='landing page screenshot' width='45%' />
 <img src='https://i.imgur.com/n2z3T6a.png' alt='post feed' width='45%' />
