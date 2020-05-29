@@ -1075,4 +1075,122 @@ button {
     height: 30px;
     margin-right: 15px;
   }
+  .post {
+    width: 60%;
+  }
+  .post h4 {
+    font-size: 20px;
+  }
+  .displayName {
+    font-size: 16px;
+  }
+  .sidebarButton {
+    background-color: #ccc;
+  }
+  .sidebarButton img {
+    height: 30px;
+  }
+  .header {
+    position: static;
+    background-color: #ccc;
+  }
+  .footer {
+    position: static;
+    height: 53px;
+  }
+  .openNav {
+    width: 300px;
+  }
+  .sideNavButton {
+    font-size: 20px;
+  }
+  .sideNavButton img {
+    height: 25px;
+    margin-right: 10px;
+  }
+  .closebtn img {
+    height: 30px;
+  }
+  .postDescription {
+    font-size: 16px;
+  }
+  .detailsBackButton {
+    margin-top: 10px;
+  }
+  .detailsBackButton img {
+    height: 40px;
+  }
+  .newPostFormDiv {
+    width: 75%;
+  }
+  .followProfilePicDiv  {
+    height: 60px;
+    width: 60px;
+  }
+  .followProfilePicDiv img  {
+    height: 60px;
+  }
+  .followName {
+    font-size: 20px;
+  }
+  .postsDiv {
+    padding-top: 10px;
+  }
+  .profile {
+    margin-top: 0;
+  }
+  .profileTop {
+    padding: 20px 20px 10px 20px;
+  }
+  .profileTop h2 {
+    font-size: 30px;
+    margin-left: 10px;
+  }
+  .profileImgDiv {
+    height: 100px;
+    width: 100px;
+  }
+  .profileImgDiv img {
+    height: 100px;
+  }
+  .githubProfile h4 {
+    font-size: 30px;
+  } 
+  .gitHubProfileImgDiv {
+    height: 80px;
+    width: 80px;
+  }
+  .gitHubProfileImgDiv img {
+    height: 80px;
+  }
+  .githubProfileHeader h3 {
+    font-size: 25px;
+  }
+  .stat {
+    font-size: 20px;
+  }
+  .githubBodyInfo {
+    font-size: 18px;
+  }
+  .languageDataVis, .activityDataVis {
+    width: 45%;
+    margin: 20px auto;
+  }
+  .languageDataVis h4, .activityDataVis h4 {
+    font-size: 20px;
+  }
+  .languageDataVis canvas, .activityDataVis canvas {
+    margin: auto;
+  }
+  .githubDataVis {
+    display: flex;
+  }
+  .topPostTitle {
+    font-size: 30px;
+  }
+  .activeFollowButton, .inactiveFollowButton {
+    font-size: 20px;
+    padding: 10px;
+    margin: 10px;
+  }
 }

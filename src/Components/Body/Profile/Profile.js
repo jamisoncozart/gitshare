@@ -455,30 +455,32 @@ let Profile = props => {
                         </a>
                       </p> : null}
                   </div>
-                  {languageDataConfig ? (
-                    <div className='languageDataVis'>
-                      <h4>Recent GitHub Languages</h4>
-                      <Doughnut data={languageDataConfig} legend={{position: 'bottom'}} />
-                    </div>
-                    ) :
-                    <React.Fragment>
-                      {props.currentUser.currentUserProfile && !props.currentlyLoggedInProfile.githubLanguages ? 
-                        <button className='githubGetButton' onClick={handleGettingGithubLanguages}>Get Languages</button>
-                      : null }
-                    </React.Fragment>
-                  }
-                  {data ? (
-                    <div className='activityDataVis'>
-                      <h4>Recent GitHub Activity</h4>
-                      <Line data={data} legend={{display: false}} />
-                    </div>
-                    ) : 
-                    <React.Fragment>
-                      {props.currentUser.currentUserProfile && !props.currentlyLoggedInProfile.githubActivity ? 
-                        <button className='githubGetButton' onClick={handleGettingGithubActivity}>Get Activity</button>
-                      : null}
-                    </React.Fragment>
-                  }
+                  <div className='githubDataVis'>
+                    {languageDataConfig ? (
+                      <div className='languageDataVis'>
+                        <h4>Recent GitHub Languages</h4>
+                        <Doughnut data={languageDataConfig} legend={{position: 'bottom'}} />
+                      </div>
+                      ) :
+                      <React.Fragment>
+                        {props.currentUser.currentUserProfile && !props.currentlyLoggedInProfile.githubLanguages ? 
+                          <button className='githubGetButton' onClick={handleGettingGithubLanguages}>Get Languages</button>
+                        : null }
+                      </React.Fragment>
+                    }
+                    {data ? (
+                      <div className='activityDataVis'>
+                        <h4>Recent GitHub Activity</h4>
+                        <Line data={data} legend={{display: false}} />
+                      </div>
+                      ) : 
+                      <React.Fragment>
+                        {props.currentUser.currentUserProfile && !props.currentlyLoggedInProfile.githubActivity ? 
+                          <button className='githubGetButton' onClick={handleGettingGithubActivity}>Get Activity</button>
+                        : null}
+                      </React.Fragment>
+                    }
+                  </div>
                 </div>
               </div>
             : null }

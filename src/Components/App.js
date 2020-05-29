@@ -89,7 +89,6 @@ let App = props => {
             currentUser={auth.currentUser !== null ? auth.currentUser.displayName : ''} 
             handleSignOut={setAuthToggle}
             handlePressingSidebarButton={handlePressingSidebarButton}/>
-          {authContent}   
           <FooterNav 
             currentLoggedUser={auth.currentUser ? { 
                 name: auth.currentUser.displayName, 
@@ -100,6 +99,7 @@ let App = props => {
               }
             }
             handleNavToFeed={handleNavToFeed} />
+          {authContent}   
         </React.Fragment>
       </Route>
     </Switch>
